@@ -1,6 +1,7 @@
 /* Global styles */
 :root {
     --black-color: rgb(46, 44, 44);
+    --black-deep-color: rgb(31, 28, 28);
     --white-color: rgb(243, 225, 194);
     --white-pale-color: rgb(224, 216, 202);
     --font-titles: 23px;
