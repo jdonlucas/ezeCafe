@@ -49,11 +49,5 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
-  },
-  "styles": [
-    "src/styles.css",
-    "src/fonts.css",
-    "./node_modules/bootstrap/dist/css/bootstrap.css",
-    "./node_modules/bootstrap/dist/css/mdb.css"
-  ]
+  }
 }

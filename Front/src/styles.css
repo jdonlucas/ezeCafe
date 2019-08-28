@@ -1,13 +1,11 @@
 /* Global styles */
-
 :root {
-    --blue-color: rgb(0, 39, 83);
-    --blue-pale-color: rgb(41, 62, 107);
-    --blue-deep-color: rgb(1, 23, 48);
-    --gold-color: rgb(213, 159, 15);
-    --gold-pale-color: rgb(182, 152, 94);
+    --black-color: rgb(46, 44, 44);
+    --white-color: rgb(243, 225, 194);
+    --white-pale-color: rgb(224, 216, 202);
     --font-titles: 23px;
-    --font-type: 'BernardoModa', Fallback, sans-serif;
+    --font-title-type: Bernardo Moda, Fallback, sans-serif;
+    --font-type: Roboto, sans-serif;
 }
 
 /*------------- General */
@@ -15,18 +13,19 @@ html, body {
     padding: 0px;
     margin: 0px;
     font-size: 15px;
-    font-family: var(--font-type);
+    font-family: var(--font-type)!important;
 }
 /*------------- Header */
 nav {
     display: flex;
-    background-color: var(--blue-color);
+    background-color: var(--black-color);
     padding: 10px;
-    color: var(--gold-color);
+    color: var(--white-color);
     justify-content: space-between;
     align-items: center;
 }
 nav h1 {
+    font-family: var(--font-title-type)!important;
     font-weight: 700;
 }
 nav ul {
@@ -39,12 +38,12 @@ nav li {
     list-style: none;
 }
 nav li a {
-    color: var(--gold-color);
+    color: var(--white-color);
     text-decoration: none;
     font-size: 18px;
     padding-top: 35px; 
 }
 nav li a:hover {
-    color: var(--gold-pale-color);
+    color: var(--white-pale-color);
     text-decoration: none;
 }

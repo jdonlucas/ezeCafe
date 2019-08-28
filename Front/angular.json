@@ -24,7 +24,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "./node_modules/mdbootstrap/css/bootstrap.css",
+              "./node_modules/mdbootstrap/css/mdb.css",
+              "src/styles.css",
+              "src/fonts.css"
             ],
             "scripts": []
           },
