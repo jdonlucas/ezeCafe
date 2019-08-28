@@ -1,0 +1,29 @@
+<div class="container authContainer">
+    <div class="row justify-content-center align-items-center">
+        <div class="card">
+            <div class="card-body">
+                <div class="row authLogin">
+                    <h2>Inicia sesión en coding UNAM</h2>
+                    <div class="col-md-10">
+                        <form [formGroup]="loginForm">
+                            <div class="form-group">
+                                <input type="text" id="email" class="form-control" placeholder="Correo electrónico"
+                                formControlName="email" />
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="password" class="form-control" placeholder="Contraseña" 
+                                formControlName="password" />
+                            </div>
+                            <div class="authButton">
+                                <button type="submit" (click)="login()">Acceder</button>
+                            </div>
+                        </form>
+                        <div class="register">
+                            <p>¿Aún no estás registrado? <a routerLink="/auth/signup">Regístrate ahora »</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

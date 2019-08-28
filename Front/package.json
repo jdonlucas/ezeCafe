@@ -20,9 +20,14 @@
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
     "@angular/router": "~8.2.0",
+    "@ngrx/store": "^8.2.0",
+    "@ngrx/store-devtools": "^8.2.0",
+    "ng4-loading-spinner": "^1.2.3",
+    "jwt-decode": "^2.2.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "mdbootstrap": "^4.8.8"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.802.0",
@@ -44,5 +49,11 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
-  }
+  },
+  "styles": [
+    "src/styles.css",
+    "src/fonts.css",
+    "./node_modules/bootstrap/dist/css/bootstrap.css",
+    "./node_modules/bootstrap/dist/css/mdb.css"
+  ]
 }

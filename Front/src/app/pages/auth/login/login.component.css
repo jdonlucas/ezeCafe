@@ -1,0 +1,25 @@
+.authLogin {
+    justify-content:left;
+}
+.authLogin h2 {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+}
+.authButton button {
+    border-radius: 4px;
+    border-color: none;
+    background-color: var(--blue-color);
+    color: var(--gold-color);
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    width: 40%;
+    padding: 7px;
+}
+.authButton button:hover {
+    background-color: var(--blue-deep-color);
+}
+.authLogin form {
+    padding-bottom: 20px;
+}

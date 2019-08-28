@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles */
+
+:root {
+    --blue-color: rgb(0, 39, 83);
+    --blue-pale-color: rgb(41, 62, 107);
+    --blue-deep-color: rgb(1, 23, 48);
+    --gold-color: rgb(213, 159, 15);
+    --gold-pale-color: rgb(182, 152, 94);
+    --font-titles: 23px;
+    --font-type: 'BernardoModa', Fallback, sans-serif;
+}
+
+/*------------- General */
+html, body {
+    padding: 0px;
+    margin: 0px;
+    font-size: 15px;
+    font-family: var(--font-type);
+}
+/*------------- Header */
+nav {
+    display: flex;
+    background-color: var(--blue-color);
+    padding: 10px;
+    color: var(--gold-color);
+    justify-content: space-between;
+    align-items: center;
+}
+nav h1 {
+    font-weight: 700;
+}
+nav ul {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+}
+nav li {
+    padding-left: 20px;
+    list-style: none;
+}
+nav li a {
+    color: var(--gold-color);
+    text-decoration: none;
+    font-size: 18px;
+    padding-top: 35px; 
+}
+nav li a:hover {
+    color: var(--gold-pale-color);
+    text-decoration: none;
+}

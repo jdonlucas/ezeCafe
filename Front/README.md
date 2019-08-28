@@ -1,27 +1,42 @@
 # EzeCafe
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.2.0.
+
+## Instalación
+
+    *  Correr en bash [npm i]
+    *  Correr en bash [npm run start]
+
+## Cli
+
+    *   Para generar una nueva página lazy load, correr en bash
+            ng g m modules/[moduleName] --routing
+            ng g c modules/[pageName] --module [moduleName]
+
+## Frameworks
+
+    Ng Bootstrap: https://ng-bootstrap.github.io/#/components/datepicker/examples
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Corre `ng serve` para un servidor de desarrollo. Navega a `http://localhost:4200/`. La app automáticamente se recargará si cambias alguno de los archivos base.
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Corre `ng generate component component-name` para generar un nuevo componente. Puedes usar también `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Corre `ng build` para construir el proyecto. Todo lo generado por build será guardado en el directorio `dist/`. Usa el indicador `--prod` para especificar un build de producción.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Corre `ng test` tpara ejecutar pruebas unitarias via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Corre `ng e2e` para ejecutar pruebas end-to-end via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Para obtener más ayuda con Angular CLI usa `ng help` o checa [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
