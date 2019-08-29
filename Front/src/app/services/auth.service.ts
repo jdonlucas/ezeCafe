@@ -56,13 +56,13 @@ export class AuthService {
       if (userData.user) {
         this.setAuthData(userData);
         if(userData.user.Role.name == "SuperAdmin") {
-          this._router.navigate(['/user/superadmin']);
+          this._router.navigate(['/superadmin']);
         } else if (userData.user.Role.name == "Admin") {
-          this._router.navigate(['/user/admin']);
+          this._router.navigate(['/admin']);
         } else if (userData.user.Role.name == "Caja") {
-          this._router.navigate(['/user/caja']);
+          this._router.navigate(['/caja']);
         } else if (userData.user.Role.name == "Caja") {
-          this._router.navigate(['/user/mesero']);
+          this._router.navigate(['/mesero']);
         }
       }
   }
@@ -121,7 +121,7 @@ export class AuthService {
         if (!isAuth && !noAuth) {
           this.logout();
         } else if (!isAuth && noAuth) {
-          this._router.navigate(['/user/' + userData.toLowerCase()]);
+          this._router.navigate(['/' + userData.toLowerCase()]);
         }
         return isAuth;
       })
@@ -134,9 +134,9 @@ export class AuthService {
         const authData = auth.authData ? auth.authData : {};
         const userData = authData.user ? authData.user : {};
         const isUser = userData.Role.name == whichUser;  
-        console.log('/user/' + whichUser.toLowerCase());
+        console.log('/' + whichUser.toLowerCase());
         if (!isUser) {
-          this._router.navigate(['/user/' + userData.Role.name.toLowerCase()]);
+          this._router.navigate(['/' + userData.Role.name.toLowerCase()]);
         }
         return isUser;
       })
