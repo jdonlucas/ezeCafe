@@ -132,11 +132,11 @@ export class AuthService {
     return this._store.select('auth').pipe(
       map(auth => {
         const authData = auth.authData ? auth.authData : {};
-        const userData = authData.user ? authData.user : {};
-        const isUser = userData.Role.name == whichUser;  // verifica si el usuario puede entrar a la ruta que quiere
+        const userData = authData.user ? authData.user.Role.name : {}; // verifica si el usuario puede entrar a la ruta que quiere
+        const isUser = (userData == whichUser || userData == 'SuperAdmin') ? true : false;  
         if (!isUser) { // si la ruta es distinta al rol del usuario lo redirige a su home
-          this._router.navigate(['/' + userData.Role.name.toLowerCase()]);
-        }
+          this._router.navigate(['/' + userData.toLowerCase()]);
+        } 
         return isUser; // si la ruta es igual al rol del usuario regresa True
       })
     );
