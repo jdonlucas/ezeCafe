@@ -25,17 +25,17 @@ passport.use(new JWTStrategy({
 
 //Local Strategy
 passport.use(new LocalStrategy({
-    usernameField: 'Email',
+    usernameField: 'Username',
     passwordField: 'Password',
     passReqToCallback: true
-}, async (req, Email, Password, done) => {
+}, async (req, Username, Password, done) => {
     try {
-        const user = await User.scope('withPassword').findOne({ where: { Email } });
+        const user = await User.scope('withPassword').findOne({ where: { Username } });
         if (!user) {
-            return done(null, false, errorCodes.EmailPassword);
+            return done(null, false, errorCodes.UsernamePassword);
         }
         if (!user.validatePassword(Password)) {
-            return done(null, false, errorCodes.EmailPassword);
+            return done(null, false, errorCodes.UsernamePassword);
         }
         done(null, user);
     } catch (error) {

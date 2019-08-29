@@ -16,12 +16,9 @@ module.exports = {
       Lastname: {
         type: Sequelize.STRING
       },
-      Email: {
+      Username: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          isEmail: true,
-        }
+        allowNull: false
       },
       Password: {
         type: Sequelize.STRING,

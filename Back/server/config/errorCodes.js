@@ -3,9 +3,9 @@ module.exports = {
         Code: 401,
         Message: 'Unauthorized'
     },
-    EmailPassword: {
+    UsernamePassword: {
         Code: 452,
-        Message: 'Invalid email or password'
+        Message: 'Invalid username or password'
     },
     Role: {
         Code: 453,
@@ -19,9 +19,9 @@ module.exports = {
         Code: 455,
         Message: 'Invalid oauth token'
     },
-    EmailTaken: {
+    UsernameTaken: {
         Code: 456,
-        Message: 'This email has already been taken'
+        Message: 'This username has already been taken'
     },
     UserNotFound: {
         Code: 457,

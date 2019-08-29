@@ -6,18 +6,23 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Roles',[
       {
-        name: 'User',
-        description: 'Common user',
+        name: 'Mesero',
+        description: 'Empleado con rol de mesero',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }, {
+        name: 'Caja',
+        description: 'Empleado con rol de caja',
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
         name: 'Admin',
-        description: 'Staff admin',
+        description: 'Empleado Staff con permiso de caja/mesero/inventario',
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
         name: 'SuperAdmin',
-        description: 'Super Administrator',
+        description: 'Super Administrador',
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -32,10 +37,11 @@ module.exports = {
       {
         id: uuidv4(),
         Name: 'SuperAdmin',
-        Email: 'admin@matrixp.fciencias.unam.mx',
+        Lastname: 'Donlucas',
+        Username: 'superadmin',
         Password: bcrypt.hashSync('administrator', 10),
         Active: true,
-        UserRole: sudo[2].id,
+        UserRole: sudo[3].id,
         createdAt: new Date(),
         updatedAt: new Date()
       }

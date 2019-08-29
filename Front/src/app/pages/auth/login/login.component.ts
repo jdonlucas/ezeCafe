@@ -19,15 +19,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup ({
-      email: new FormControl('', []),
+      username: new FormControl('', []),
       password: new FormControl('', [])
     });
   }
 
   async login() {
-    let { email, password } = this.loginForm.value;
+    let { username, password } = this.loginForm.value;
     this._spinnerService.show();
-    await this._authService.localLogin(email, password).then(response => {
+    await this._authService.localLogin(username, password).then(response => {
       this._authService.login(response["token"].toString());
     }).catch(err => {
       const errorCodes = err.error;

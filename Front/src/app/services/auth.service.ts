@@ -30,19 +30,19 @@ export class AuthService {
       });
   }
 
-  localLogin(Email: string, Password: string ) {
+  localLogin(Username: string, Password: string ) {
     return this._http.post('http://localhost:3000/api/auth/localLogin', {
-      Email,
+      Username,
       Password
     }).toPromise();
   }
 
-  signup(Name: string, Lastname: string, Email: string, Password: string) {
+  signup(Name: string, Lastname: string, Username: string, Password: string) {
       return this._http.post('http://localhost:3000/api/auth/signup', {
         UserData: {
           Name,
           Lastname,
-          Email,
+          Username,
           Password, 
           UserRole: 1
         }
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   logout() {
-    this._router.navigate(['/auth']);
+    this._router.navigate(['/']);
     this.unsetAuthData();
   }
 
