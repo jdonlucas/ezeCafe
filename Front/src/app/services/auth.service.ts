@@ -55,7 +55,9 @@ export class AuthService {
       userData.token = token;
       if (userData.user) {
         this.setAuthData(userData);
-        this._router.navigate(['/user/profile']);
+        if(userData.user.Role.name == "SuperAdmin") {
+          this._router.navigate(['/user']);
+        }
       }
   }
 
@@ -111,9 +113,7 @@ export class AuthService {
         }
         if (!isAuth && !noAuth) {
           this.logout();
-        } else if (!isAuth && noAuth) {
-          this._router.navigate(['/']);
-        }
+        } 
         return isAuth;
       })
     );
@@ -124,7 +124,7 @@ export class AuthService {
       map(auth => {
         const authData = auth.authData ? auth.authData : {};
         const userData = authData.user ? authData.user : {};
-        const isUser = userData//.roleId == 1; esto se agregará una vez que se tengan roles 
+        const isUser = userData//.Role.name == 'mesero'; esto se agregará una vez que se tengan roles 
         //if (!isUser) {
         //  this._router.navigate(['/user/student/']);
         //}
