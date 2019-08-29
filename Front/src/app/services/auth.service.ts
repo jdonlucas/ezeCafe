@@ -54,7 +54,7 @@ export class AuthService {
       let userData = decodedToken ? decodedToken : {};
       userData.token = token;
       if (userData.user) {
-        this.setAuthData(userData);
+        this.setAuthData(userData); // redirige al usuario a su home segun su rol
         if(userData.user.Role.name == "SuperAdmin") {
           this._router.navigate(['/superadmin']);
         } else if (userData.user.Role.name == "Admin") {
@@ -115,12 +115,12 @@ export class AuthService {
         let expDate = authData.exp ? new Date(authData.exp) : new Date();
         let isAuth = authData.token && today < expDate;
 
-        if (noAuth) {
+        if (noAuth) { // si el usuario no esta autenticado le permite ver la vista del login
           isAuth = !isAuth;
         }
-        if (!isAuth && !noAuth) {
+        if (!isAuth && !noAuth) { // si es token expiró cierra la sesion del usuario
           this.logout();
-        } else if (!isAuth && noAuth) {
+        } else if (!isAuth && noAuth) { // si el usuario esta autenticado y quiere acceder a login lo manda al home
           this._router.navigate(['/' + userData.toLowerCase()]);
         }
         return isAuth;
@@ -133,12 +133,11 @@ export class AuthService {
       map(auth => {
         const authData = auth.authData ? auth.authData : {};
         const userData = authData.user ? authData.user : {};
-        const isUser = userData.Role.name == whichUser;  
-        console.log('/' + whichUser.toLowerCase());
-        if (!isUser) {
+        const isUser = userData.Role.name == whichUser;  // verifica si el usuario puede entrar a la ruta que quiere
+        if (!isUser) { // si la ruta es distinta al rol del usuario lo redirige a su home
           this._router.navigate(['/' + userData.Role.name.toLowerCase()]);
         }
-        return isUser;
+        return isUser; // si la ruta es igual al rol del usuario regresa True
       })
     );
   }
