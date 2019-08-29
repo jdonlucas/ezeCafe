@@ -56,7 +56,13 @@ export class AuthService {
       if (userData.user) {
         this.setAuthData(userData);
         if(userData.user.Role.name == "SuperAdmin") {
-          this._router.navigate(['/user']);
+          this._router.navigate(['/user/superadmin']);
+        } else if (userData.user.Role.name == "Admin") {
+          this._router.navigate(['/user/admin']);
+        } else if (userData.user.Role.name == "Caja") {
+          this._router.navigate(['/user/caja']);
+        } else if (userData.user.Role.name == "Caja") {
+          this._router.navigate(['/user/mesero']);
         }
       }
   }
@@ -105,6 +111,7 @@ export class AuthService {
       map(auth => {
         let today = new Date();
         let authData = auth.authData ? auth.authData : {};
+        const userData = authData.user ? authData.user.Role.name : {};
         let expDate = authData.exp ? new Date(authData.exp) : new Date();
         let isAuth = authData.token && today < expDate;
 
@@ -113,21 +120,24 @@ export class AuthService {
         }
         if (!isAuth && !noAuth) {
           this.logout();
-        } 
+        } else if (!isAuth && noAuth) {
+          this._router.navigate(['/user/' + userData.toLowerCase()]);
+        }
         return isAuth;
       })
     );
   }
 
-  isUser() {
+  isUser(whichUser) {
     return this._store.select('auth').pipe(
       map(auth => {
         const authData = auth.authData ? auth.authData : {};
         const userData = authData.user ? authData.user : {};
-        const isUser = userData//.Role.name == 'mesero'; esto se agregará una vez que se tengan roles 
-        //if (!isUser) {
-        //  this._router.navigate(['/user/student/']);
-        //}
+        const isUser = userData.Role.name == whichUser;  
+        console.log('/user/' + whichUser.toLowerCase());
+        if (!isUser) {
+          this._router.navigate(['/user/' + userData.Role.name.toLowerCase()]);
+        }
         return isUser;
       })
     );

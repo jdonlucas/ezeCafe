@@ -10,7 +10,8 @@ export class UserGuard implements CanActivate {
   constructor(private _authService: AuthService) { 
   }
 
-  canActivate() {    
-    return this._authService.isUser();
+  canActivate(route: ActivatedRouteSnapshot) {    
+    let whichUser = route.data.whichUser;
+    return this._authService.isUser(whichUser);
   }
 }
