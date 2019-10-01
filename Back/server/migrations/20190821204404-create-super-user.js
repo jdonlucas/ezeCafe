@@ -29,7 +29,7 @@ module.exports = {
     ]);
 
     const roles = await queryInterface.sequelize.query(
-      `SELECT id FROM \"Roles\";`
+      `SELECT id FROM Roles;`
     );
     const sudo = roles[0];
 
