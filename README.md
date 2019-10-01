@@ -29,7 +29,7 @@ y comprobamos que la instalación se haya realizado comprobando las versiones de
 ```
 $ node -v 
 
-v12.3.1
+v10.16.1
 ```
 y npm: 
 ```
