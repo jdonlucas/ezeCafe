@@ -6,7 +6,7 @@ Plataforma que gestiona el sistema de caja, comanda e inventario de eze Café. S
 
 * Angular CLI (version 8.2.0)
 * Node.js (version 10.16.1)[npm (version 6.9.0)]
-* PostgreSQL 11
+* MySQL
 
 ## Instalación
 
