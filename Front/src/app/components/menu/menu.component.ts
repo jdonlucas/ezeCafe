@@ -21,7 +21,6 @@ export class MenuComponent implements OnInit {
     this._store.select('auth').subscribe(auth => {
       let authData = auth.authData ? auth.authData : {};
       this.userData = authData.user ? authData.user : {};
-      console.log(this.userData);
     });
     
   }

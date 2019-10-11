@@ -1,9 +1,9 @@
 /* Global styles */
 :root {
-    --black-color: rgb(46, 44, 44);
-    --black-deep-color: rgb(31, 28, 28);
-    --white-color: rgb(243, 225, 194);
-    --white-pale-color: rgb(224, 216, 202);
+    --black-color: rgb(0, 0, 0);
+    --black-clear-color: rgb(39, 39, 39);
+    --white-color: rgb(255, 255, 255);
+    --white-pale-color: rgb(223, 221, 219);
     --font-titles: 23px;
     --font-title-type: Bernardo Moda, Fallback, sans-serif;
     --font-type: Roboto, sans-serif;
