@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 import * as jwt_decode from 'jwt-decode';
 
 @Component({
@@ -16,8 +18,10 @@ export class UsuariosComponent implements OnInit {
   public create: boolean;
   public created: boolean;
   public userCreated: string;
+  public userData: any;
 
   constructor(
+    private _store: Store<AppState>,
     private _authService: AuthService,
     private _spinnerService: Ng4LoadingSpinnerService
     ) { 
@@ -28,6 +32,10 @@ export class UsuariosComponent implements OnInit {
     }
 
   ngOnInit() {
+    this._store.select('auth').subscribe(auth => {
+      let authData = auth.authData ? auth.authData : {};
+      this.userData = authData.user ? authData.user : {};
+    });
     this.create = true;
     this.created = false;
     this.signupForm = new FormGroup ({
@@ -62,19 +70,25 @@ export class UsuariosComponent implements OnInit {
   }
   async signup() {
     let { name, lastname, username, password, role } = this.signupForm.value;
-    console.log(name, lastname, username, password, role);this._spinnerService.show();
-    await this._authService.signup(name, lastname, username, password, role).then(response => {
-      let decodedToken = this.getDecodedAccessToken(response["token"].toString());
-      let userData = decodedToken ? decodedToken : {};
-      this.create = false;
-      this.created = true;
-      this.userCreated = "Se creo el " + userData.user.Role.description.toLowerCase() + ".";
-    }).catch(err => {
-      this.signupError.status = true;
-      const errorCodes = err.error;
-      this.signupError.code = errorCodes.Code;
-    });
-    this._spinnerService.hide();
+    if (role == 4) {
+      this.signupError.code = 777;
+    } else if ((this.userData.Role.id < 4) && (role == 3)){
+      this.signupError.code = 777;
+    } else {
+      this._spinnerService.show();
+      await this._authService.signup(name, lastname, username, password, role).then(response => {
+        let decodedToken = this.getDecodedAccessToken(response["token"].toString());
+        let userData = decodedToken ? decodedToken : {};
+        this.create = false;
+        this.created = true;
+        this.userCreated = "Se creo el " + userData.user.Role.description.toLowerCase() + ".";
+      }).catch(err => {
+        this.signupError.status = true;
+        const errorCodes = err.error;
+        this.signupError.code = errorCodes.Code;
+      });
+      this._spinnerService.hide();
+    }
   }
 
   back() {
