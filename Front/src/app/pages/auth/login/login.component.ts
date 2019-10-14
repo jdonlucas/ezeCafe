@@ -11,16 +11,26 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
+  public loginError: any;
 
   constructor(
     private _authService: AuthService,
     private _spinnerService: Ng4LoadingSpinnerService
-  ) { }
+  ) {
+    this.loginError = {
+      status: false,
+      code: ''
+    };
+   }
 
   ngOnInit() {
     this.loginForm = new FormGroup ({
-      username: new FormControl('', []),
-      password: new FormControl('', [])
+      username: new FormControl('', [
+        Validators.required
+      ]),
+      password: new FormControl('', [
+        Validators.required
+      ])
     });
   }
 
@@ -30,8 +40,9 @@ export class LoginComponent implements OnInit {
     await this._authService.localLogin(username, password).then(response => {
       this._authService.login(response["token"].toString());
     }).catch(err => {
+      this.loginError.status = true;
       const errorCodes = err.error;
-      console.log(errorCodes);
+      this.loginError.code = errorCodes.Code;
     });
     this._spinnerService.hide();
   }

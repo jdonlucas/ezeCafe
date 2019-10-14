@@ -31,20 +31,22 @@ export class AuthService {
   }
 
   localLogin(Username: string, Password: string ) {
-    return this._http.post('http://localhost:3000/api/auth/localLogin', {
+    //return this._http.post('http://localhost:3000/api/auth/localLogin', { // dev
+    return this._http.post('http://db.ezecafe.com.mx/api/auth/localLogin', { // prod
       Username,
       Password
     }).toPromise();
   }
 
-  signup(Name: string, Lastname: string, Username: string, Password: string) {
-      return this._http.post('http://localhost:3000/api/auth/signup', {
+  signup(Name: string, Lastname: string, Username: string, Password: string, UserRole: string) {
+      //return this._http.post('http://localhost:3000/api/auth/signup', { // for development
+      return this._http.post('http://db.ezecafe.com.mx/api/auth/signup', { // for production
         UserData: {
           Name,
           Lastname,
           Username,
           Password, 
-          UserRole: 1
+          UserRole
         }
       }).toPromise();
   }
