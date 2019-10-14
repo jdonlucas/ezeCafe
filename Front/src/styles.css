@@ -1,7 +1,8 @@
 /* Global styles */
 :root {
     --black-color: rgb(0, 0, 0);
-    --black-clear-color: rgb(39, 39, 39);
+    --black-clear-color: rgb(56, 54, 54);
+    --black-disabled-color: rgba(0, 0, 0, 0.692);
     --white-color: rgb(255, 255, 255);
     --white-pale-color: rgb(223, 221, 219);
     --font-titles: 23px;
@@ -47,4 +48,35 @@ nav li a {
 nav li a:hover {
     color: var(--white-pale-color);
     text-decoration: none;
+}
+.alert-message {
+    color: red;
+    width: inherit;
+    margin-top: 10px;
+    position: absolute;
+}
+.authLogin {
+    justify-content:left;
+}
+.authLogin h2 {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+}
+.authButton button {
+    border-radius: 4px;
+    border-color: none;
+    background-color: var(--black-color);
+    color: var(--white-color);
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    width: 40%;
+    padding: 7px;
+}
+.authButton button:hover {
+    background-color: var(--black-clear-color);
+}
+.authButton button:disabled {
+    background-color: var(--black-disabled-color);
 }

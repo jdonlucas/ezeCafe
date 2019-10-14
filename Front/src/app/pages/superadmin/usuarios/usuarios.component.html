@@ -1,1 +1,62 @@
-<p>usuarios works!</p>
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="card">
+            <div class="card-body">
+                <div class="row authLogin" [style.display]="create ? 'flex' : 'none'">
+                    <h2>Alta de usuarios</h2>
+                        <div class="col-md-10">
+                        <form [formGroup]="signupForm">
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="name" class="form-control" placeholder="Nombre" [ngClass]="{ 'is-invalid': signupForm.get('name').touched && signupForm.get('name').invalid }"
+                                    formControlName="name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="lastname" class="form-control" placeholder="Apellidos" [ngClass]="{ 'is-invalid': signupForm.get('lastname').touched && signupForm.get('lastname').invalid }"
+                                    formControlName="lastname" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="username" class="form-control" placeholder="Nombre de Usuario" [ngClass]="{ 'is-invalid': signupForm.get('username').touched && signupForm.get('username').invalid }"
+                                    formControlName="username" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="password" id="password" class="form-control" placeholder="Contraseña"  [ngClass]="{ 'is-invalid': signupForm.get('username').touched && signupForm.get('username').invalid }"
+                                    formControlName="password" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <select class="browser-default custom-select users" [ngClass]="{ 'is-invalid': signupForm.get('role').touched && signupForm.get('role').invalid }" formControlName="role">
+                                    <option value="" disabled selected>Rol de nuevo usuario</option>
+                                    <option value="1">Mesero</option>
+                                    <option value="2">Caja</option>
+                                    <option value="3">Admin</option>
+                                </select>
+                            </div>
+                            <div class="authButton">
+                                <button type="submit" [disabled]="!signupForm.valid" (click)="signup()">Crear</button>
+                            </div>
+                            <div class="delete-user" >
+                                <a routerLink="/superadmin/baja/">Dar de baja un usuario »</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row authLogin" [style.display]="created ? 'flex' : 'none'">
+                    <h2>Usuario creado</h2>
+                    <div class="col-md-10">
+                        <p id="created-message">{{ userCreated }}</p>
+                        <div class="authButton created">
+                            <button type="submit" (click)="back()">Regresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
