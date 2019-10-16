@@ -1,12 +1,6 @@
 .authLogin form {
     padding-bottom: 20px;
 }
-.container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 .feedback {
     color: red;
     font-size: 12px;

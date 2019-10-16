@@ -9,13 +9,3 @@
 .logout:hover {
     background-color: var(--black-clear-color);
 }
-.breadcrumb li {
-    color: black;
-    margin-left: 10px;
-}
-.breadcrumb li a {
-    color: black;
-}
-.breadcrumb li a:hover {
-    text-decoration: underline;
-}

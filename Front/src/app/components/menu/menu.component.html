@@ -10,8 +10,3 @@
         </ul>
     </div>
 </nav>
-<div class="breadcrumb" *ngIf="userData.id">
-    <li>Inicio</li>
-    <li *ngIf="userData.UserRole==4" ><a routerLink="/superadmin/users">Administración de usuarios</a></li>
-    <li *ngIf="userData.UserRole==4" >Inventario</li>
-</div>
