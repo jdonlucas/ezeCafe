@@ -10,6 +10,8 @@ var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var users  = require('./routes/users');
+var stock = require('./routes/stock');
+var insumos = require('./routes/insumos');
 var baseUrl = "/api";
 var dotenv = require('dotenv').config();
 
@@ -42,6 +44,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use(`${baseUrl}/auth`, authRouter);
 app.use(`${baseUrl}/users`, users);
+app.use(`${baseUrl}/stock`, stock);
+app.use(`${baseUrl}/insumos`, insumos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
