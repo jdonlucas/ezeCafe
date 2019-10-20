@@ -12,6 +12,7 @@ var authRouter = require('./routes/auth');
 var users  = require('./routes/users');
 var stock = require('./routes/stock');
 var insumos = require('./routes/insumos');
+var menu = require('./routes/menu');
 var baseUrl = "/api";
 var dotenv = require('dotenv').config();
 
@@ -46,6 +47,7 @@ app.use(`${baseUrl}/auth`, authRouter);
 app.use(`${baseUrl}/users`, users);
 app.use(`${baseUrl}/stock`, stock);
 app.use(`${baseUrl}/insumos`, insumos);
+app.use(`${baseUrl}/menu`, menu);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

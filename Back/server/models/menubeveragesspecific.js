@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.FLOAT
   }, {});
   MenuBeveragesSpecific.associate = function(models) {
-    // associations can be defined here
+    MenuBeveragesSpecific.belongsTo(models.MenuBeverages,{
+      foreignKey: 'beverage'
+    });
   };
   return MenuBeveragesSpecific;
 };

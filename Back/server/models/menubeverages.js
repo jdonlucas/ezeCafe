@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     product: DataTypes.STRING
   }, {});
   MenuBeverages.associate = function(models) {
-    // associations can be defined here
+    MenuBeverages.hasMany(models.MenuBeveragesSpecific,{
+      foreignKey: 'specific',
+      onDelete: 'cascade'
+    })
   };
   return MenuBeverages;
 };
