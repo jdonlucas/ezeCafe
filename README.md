@@ -96,3 +96,24 @@ Para instalar postgreSQL en Windows o Mac es necesario [descargar el instalador]
 Una vez en el instalador, se recomienda dejar puerto por default (5432) y designar una contraseña memorable para acceder a él. 
 
 Para la instalación de pgAdmin4 en Windows se necesita descargar su [instalador](https://www.pgadmin.org/download/pgadmin-4-windows/) en su versión más reciente, y lo mismo para [MacOs](https://www.pgadmin.org/download/pgadmin-4-macos/).
+
+## Para deployment en server
+
+Es necesario revisar varios puntos:
+
+# Back
+
+- Verificar que las rutas en los cors apunten a negocio.ezecafe.com.mx y no a localhost:8000
+- Correr el servidor con forever y no con npm:
+```
+$ forever start ./bin/www
+```
+para esto hay que estar parados en el directorio Back/ que alberga los archivos del servidor
+
+# Front 
+
+- Verificar que las rutas de la api sean db.ezecafe.com.mx y no localhost:3000
+- Correr ng build --prod para obtener el compilado de la aplicacion de angular
+- Eliminar en servidor los archivos anteriores de la aplicacion
+- Copiar los archivos generador con ng build, ubicados en dist/ezeCafe/ en la carpeta root del subdominio negocio en servidor
+
