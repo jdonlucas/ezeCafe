@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { StockService } from 'src/app/services/stock.service'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { AuthService } from 'src/app/services/auth.service';
 
 declare var $: any;
 
@@ -11,6 +14,7 @@ declare var $: any;
 })
 export class HomeComponent implements OnInit {
 
+  public userData: any;
   public createInsumo: FormGroup;
   public insumosList: any;
   public desposablesList: any;
@@ -22,13 +26,16 @@ export class HomeComponent implements OnInit {
   public showDeleteInsumo: boolean;
 
   constructor(
-    private _stockService: StockService
+    private _stockService: StockService,
+    private _store: Store<AppState>,
+    private _authService: AuthService
   ) { }
 
   ngOnInit() {
-    $(document).ready(() => {
-      
-    })
+    this._store.select('auth').subscribe(auth => {
+      let authData = auth.authData ? auth.authData : {};
+      this.userData = authData.user ? authData.user : {};
+    });
     this.showHome = true;
     this.createInsumo = new FormGroup ({
       product: new FormControl('', [
@@ -45,7 +52,6 @@ export class HomeComponent implements OnInit {
   fetchInsumos() {
     this._stockService.showInsumos().then(response => {
       this.insumosList = response["insumosList"];
-      console.log(this.insumosList);
     }).catch(err => {
       this.errorCode = err.error;
     })
@@ -59,8 +65,23 @@ export class HomeComponent implements OnInit {
     this._stockService.addInsumo(newInsumoData)
       .then(response => {
         this.newInsumo = response;
-        this.showAlert()
         this.createInsumo.reset();
+        $('#alertM p').html('Se agregó insumo al inventario.');
+        $('#alertM').show();
+        $('#alertM').fadeOut(4000);
+      })
+      .catch(err => {
+        this.errorCode = err.error;
+      })
+  }
+  deleteInsumo(id: any) {
+    this._stockService.deleteIsumo(id)
+      .then(response => {
+        console.log(response);
+        $('#alertM p').html('Se eliminó el insumo del inventario.');
+        this.fetchInsumos();
+        $('#alertM').show();
+        $('#alertM').fadeOut(4000);
       })
       .catch(err => {
         this.errorCode = err.error;
@@ -80,21 +101,6 @@ export class HomeComponent implements OnInit {
       console.log(showDiv);
       this.showListInsumo = true;
     }
-  }
-
-  async showAlert() {
-    let alert = document.getElementById('alertM');
-    alert.classList.remove('alertMessageNone');
-    alert.classList.add('alertMessage');
-    alert.classList.add('fadeInBottom');
-    await this.delay(1000);
-    alert.classList.remove('alertMessage');
-    alert.classList.remove('fadeInBottom');
-    alert.classList.add('fadeOut');
-    alert.classList.add('alertMessageNone');
-  }
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
 }

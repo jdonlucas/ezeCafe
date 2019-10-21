@@ -1,6 +1,8 @@
 <div class="breadcrumb">
     <li><a routerLink="/">Inicio</a></li>
-    <li><a routerLink="/superadmin/users">Administración de usuarios</a></li>
+    <li>
+        <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
+    </li>
 </div>
 <nav class="sidenav">
     <ul>
@@ -9,7 +11,7 @@
             <ul class="dropdown">
                 <li><button class="link" (click)="toggle('showListInsumo'); fetchInsumos()" >Lista de insumos</button></li>
                 <li><button class="link" (click)="toggle('showAddInsumo')">Agregar insumos</button></li>
-                <li><button class="link" (click)="toggle('showDeleteInsumo')">Eliminar insumo</button></li>
+                <li><button class="link" (click)="toggle('showDeleteInsumo'); fetchInsumos()">Eliminar insumo</button></li>
             </ul>
         </li>
         <li>
@@ -82,12 +84,28 @@
                     <div *ngIf="showDeleteInsumo">
                         <h2>Eliminar Insumos</h2>
                         <p>Sólo se pueden eliminar entradas recientes.</p>
+                        <table class="table" style="width:100%">
+                            <thead class="black white-text">
+                              <tr>
+                                <th></th>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Cantidad</th>
+                              </tr>
+                            </thead>
+                            <tr *ngFor="let product of insumosList | slice: -10;">
+                                <td align="center"><button class="link-dark" (click)="deleteInsumo(product.id)">Eliminar</button></td>
+                                <td align="center">{{ product.product }}</td>
+                                <td align="center">{{ product.description }}</td>
+                                <td align="center">{{ product.quantity }}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="alertM" class="alertMessageNone">
-        <p>Se agregó insumo al inventario.</p>
+<div id="alertM" class="alertMessage">
+        <p></p>
 </div>

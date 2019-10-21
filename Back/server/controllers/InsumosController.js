@@ -38,8 +38,7 @@ var InsumosController = {
     delete(req, res) {
         let insumosId = req.body.insumosId;
         Insumos.destroy({
-            where: { id: insumosId },
-            truncate: true
+            where: { id: insumosId }
         })
             .then(insumosDeleted => {
                 res.json({ insumos: insumosDeleted });
