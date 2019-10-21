@@ -4,7 +4,7 @@ const InsumosController = require('../server/controllers/InsumosController');
 
 router.post('/new', InsumosController.create);
 router.post('/update', InsumosController.update);
-router.post('/list', InsumosController.index);
+router.get('/list', InsumosController.index);
 router.post('/one', InsumosController.show);
 router.post('/delete', InsumosController.delete);
 

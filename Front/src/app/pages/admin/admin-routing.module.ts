@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
+  { path: 'inventario', loadChildren : './inventario/inventario.module#InventarioModule', canActivate: [UserGuard], data: { whichUser: 'Admin' }}
 ];
 
 @NgModule({

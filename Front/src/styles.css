@@ -81,6 +81,9 @@ nav li a:hover {
 .authButton button:disabled {
     background-color: var(--black-disabled-color);
 }
+.breadcrumb {
+    margin: 0;
+}
 .breadcrumb li {
     color: black;
     margin-left: 10px;
