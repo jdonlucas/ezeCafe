@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "resolve-install": "npx npm-force-resolutions && npm install"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/router": "~8.2.0",
     "@ngrx/store": "^8.2.0",
     "@ngrx/store-devtools": "^8.2.0",
+    "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
     "mdbootstrap": "^4.8.8",
     "ng4-loading-spinner": "^1.2.3",
@@ -49,5 +51,8 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
+  },
+  "resolutions": {
+    "https-proxy-agent": "^3.0.0"
   }
 }

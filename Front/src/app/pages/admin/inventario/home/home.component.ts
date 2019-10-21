@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StockService } from 'src/app/services/stock.service'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+declare var $: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,6 +26,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    $(document).ready(() => {
+      
+    })
     this.showHome = true;
     this.createInsumo = new FormGroup ({
       product: new FormControl('', [
