@@ -5,6 +5,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { AuthService } from 'src/app/services/auth.service';
 
+import { DatePipe } from '@angular/common';
+
 declare var $: any;
 
 @Component({
@@ -14,6 +16,7 @@ declare var $: any;
 })
 export class HomeComponent implements OnInit {
 
+  public today: any;
   public userData: any;
   public createInsumo: FormGroup;
   public insumosList: any;
@@ -26,12 +29,14 @@ export class HomeComponent implements OnInit {
   public showDeleteInsumo: boolean;
 
   constructor(
+    private datePipe: DatePipe,
     private _stockService: StockService,
     private _store: Store<AppState>,
     private _authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.today = this.datePipe.transform(new Date(),'yyyy-MM-dd');
     this._store.select('auth').subscribe(auth => {
       let authData = auth.authData ? auth.authData : {};
       this.userData = authData.user ? authData.user : {};
@@ -101,6 +106,11 @@ export class HomeComponent implements OnInit {
       console.log(showDiv);
       this.showListInsumo = true;
     }
+  }
+
+  compareDates(date) {
+    date = this.datePipe.transform(date, 'yyyy-MM-dd');
+    return date == this.today;
   }
 
 }

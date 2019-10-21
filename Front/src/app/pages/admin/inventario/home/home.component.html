@@ -94,10 +94,10 @@
                               </tr>
                             </thead>
                             <tr *ngFor="let product of insumosList | slice: -10;">
-                                <td align="center"><button class="link-dark" (click)="deleteInsumo(product.id)">Eliminar</button></td>
-                                <td align="center">{{ product.product }}</td>
-                                <td align="center">{{ product.description }}</td>
-                                <td align="center">{{ product.quantity }}</td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center"><button class="link-dark" (click)="deleteInsumo(product.id)">Eliminar</button></td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.product }}</td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.description }}</td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.quantity }}</td>
                             </tr>
                         </table>
                     </div>
