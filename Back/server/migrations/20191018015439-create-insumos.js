@@ -11,7 +11,13 @@ module.exports = {
       product: {
         type: Sequelize.STRING
       },
+      brand: {
+        type: Sequelize.STRING
+      },
       description: {
+        type: Sequelize.STRING
+      },
+      grammageLiters: {
         type: Sequelize.STRING
       },
       quantity: {

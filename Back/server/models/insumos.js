@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     product: DataTypes.STRING,
+    brand: DataTypes.STRING,
     description: DataTypes.STRING,
+    grammageLiters: DataTypes.STRING,
     quantity: DataTypes.INTEGER
   }, {});
   Insumos.associate = function(models) {
