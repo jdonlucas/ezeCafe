@@ -27,7 +27,7 @@ var StockController = {
 
     update(req, res) {
         let stockData = req.body.stockData;
-        let query = { returning: true, where: { id: req.params.id } };
+        let query = { where: { id: req.body.params.id } };
         Consumibles.update(stockData, query)
           .then(stockUpdated => {
             res.json({ newStock: stockUpdated });

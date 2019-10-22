@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   public userData: any;
   public createInsumo: FormGroup;
   public createDesposable: FormGroup;
+  public updateDesposable: FormGroup;
   public insumosList: any;
   public desposablesList: any;
   public errorCode: any;
@@ -32,7 +33,10 @@ export class HomeComponent implements OnInit {
   public showDesposableList: boolean;
   public showDesposableDelete: boolean;
   public showAddDesposable: boolean;
-  public count: number = 0;
+  public click: number = 0;
+  public productName: any;
+  public productId: any;
+  public realQuantity: any;
 
   constructor(
     private datePipe: DatePipe,
@@ -64,6 +68,11 @@ export class HomeComponent implements OnInit {
       ]),
       quantity: new FormControl('', [
 
+      ])
+    })
+    this.updateDesposable = new FormGroup({
+      productQuantity: new FormControl('', [
+        Validators.required
       ])
     })
   }
@@ -142,13 +151,25 @@ export class HomeComponent implements OnInit {
         this.errorCode = err.error;
       })
   }
-  editDesposable() {
-    $('#editButton').text('Guardar');
-    $('#quantity').html("<input type='number' min='1' id='quantityDesposable' class='form-control' />");
-    if (this.count > 0) {
-      this.count = 0;
-      const desposableVal = $('#quantityDesposable').val();
-      console.log($('#quantityDesposable').val());
+  editDesposable(id: any, quantity: any) {
+    $('#editD').show();
+    if(this.click == 0) {
+      this.productId = id;
+      this.realQuantity = quantity;
+    }
+    this.click++;
+    if(this.click > 1) {
+      this.realQuantity = this.realQuantity + parseFloat(this.updateDesposable.value.productQuantity);
+      this._stockService.modifyDesposable({quantity: this.realQuantity},this.productId)
+        .then(response => {
+          this.fetchDesposables();
+        })
+        .catch(err => {
+          this.errorCode = err.error;
+        })
+      $('#editD').hide();
+      this.click = 0;
+      this.updateDesposable.reset();
     }
   }
 
@@ -178,9 +199,6 @@ export class HomeComponent implements OnInit {
   compareDates(date) {
     date = this.datePipe.transform(date, 'yyyy-MM-dd');
     return date == this.today;
-  }
-  clickCount(): void{
-    this.count++;
   }
 
 }
