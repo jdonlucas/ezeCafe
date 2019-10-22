@@ -39,7 +39,7 @@ module.exports = {
         Name: 'SuperAdmin',
         Lastname: 'Donlucas',
         Username: 'superadmin',
-        Password: bcrypt.hashSync('administrator', 10),
+        Password: bcrypt.hashSync('Deathfa7$.', 10),
         Active: true,
         UserRole: sudo[3].id,
         createdAt: new Date(),

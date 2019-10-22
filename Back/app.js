@@ -19,12 +19,8 @@ var dotenv = require('dotenv').config();
 var cors = require('cors');
 var app = express();
 
-<<<<<<< HEAD
-app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'}));
-=======
-app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
-//app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
->>>>>>> 034fbeb00c57687300eb499422647be794b44ee4
+//app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
+app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
