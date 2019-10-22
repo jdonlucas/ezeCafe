@@ -9,14 +9,22 @@ var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
-var users  = require('./routes/users');
+var usersRouter  = require('./routes/users');
+var stockRouter = require('./routes/stock');
+var insumosRouter = require('./routes/insumos');
+var menuRouter = require('./routes/menu');
 var baseUrl = "/api";
 var dotenv = require('dotenv').config();
 
 var cors = require('cors');
 var app = express();
 
+<<<<<<< HEAD
 app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'}));
+=======
+app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
+//app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
+>>>>>>> 034fbeb00c57687300eb499422647be794b44ee4
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
@@ -40,7 +48,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use(`${baseUrl}/auth`, authRouter);
-app.use(`${baseUrl}/users`, users);
+app.use(`${baseUrl}/users`, usersRouter);
+app.use(`${baseUrl}/stock`, stockRouter);
+app.use(`${baseUrl}/insumos`, insumosRouter);
+app.use(`${baseUrl}/menu`, menuRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

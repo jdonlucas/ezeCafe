@@ -1,0 +1,10 @@
+.container {
+    width: 70%;
+}
+.welcome h2{
+    margin: 20px;
+    margin-bottom: 30px;
+}
+.welcome p {
+    margin: 20px;
+}

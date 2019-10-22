@@ -1,0 +1,166 @@
+<div class="breadcrumb">
+    <li><a routerLink="/">Inicio</a></li>
+    <li>
+        <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
+    </li>
+</div>
+<nav class="sidenav">
+    <ul>
+        <li>
+            Insumos
+            <ul class="dropdown">
+                <li><button class="link" (click)="toggle('showListInsumo'); fetchInsumos()" >Lista de insumos</button></li>
+                <li><button class="link" (click)="toggle('showAddInsumo')">Agregar insumos</button></li>
+                <li><button class="link" (click)="toggle('showDeleteInsumo'); fetchInsumos()">Eliminar insumo</button></li>
+            </ul>
+        </li>
+        <li>
+            Desechables
+            <ul class="dropdown">
+                    <li><button class="link" (click)="toggle('showDesposableList'); fetchDesposables();">Lista de desechables</button></li>
+                    <li><button class="link" (click)="toggle('showAddDesposable')">Agregar desechables</button></li>
+                    <li><button class="link" (click)="toggle('showDesposableDelete'); fetchDesposables();">Eliminar desechables</button></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div class="mainPanel">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="card my-auto">
+                <div class="card-body">
+                    <div *ngIf="showHome" id="home">
+                        <h2>Inventario Eze Café</h2>
+                        <p>Este es el inventario de Eze Café, a un costado tienes las opciones
+                            disponibles para consultar, agregar o eliminar elementos del 
+                            inventario.
+                        </p>
+                        <p>Cualquier duda sobre esta plataforma, contactar con el administrador.</p>
+                    </div>
+                    <div *ngIf="showAddInsumo" id="addInsumo">
+                        <h2>Alta de insumos</h2>
+                        <div class="col-md-10">
+                            <form [formGroup]="createInsumo">
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="product" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': createInsumo.get('product').touched && createInsumo.get('product').invalid }"
+                                        formControlName="product" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="description" class="form-control" placeholder="Descripción" [ngClass]="{ 'is-invalid': createInsumo.get('description').touched && createInsumo.get('description').invalid }"
+                                        formControlName="description" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="number" min="1" id="quantity" class="form-control" placeholder="Cantidad" [ngClass]="{ 'is-invalid': createInsumo.get('quantity').touched && createInsumo.get('quantity').invalid }"
+                                        formControlName="quantity" />
+                                    </div>
+                                </div>
+                                <div class="authButton">
+                                    <button type="submit" [disabled]="!createInsumo.valid" (click)="addInsumo()">Añadir</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div> 
+                    <div *ngIf="showListInsumo" >
+                        <table class="table" style="width:100%">
+                            <thead class="black white-text">
+                              <tr>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Cantidad</th>
+                              </tr>
+                            </thead>
+                            <tr *ngFor="let product of insumosList | slice: -10;">
+                              <td align="center">{{ product.product }}</td>
+                              <td align="center">{{ product.description }}</td>
+                              <td align="center">{{ product.quantity }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="showDeleteInsumo">
+                        <h2>Eliminar Insumos</h2>
+                        <p>Sólo se pueden eliminar entradas recientes.</p>
+                        <table class="table" style="width:100%">
+                            <thead class="black white-text">
+                              <tr>
+                                <th></th>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Cantidad</th>
+                              </tr>
+                            </thead>
+                            <tr *ngFor="let product of insumosList | slice: -10;">
+                                <td *ngIf="compareDates(product.createdAt)" align="center"><button class="link-dark" (click)="deleteInsumo(product.id)">Eliminar</button></td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.product }}</td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.description }}</td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.quantity }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="showDesposableList">
+                        <table class="table" style="width:100%">
+                            <thead class="black white-text">
+                              <tr>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Cantidad</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tr *ngFor="let product of desposablesList | slice: -10;">
+                              <td align="center">{{ product.product }}</td>
+                              <td align="center" id="quantity">{{ product.quantity }}</td>
+                              <td align="center"><button id="editButton" class="link-dark" (click)="editDesposable(product.id); clickCount()">Editar</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="showAddDesposable">
+                        <h2>Alta de stock</h2>
+                        <div class="col-md-10">
+                            <form [formGroup]="createDesposable">
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="product" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': createDesposable.get('product').touched && createDesposable.get('product').invalid }"
+                                        formControlName="product" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="number" min="1" id="quantity" class="form-control" placeholder="Cantidad" [ngClass]="{ 'is-invalid': createDesposable.get('quantity').touched && createDesposable.get('quantity').invalid }"
+                                        formControlName="quantity" />
+                                    </div>
+                                </div>
+                                <div class="authButton">
+                                    <button type="submit" [disabled]="!createDesposable.valid" (click)="addDesposable()">Añadir</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div *ngIf="showDesposableDelete">
+                        <h2>Eliminar Stock</h2>
+                        <table class="table" style="width:100%">
+                            <thead class="black white-text">
+                              <tr>
+                                <th></th>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Cantidad</th>
+                              </tr>
+                            </thead>
+                            <tr *ngFor="let product of desposablesList | slice: -10;">
+                                <td align="center"><button class="link-dark" (click)="deleteDesposable(product.id)">Eliminar</button></td>
+                                <td align="center">{{ product.product }}</td>
+                                <td align="center">{{ product.quantity }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="alertM" class="alertMessage">
+        <p></p>
+</div>
