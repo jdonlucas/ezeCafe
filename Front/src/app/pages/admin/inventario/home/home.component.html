@@ -102,6 +102,20 @@
                         </table>
                     </div>
                     <div *ngIf="showDesposableList">
+                        <div id="editD">
+                            <h2>Agregar a {{ productName }}</h2>
+                            <form [formGroup]="updateDesposable">
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="productQuantity" class="form-control" placeholder="Cantidad a añadir" [ngClass]="{ 'is-invalid': updateDesposable.get('productQuantity').touched && updateDesposable.get('productQuantity').invalid }"
+                                        formControlName="productQuantity"/>
+                                    </div>
+                                    <div class="authButton">
+                                        <button type="submit" [disabled]="!updateDesposable.valid" (click)="editDesposable('id','quantity')">Añadir</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <table class="table" style="width:100%">
                             <thead class="black white-text">
                               <tr>
@@ -113,7 +127,7 @@
                             <tr *ngFor="let product of desposablesList | slice: -10;">
                               <td align="center">{{ product.product }}</td>
                               <td align="center" id="quantity">{{ product.quantity }}</td>
-                              <td align="center"><button id="editButton" class="link-dark" (click)="editDesposable(product.id); clickCount()">Editar</button></td>
+                              <td align="center"><button id="editButton" class="link-dark" (click)="editDesposable(product.id,product.quantity); productName = product.product">Editar</button></td>
                             </tr>
                         </table>
                     </div>

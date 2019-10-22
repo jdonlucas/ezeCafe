@@ -28,6 +28,7 @@ export class BajaComponent implements OnInit {
       this.fetchUsers();
     });
   }
+
   fetchUsers() {
     this._authService.getUsers().then(response => {
       this.users = response["usersList"];
