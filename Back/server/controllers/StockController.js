@@ -38,8 +38,7 @@ var StockController = {
     delete(req, res) {
         let stockId = req.body.stockId;
         Consumibles.destroy({
-            where: { id: stockId },
-            truncate: true
+            where: { id: stockId }
         })
             .then(stockDeleted => {
                 res.json({ stock: stockDeleted });

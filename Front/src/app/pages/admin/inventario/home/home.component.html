@@ -17,9 +17,9 @@
         <li>
             Desechables
             <ul class="dropdown">
-                    <li>Lista de desechables</li>
-                    <li>Agregar desechables</li>
-                    <li>Eliminar desechables</li>
+                    <li><button class="link" (click)="toggle('showDesposableList'); fetchDesposables();">Lista de desechables</button></li>
+                    <li><button class="link" (click)="toggle('showAddDesposable')">Agregar desechables</button></li>
+                    <li><button class="link" (click)="toggle('showDesposableDelete'); fetchDesposables();">Eliminar desechables</button></li>
             </ul>
         </li>
     </ul>
@@ -98,6 +98,61 @@
                                 <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.product }}</td>
                                 <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.description }}</td>
                                 <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.quantity }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="showDesposableList">
+                        <table class="table" style="width:100%">
+                            <thead class="black white-text">
+                              <tr>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Cantidad</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tr *ngFor="let product of desposablesList | slice: -10;">
+                              <td align="center">{{ product.product }}</td>
+                              <td align="center" id="quantity">{{ product.quantity }}</td>
+                              <td align="center"><button id="editButton" class="link-dark" (click)="editDesposable(product.id); clickCount()">Editar</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="showAddDesposable">
+                        <h2>Alta de stock</h2>
+                        <div class="col-md-10">
+                            <form [formGroup]="createDesposable">
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="product" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': createDesposable.get('product').touched && createDesposable.get('product').invalid }"
+                                        formControlName="product" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="number" min="1" id="quantity" class="form-control" placeholder="Cantidad" [ngClass]="{ 'is-invalid': createDesposable.get('quantity').touched && createDesposable.get('quantity').invalid }"
+                                        formControlName="quantity" />
+                                    </div>
+                                </div>
+                                <div class="authButton">
+                                    <button type="submit" [disabled]="!createDesposable.valid" (click)="addDesposable()">Añadir</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div *ngIf="showDesposableDelete">
+                        <h2>Eliminar Stock</h2>
+                        <table class="table" style="width:100%">
+                            <thead class="black white-text">
+                              <tr>
+                                <th></th>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Cantidad</th>
+                              </tr>
+                            </thead>
+                            <tr *ngFor="let product of desposablesList | slice: -10;">
+                                <td align="center"><button class="link-dark" (click)="deleteDesposable(product.id)">Eliminar</button></td>
+                                <td align="center">{{ product.product }}</td>
+                                <td align="center">{{ product.quantity }}</td>
                             </tr>
                         </table>
                     </div>

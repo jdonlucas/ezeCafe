@@ -19,14 +19,20 @@ export class HomeComponent implements OnInit {
   public today: any;
   public userData: any;
   public createInsumo: FormGroup;
+  public createDesposable: FormGroup;
   public insumosList: any;
   public desposablesList: any;
   public errorCode: any;
   public newInsumo: any;
+  public newDesposable: any;
   public showAddInsumo: boolean;
   public showHome: boolean;
   public showListInsumo: boolean;
   public showDeleteInsumo: boolean;
+  public showDesposableList: boolean;
+  public showDesposableDelete: boolean;
+  public showAddDesposable: boolean;
+  public count: number = 0;
 
   constructor(
     private datePipe: DatePipe,
@@ -50,6 +56,14 @@ export class HomeComponent implements OnInit {
       ]),
       quantity: new FormControl('', [
         Validators.required
+      ])
+    });
+    this.createDesposable = new FormGroup ({
+      product: new FormControl('', [
+        Validators.required
+      ]),
+      quantity: new FormControl('', [
+
       ])
     })
   }
@@ -82,7 +96,6 @@ export class HomeComponent implements OnInit {
   deleteInsumo(id: any) {
     this._stockService.deleteIsumo(id)
       .then(response => {
-        console.log(response);
         $('#alertM p').html('Se eliminó el insumo del inventario.');
         this.fetchInsumos();
         $('#alertM').show();
@@ -93,9 +106,57 @@ export class HomeComponent implements OnInit {
       })
   }
 
+  fetchDesposables() {
+    this._stockService.showDesposable().then(response => {
+      this.desposablesList = response["stockList"];
+    }).catch(err => {
+      this.errorCode = err.error;
+    })
+  }
+  addDesposable() {
+    const newDesposableData: any = {
+      product: this.createDesposable.value.product,
+      quantity: this.createDesposable.value.quantity
+    }
+    this._stockService.addDesposable(newDesposableData)
+      .then(response => {
+        this.newDesposable = response;
+        this.createDesposable.reset();
+        $('#alertM p').html('Se agregó el elemento al inventario.');
+        $('#alertM').show();
+        $('#alertM').fadeOut(4000);
+      })
+      .catch(err => {
+        this.errorCode = err.error;
+      })
+  }
+  deleteDesposable(id: any) {
+    this._stockService.deleteDesposable(id)
+      .then(response => {
+        $('#alertM p').html('Se eliminó el elemento del inventario.');
+        this.fetchDesposables();
+        $('#alertM').show();
+        $('#alertM').fadeOut(4000);
+      })
+      .catch(err => {
+        this.errorCode = err.error;
+      })
+  }
+  editDesposable() {
+    $('#editButton').text('Guardar');
+    $('#quantity').html("<input type='number' min='1' id='quantityDesposable' class='form-control' />");
+    if (this.count > 0) {
+      this.count = 0;
+      const desposableVal = $('#quantityDesposable').val();
+      console.log($('#quantityDesposable').val());
+    }
+  }
+
   toggle(showDiv) {
     this.showAddInsumo = this.showDeleteInsumo = 
-    this.showHome = this.showListInsumo = false;
+    this.showDesposableList = this.showAddDesposable
+    = this.showDesposableDelete = this.showHome = 
+    this.showListInsumo = false;
     if (showDiv == 'showAddInsumo') {
       this.showAddInsumo = true;
     } else if (showDiv == 'showDeleteInsumo') {
@@ -105,12 +166,21 @@ export class HomeComponent implements OnInit {
     } else if (showDiv == 'showListInsumo') {
       console.log(showDiv);
       this.showListInsumo = true;
+    } else if (showDiv == 'showDesposableList') {
+      this.showDesposableList = true;
+    } else if (showDiv == 'showDesposableDelete') {
+      this.showDesposableDelete = true;
+    } else if (showDiv == 'showAddDesposable') {
+      this.showAddDesposable = true;
     }
   }
 
   compareDates(date) {
     date = this.datePipe.transform(date, 'yyyy-MM-dd');
     return date == this.today;
+  }
+  clickCount(): void{
+    this.count++;
   }
 
 }
