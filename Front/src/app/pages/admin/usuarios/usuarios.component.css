@@ -22,3 +22,6 @@
 .created {
     margin-bottom: 15px;
 }
+.alert-message {
+    margin-top: 3px!important;
+}

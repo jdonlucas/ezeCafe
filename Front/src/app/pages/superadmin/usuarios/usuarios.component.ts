@@ -51,6 +51,9 @@ export class UsuariosComponent implements OnInit {
       password: new FormControl('', [
         Validators.required
       ]),
+      password2: new FormControl('', [
+        Validators.required
+      ]),
       role: new FormControl('', [
         Validators.required
       ])
@@ -69,11 +72,14 @@ export class UsuariosComponent implements OnInit {
     }
   }
   async signup() {
+    this.signupError.code = '';
     let { name, lastname, username, password, role } = this.signupForm.value;
     if (role == 4) {
       this.signupError.code = 777;
     } else if ((this.userData.Role.id < 4) && (role == 3)){
       this.signupError.code = 777;
+    } else if (this.signupForm.value.password != this.signupForm.value.password2) {
+      this.signupError.code = 666;
     } else {
       this._spinnerService.show();
       await this._authService.signup(name, lastname, username, password, role).then(response => {
