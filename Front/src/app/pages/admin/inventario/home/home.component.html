@@ -49,8 +49,20 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="md-form">
+                                        <input type="text" id="brand" class="form-control" placeholder="Marca" [ngClass]="{ 'is-invalid': createInsumo.get('brand').touched && createInsumo.get('brand').invalid }"
+                                        formControlName="brand" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
                                         <input type="text" id="description" class="form-control" placeholder="Descripción" [ngClass]="{ 'is-invalid': createInsumo.get('description').touched && createInsumo.get('description').invalid }"
                                         formControlName="description" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="grammageLiters" class="form-control" placeholder="Gramage/Litros" [ngClass]="{ 'is-invalid': createInsumo.get('grammageLiters').touched && createInsumo.get('grammageLiters').invalid }"
+                                        formControlName="grammageLiters" />
                                     </div>
                                 </div>
                                 <div class="form-group">
