@@ -19,11 +19,24 @@ var UserController = {
     },
 
     update(req, res) {
-
+        let userData = req.body.userData;
+        let query = { returning: true, where: { id: req.params.id } };
+        User.update(userData, query)
+          .then(userUpdated => {
+            res.json({ newUserInfo: userUpdated });
+          })
+          .catch(err => res.status(500).send(err));
     },
     
     delete(req, res) {
-
+        let userId = req.body.userId;
+        User.destroy({
+            where: { id: userId }
+        })
+            .then(userDeleted => {
+                res.json({ userStatus: userDeleted });
+            })
+            .catch(err => res.status(500).send(err));
     },
 
     async localCreate(userData) {
