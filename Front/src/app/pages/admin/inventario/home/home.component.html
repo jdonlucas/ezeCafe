@@ -2,6 +2,7 @@
     <li><a routerLink="/">Inicio</a></li>
     <li>
         <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
+        <a *ngIf="userData.Role.name == 'Admin'" routerLink="/admin/users">Administración de usuarios</a>
     </li>
 </div>
 <nav class="sidenav">
