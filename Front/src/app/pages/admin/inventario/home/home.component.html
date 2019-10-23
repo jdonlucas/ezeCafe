@@ -2,6 +2,7 @@
     <li><a routerLink="/">Inicio</a></li>
     <li>
         <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
+        <a *ngIf="userData.Role.name == 'Admin'" routerLink="/admin/users">Administración de usuarios</a>
     </li>
 </div>
 <nav class="sidenav">
@@ -49,8 +50,20 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="md-form">
+                                        <input type="text" id="brand" class="form-control" placeholder="Marca" [ngClass]="{ 'is-invalid': createInsumo.get('brand').touched && createInsumo.get('brand').invalid }"
+                                        formControlName="brand" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
                                         <input type="text" id="description" class="form-control" placeholder="Descripción" [ngClass]="{ 'is-invalid': createInsumo.get('description').touched && createInsumo.get('description').invalid }"
                                         formControlName="description" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="grammageLiters" class="form-control" placeholder="Gramaje/Litros" [ngClass]="{ 'is-invalid': createInsumo.get('grammageLiters').touched && createInsumo.get('grammageLiters').invalid }"
+                                        formControlName="grammageLiters" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -70,13 +83,17 @@
                             <thead class="black white-text">
                               <tr>
                                 <th class="text-center">Producto</th>
+                                <th class="text-center">Marca</th>
                                 <th class="text-center">Descripción</th>
+                                <th class="text-center">Gramaje/Litros</th>
                                 <th class="text-center">Cantidad</th>
                               </tr>
                             </thead>
                             <tr *ngFor="let product of insumosList | slice: -10;">
                               <td align="center">{{ product.product }}</td>
+                              <td align="center">{{ product.brand }}</td>
                               <td align="center">{{ product.description }}</td>
+                              <td align="center">{{ product.grammageLiters }}</td>
                               <td align="center">{{ product.quantity }}</td>
                             </tr>
                         </table>
@@ -89,14 +106,18 @@
                               <tr>
                                 <th></th>
                                 <th class="text-center">Producto</th>
+                                <th class="text-center">Marca</th>
                                 <th class="text-center">Descripción</th>
+                                <th class="text-center">Gramaje/Litros</th>
                                 <th class="text-center">Cantidad</th>
                               </tr>
                             </thead>
                             <tr *ngFor="let product of insumosList | slice: -10;">
                                 <td *ngIf="compareDates(product.createdAt)" align="center"><button class="link-dark" (click)="deleteInsumo(product.id)">Eliminar</button></td>
                                 <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.product }}</td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.brand }}</td>
                                 <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.description }}</td>
+                                <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.grammageLiters }}</td>
                                 <td *ngIf="compareDates(product.createdAt)" align="center">{{ product.quantity }}</td>
                             </tr>
                         </table>
