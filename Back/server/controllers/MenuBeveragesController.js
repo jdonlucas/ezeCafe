@@ -11,7 +11,7 @@ var MenuBeveragesController = {
         const beverageSpecific = req.body.beverageSpecificId;
         return MenuBeveragesSpecific.findAll({
             where: {
-                specific: beverageSpecific
+                beverageId: beverageSpecific
             }
         })
             .then(menuBeveragesSpecific => res.status(200).json({ menuBeveragesSpecific }))

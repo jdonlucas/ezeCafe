@@ -21,6 +21,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      beverageId: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: 'MenuBeverages',
+          key: 'id'
+        }
+      },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE

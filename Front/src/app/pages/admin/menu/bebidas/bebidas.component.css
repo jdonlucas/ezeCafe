@@ -35,7 +35,7 @@
     text-decoration: underline;
     cursor: pointer;
 }
-#eliminar, #add {
+#eliminar, #add, #addPrices {
     display: none;
 }
 #add h2 {
@@ -43,4 +43,7 @@
 }
 .authButton button {
     width: auto;
+}
+#addPrices h2 {
+    margin-bottom: 30px;
 }
