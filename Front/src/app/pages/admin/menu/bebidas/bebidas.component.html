@@ -21,24 +21,46 @@
                         <td><button>Actualizar bebida</button></td>
                     </tr>
                     <tr>
-                        <td><button (click)="showBeverages()">Mostrar bebidas</button></td>
-                        <td><button>Eliminar bebida</button></td>
+                        <td><button (click)="showBeverages(1)">Mostrar bebidas</button></td>
+                        <td><button (click)="showBeverages(2)">Eliminar bebida</button></td>
                     </tr>
                 </table>
             </div>
-            <div id="eliminar">
-                <table class="table" style="width:100%">
-                    <thead class="black white-text">
-                      <tr>
-                        <th class="text-center">Producto</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tr *ngFor="let beverage of beveragesList">
-                      <td align="center">{{ beverage.product }}</td>
-                      <td align="center"><button class="link-dark">Mostrar más</button></td>
-                    </tr>
-                </table>
+            <div id="mostrar">
+                <div id="showGeneralBeverages">
+                    <table class="table" style="width:100%">
+                        <thead class="black white-text">
+                          <tr>
+                            <th class="text-center">Producto</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tr *ngFor="let beverage of beveragesList">
+                          <td align="center">{{ beverage.product }}</td>
+                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id,1); pushTitle(beverage.product)">Mostrar más</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="showSpecificBeveragesList">
+                    <h2>{{ productTitle }}</h2>
+                    <table class="table" style="width:100%">
+                        <thead class="black white-text">
+                          <tr>
+                            <th class="text-center">Tamaño</th>
+                            <th class="text-center">Leche</th>
+                            <th class="text-center">Precio</th>
+                          </tr>
+                        </thead>
+                        <tr *ngFor="let beverage of beveragesSpecificList">
+                          <td align="center">{{ beverage.size }}</td>
+                          <td align="center">{{ beverage.milk }}</td>
+                          <td align="center">{{ beverage.price }}</td>
+                        </tr>
+                    </table>
+                    <div class="authButton">
+                        <button type="submit" (click)="show(3)">Regresar</button>
+                    </div>
+                </div>
             </div>
             <div id="add">
                 <div id="addPrices">
@@ -103,6 +125,125 @@
                     </div>
                 </div>
             </div>
+            <div id="delete">
+                <div id="deleteGeneralbeverages">
+                    <table class="table" style="width:100%">
+                        <thead class="black white-text">
+                          <tr>
+                            <th class="text-center">Producto</th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tr *ngFor="let beverage of beveragesList">
+                          <td align="center">{{ beverage.product }}</td>
+                          <td align="center"><button class="link-dark" (click)="deleteBeverage(product.id)">Eliminar</button></td>
+                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id,2); pushTitle(beverage.product)">Mostrar más</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="deleteSpecificBeverages">
+                    <h2>{{ productTitle }}</h2>
+                    <table class="table" style="width:100%">
+                        <thead class="black white-text">
+                          <tr>
+                            <th class="text-center">Tamaño</th>
+                            <th class="text-center">Leche</th>
+                            <th class="text-center">Precio</th>
+                          </tr>
+                        </thead>
+                        <tr *ngFor="let beverage of beveragesSpecificList">
+                          <td align="center">{{ beverage.size }}</td>
+                          <td align="center">{{ beverage.milk }}</td>
+                          <td align="center">{{ beverage.price }}</td>
+                        </tr>
+                    </table>
+                    <div class="authButton">
+                        <button type="submit" (click)="show(4)">Regresar</button>
+                    </div>
+                </div>
+            </div>
+            <div id="update">
+                <div id="updateGeneralbeverages">
+                    <table class="table" style="width:100%">
+                        <thead class="black white-text">
+                          <tr>
+                            <th class="text-center">Producto</th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tr *ngFor="let beverage of beveragesList">
+                          <td align="center">{{ beverage.product }}</td>
+                          <td align="center"><button class="link-dark" (click)="editThisField(beverage.id)">Editar</button></td>
+                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id,2); pushTitle(beverage.product)">Mostrar más</button></td>
+                        </tr>
+                    </table>
+                    <div id="uGeneral">
+                        <form [formGroup]="updateGeneral">
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="productName" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': updateGeneral.get('productName').touched && updateGeneral.get('productName').invalid }"
+                                    formControlName="productName" />
+                                </div>
+                            </div>
+                            <div class="authButton">
+                                <button type="submit" [disabled]="!updateGeneral.valid" (click)="updateBeverageGeneral()">Actualizar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="updateSpecificBeverages">
+                    <h2>{{ productTitle }}</h2>
+                    <table class="table" style="width:100%">
+                        <thead class="black white-text">
+                          <tr>
+                            <th class="text-center">Tamaño</th>
+                            <th class="text-center">Leche</th>
+                            <th class="text-center">Precio</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tr *ngFor="let beverage of beveragesSpecificList">
+                          <td align="center">{{ beverage.size }}</td>
+                          <td align="center">{{ beverage.milk }}</td>
+                          <td align="center">{{ beverage.price }}</td>
+                          <td align="center"><button class="link-dark" (click)="editThisSpecific(beverage.id)">Editar</button></td>
+                        </tr>
+                    </table>
+                    <div id="uSpecific"> 
+                        <form [formGroup]="updateSpecific">
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="sizeUpdate" class="form-control" placeholder="Tamaño" [ngClass]="{ 'is-invalid': updateSpecific.get('sizeUpdate').touched && updateSpecific.get('sizeUpdate').invalid }"
+                                    formControlName="sizeUpdate" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="milkUpdate" class="form-control" placeholder="Leche" [ngClass]="{ 'is-invalid': updateSpecific.get('milkUpdate').touched && updateSpecific.get('milkUpdate').invalid }"
+                                    formControlName="milkUpdate" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="priceUpdate" class="form-control" placeholder="Tamaño" [ngClass]="{ 'is-invalid': updateSpecific.get('priceUpdate').touched && updateSpecific.get('priceUpdate').invalid }"
+                                    formControlName="priceUpdate" />
+                                </div>
+                            </div>
+                            <div class="authButton">
+                                <button type="submit" [disabled]="!updateSpecific.valid" (click)="updateBeverageGeneral()">Actualizar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="authButton">
+                        <button type="submit" (click)="show(4)">Regresar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+<div id="alertM" class="alertMessage">
+        <p></p>
 </div>

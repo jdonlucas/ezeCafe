@@ -35,7 +35,8 @@
     text-decoration: underline;
     cursor: pointer;
 }
-#eliminar, #add, #addPrices {
+#eliminar, #add, #addPrices, #showSpecificBeveragesList, #deleteSpecificBeverages, 
+#updateSpecificBeverages, #uGeneral {
     display: none;
 }
 #add h2 {

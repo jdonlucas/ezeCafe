@@ -19,7 +19,10 @@ export class BebidasComponent implements OnInit {
   public errors: any;
   public addBeverage: FormGroup;
   public addBeverageSpecific: FormGroup;
+  public updateGeneral: FormGroup;
+  public updateSpecific: FormGroup;
   public beverageId: any;
+  public title: string;
 
   constructor(
     private _store: Store<AppState>,
@@ -47,12 +50,33 @@ export class BebidasComponent implements OnInit {
       ]),
       beverageId: new FormControl('',[
       ])
+    });
+    this.updateGeneral = new FormGroup({
+      productName: new FormControl('',[
+        Validators.required
+      ])
+    });
+    this.updateSpecific = new FormGroup({
+      sizeUpdate: new FormControl('',[
+      ]),
+      milkUpdate: new FormControl('',[
+      ]),
+      priceUpdate: new FormControl('',[
+      ])
     })
   }
 
-  showBeverages () {
-    $('#options').hide();
-    $('#eliminar').show();
+  showBeverages (option: any) {
+    if (option == 1){
+      $('#options').hide();
+      $('#mostrar').show();
+    } else if (option == 2) {
+      $('#options').hide();
+      $('#delete').show();
+    } else if (option == 3) {
+      $('#options').hide();
+      $('#update').show();
+    }
     this._menuService.showBeverages()
       .then(response => {
         this.beveragesList = response['menuBeverages'];
@@ -78,6 +102,12 @@ export class BebidasComponent implements OnInit {
       $('#addPrices').hide();
       $('#addBeverage').show();
       this.addBeverage.reset();
+    } else if (num == 3) {
+      $('#showSpecificBeverageList').hide();
+      $('#showGeneralList').show();
+    } else if (num == 4) {
+      $('#deleteGeneralbeverages').hide();
+      $('#deleteSpecificBeverages').show();
     }
   }
 
@@ -106,6 +136,25 @@ export class BebidasComponent implements OnInit {
       })
       .catch(err => {
         this.errors = err;
+      })
+  }
+  pushTitle(titleProduct: any, num: any){
+    this.title = titleProduct;
+    if (num == 1) {
+      $('#showGeneralList').hide();
+      $('#showSpecificGeneralList').show();
+    } else if (num == 2) {
+      $('#deleteGeneralBeverages').hide();
+      $('#deleteSpecificGenerals').show();
+    }
+  }
+  deleteBeverage(beverageId: any) {
+    this._menuService.deleteBeverage(beverageId)
+      .then(response => {
+        this.showBeverages(4);
+        $('#alertM p').html('Se eliminó la bebida.');
+        $('#alertM').show();
+        $('#alertM').fadeOut(4000);
       })
   }
 
