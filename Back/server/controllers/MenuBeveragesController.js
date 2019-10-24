@@ -70,8 +70,7 @@ var MenuBeveragesController = {
     delete(req, res) {
         let beverageId = req.body.beverageId;
         MenuBeverages.destroy({
-            where: { id: beverageId },
-            truncate: true
+            where: { id: beverageId }
         })
             .then(beverageDeleted => {
                 res.json({ beverageStatus: beverageDeleted });

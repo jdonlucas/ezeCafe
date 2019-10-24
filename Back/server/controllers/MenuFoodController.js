@@ -38,8 +38,7 @@ var MenuFoodController = {
     delete(req, res) {
         let foodId = req.body.foodId;
         MenuFood.destroy({
-            where: { id: foodId },
-            truncate: true
+            where: { id: foodId }
         })
             .then(foodDeleted => {
                 res.json({ foodStatus: foodDeleted });
