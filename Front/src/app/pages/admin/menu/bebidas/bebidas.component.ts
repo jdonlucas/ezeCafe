@@ -23,6 +23,7 @@ export class BebidasComponent implements OnInit {
   public updateSpecific: FormGroup;
   public beverageId: any;
   public title: string;
+  public updateVarGeneral: any;
 
   constructor(
     private _store: Store<AppState>,
@@ -155,6 +156,21 @@ export class BebidasComponent implements OnInit {
         $('#alertM p').html('Se eliminó la bebida.');
         $('#alertM').show();
         $('#alertM').fadeOut(4000);
+      })
+  }
+  editThisField(beverageId: any) {
+    $('#updateGeneralbeverages').hide();
+    $('#uGeneral').show();
+    this.updateVarGeneral = beverageId; 
+  }
+  updateBeverageGeneral() {
+    const newInfo = {
+      product: this.updateGeneral.value.productName
+    }
+    this._menuService.updateBeverage(newInfo,this.updateVarGeneral)
+      .then(response => {
+        $('#uGeneral').hide();
+        $('#updateGeneralbeverages').show();
       })
   }
 
