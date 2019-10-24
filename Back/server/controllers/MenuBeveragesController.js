@@ -7,6 +7,16 @@ var MenuBeveragesController = {
             .then(menuBeverages => res.status(200).json({ menuBeverages }))
             .catch(error => res.status(400).send(error));
     },
+    indexSpecific(req, res) {
+        const beverageSpecific = req.body.beverageSpecificId;
+        return MenuBeveragesSpecific.findAll({
+            where: {
+                specific: beverageSpecific
+            }
+        })
+            .then(menuBeveragesSpecific => res.status(200).json({ menuBeveragesSpecific }))
+            .catch(error => res.status(400).send(error));
+    },
 
     show(req, res) {
         const beverageId = req.query.beverageId;
@@ -45,7 +55,7 @@ var MenuBeveragesController = {
 
     update(req, res) {
         let beverageData = req.body.beverageData;
-        let query = { returning: true, where: { id: req.params.id } };
+        let query = { returning: true, where: { id: req.body.params.id } };
         MenuBeverages.update(beverageData, query)
           .then(beverageUpdated => {
             res.json({ newBeverageData: beverageUpdated });
@@ -55,7 +65,7 @@ var MenuBeveragesController = {
     updateSpecific(req,res) {
         let beverageData = req.body.beverageData;
         let query = { returning: true, where: {
-            '$MenuBeverages.id$': req.params.id 
+            '$MenuBeverages.id$': req.body.params.id 
         },
         include: [
             {model: MenuBeverages, as: MenuBeverages.tableName}

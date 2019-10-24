@@ -3,16 +3,17 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 
 @Component({
-  selector: 'app-alimentos',
-  templateUrl: './alimentos.component.html',
-  styleUrls: ['./alimentos.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class AlimentosComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   public userData: any;
 
   constructor(
-    private _store: Store<AppState>) { }
+    private _store: Store<AppState>
+    ) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -20,4 +21,5 @@ export class AlimentosComponent implements OnInit {
       this.userData = authData.user ? authData.user : {};
     });
   }
+
 }

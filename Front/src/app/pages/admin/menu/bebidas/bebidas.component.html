@@ -1,1 +1,61 @@
-<p>bebidas works!</p>
+<div class="breadcrumb">
+    <div class="list">
+        <li><a routerLink="/">Inicio</a></li>
+        <li>
+            <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
+            <a *ngIf="userData.Role.name == 'Admin'" routerLink="/admin/users">Administración de usuarios</a>
+        </li>
+        <li><a routerLink="/admin/inventario">Inventario</a></li>
+    </div>
+    <div>
+        <li><a routerLink="/admin/menu">Regresar</a></li>
+    </div>
+</div>
+<div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="card border-0 my-auto">
+            <div class="options" id="options">
+                <table>
+                    <tr>
+                        <td><button (click)="show(1)">Agregar bebida</button></td>
+                        <td><button>Actualizar bebida</button></td>
+                    </tr>
+                    <tr>
+                        <td><button (click)="showBeverages()">Mostrar bebidas</button></td>
+                        <td><button>Eliminar bebida</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="eliminar">
+                <table class="table" style="width:100%">
+                    <thead class="black white-text">
+                      <tr>
+                        <th class="text-center">Producto</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tr *ngFor="let beverage of beveragesList">
+                      <td align="center">{{ product.product }}</td>
+                      <td align="center"><button class="link-dark">Mostrar más</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="add">
+                <h2>Agregar bebida</h2>
+                <div class="col-md-10">
+                    <form [formGroup]="addBeverage">
+                        <div class="form-group">
+                            <div class="md-form">
+                                <input type="text" id="product" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': addBeverage.get('product').touched && addBeverage.get('product').invalid }"
+                                formControlName="product" />
+                            </div>
+                        </div>
+                        <div class="authButton">
+                            <button type="submit" [disabled]="!addBeverage.valid" (click)="addBeverage()">Añadir precios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

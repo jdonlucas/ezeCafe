@@ -1,0 +1,25 @@
+.content{
+    overflow:auto;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: inherit;
+}
+.menuButton button {
+    border-radius: 4px;
+    border-color: none;
+    background-color: var(--black-color);
+    color: var(--white-color);
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    width: 250px;
+    padding: 7px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 40px;
+    font-size: 42px;
+}
+.menuButton button:hover {
+    background-color: var(--black-clear-color);
+}
