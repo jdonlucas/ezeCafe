@@ -24,7 +24,11 @@ app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'}));
 =======
 app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
 //app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
+<<<<<<< HEAD
+>>>>>>> 0f1abf1f85a6c9fd86e47fa8c7ddc03cd02f9d44
+=======
 >>>>>>> 034fbeb00c57687300eb499422647be794b44ee4
+>>>>>>> 1f71c9882d2db54cb24d66edf12f93ec19d01bac
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
