@@ -7,6 +7,16 @@ var MenuBeveragesController = {
             .then(menuBeverages => res.status(200).json({ menuBeverages }))
             .catch(error => res.status(400).send(error));
     },
+    indexSpecific(req, res) {
+        const beverageSpecific = req.body.beverageSpecificId;
+        return MenuBeveragesSpecific.findAll({
+            where: {
+                beverageId: beverageSpecific
+            }
+        })
+            .then(menuBeveragesSpecific => res.status(200).json({ menuBeveragesSpecific }))
+            .catch(error => res.status(400).send(error));
+    },
 
     show(req, res) {
         const beverageId = req.query.beverageId;
@@ -45,7 +55,7 @@ var MenuBeveragesController = {
 
     update(req, res) {
         let beverageData = req.body.beverageData;
-        let query = { returning: true, where: { id: req.params.id } };
+        let query = { where: { id: req.body.params.id } };
         MenuBeverages.update(beverageData, query)
           .then(beverageUpdated => {
             res.json({ newBeverageData: beverageUpdated });
@@ -54,12 +64,9 @@ var MenuBeveragesController = {
     },
     updateSpecific(req,res) {
         let beverageData = req.body.beverageData;
-        let query = { returning: true, where: {
-            '$MenuBeverages.id$': req.params.id 
-        },
-        include: [
-            {model: MenuBeverages, as: MenuBeverages.tableName}
-        ]};
+        let query = { where: {
+            id: req.body.params.id 
+        }};
         MenuBeveragesSpecific.update(beverageData, query)
             .then(specificUpdated => {
                 res.json({ newSpecificData: specificUpdated });
@@ -70,14 +77,25 @@ var MenuBeveragesController = {
     delete(req, res) {
         let beverageId = req.body.beverageId;
         MenuBeverages.destroy({
-            where: { id: beverageId },
-            truncate: true
+            where: { id: beverageId }
         })
             .then(beverageDeleted => {
                 res.json({ beverageStatus: beverageDeleted });
             })
             .catch(err => res.status(500).send(err));
     },
+    deleteSpecific(req, res) {
+        let beverageId = req.body.beverageId;
+        MenuBeveragesSpecific.destroy({
+            where:  {
+                id: beverageId
+            }
+        })
+            .then(beverageDeleted => {
+                res.json({ beverageStatus: beverageDeleted });
+            })
+            .catch(err => res.status(500).send(err));
+    }
 
 };
 

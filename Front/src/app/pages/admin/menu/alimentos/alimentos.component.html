@@ -1,0 +1,120 @@
+<div class="breadcrumb">
+    <div class="list">
+        <li><a routerLink="/">Inicio</a></li>
+        <li>
+            <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
+            <a *ngIf="userData.Role.name == 'Admin'" routerLink="/admin/users">Administración de usuarios</a>
+        </li>
+        <li><a routerLink="/admin/inventario">Inventario</a></li>
+    </div>
+    <div>
+        <li><a routerLink="/admin/menu">Regresar</a></li>
+    </div>
+</div>
+<div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="card border-0 my-auto">
+            <div class="options" id="options">
+                <table>
+                    <tr>
+                        <td><button (click)="show(1)">Agregar alimento</button></td>
+                        <td><button (click)="show(3)">Actualizar alimento</button></td>
+                    </tr>
+                    <tr>
+                        <td><button (click)="show(2)">Mostrar alimentos</button></td>
+                        <td><button (click)="show(4)">Eliminar alimentos</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="add">
+                <h2>Ingresa los datos del nuevo alimento.</h2>
+                <form [formGroup]="addFood">
+                    <div class="form-group">
+                        <div class="md-form">
+                            <input type="text" id="product" class="form-control" placeholder="Alimento" [ngClass]="{ 'is-invalid': addFood.get('product').touched && addFood.get('product').invalid }"
+                            formControlName="product" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form">
+                            <input type="text" id="price" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': addFood.get('price').touched && addFood.get('price').invalid }"
+                            formControlName="price" />
+                        </div>
+                    </div>
+                    <div class="authButton">
+                        <button type="submit" [disabled]="!addFood.valid" (click)="addNewFood()">Añadir</button>
+                    </div>
+                </form>
+            </div>
+            <div id="update">
+                <table class="table" style="width:100%">
+                    <thead class="black white-text">
+                      <tr>
+                        <th class="text-center">Alimento</th>
+                        <th class="text-center">Precio</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tr *ngFor="let food of foodList">
+                      <td align="center">{{ food.product }}</td>
+                      <td align="center">{{ food.price }}</td>
+                      <td><button class="link-dark" (click)="edit(food.id,food.product,food.price)">Editar</button></td>
+                    </tr>
+                </table>
+                <div id="editFood">
+                    <h3>Ingresa sólo los campos que quieres alterar.</h3>
+                    <form [formGroup]="editFood">
+                        <div class="form-group">
+                            <div class="md-form">
+                                <input type="text" id="product" class="form-control" placeholder="Alimento" [ngClass]="{ 'is-invalid': editFood.get('product').touched && editFood.get('product').invalid }"
+                                formControlName="product" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="md-form">
+                                <input type="text" id="price" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': editFood.get('price').touched && editFood.get('price').invalid }"
+                                formControlName="price" />
+                            </div>
+                        </div>
+                        <div class="authButton">
+                            <button type="submit" [disabled]="!editFood.valid" (click)="updateFood()">Añadir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="show">
+                <table class="table" style="width:100%">
+                    <thead class="black white-text">
+                      <tr>
+                        <th class="text-center">Alimento</th>
+                        <th class="text-center">Precio</th>
+                      </tr>
+                    </thead>
+                    <tr *ngFor="let food of foodList">
+                      <td align="center">{{ food.product }}</td>
+                      <td align="center">{{ food.price }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="delete">
+                <table class="table" style="width:100%">
+                    <thead class="black white-text">
+                      <tr>
+                        <th class="text-center">Alimento</th>
+                        <th class="text-center">Precio</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tr *ngFor="let food of foodList">
+                      <td align="center">{{ food.product }}</td>
+                      <td align="center">{{ food.price }}</td>
+                      <td align="center"><button class="link-dark" (click)="deleteFood(food.id)">Eliminar</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="alertM" class="alertMessage">
+        <p></p>
+</div>

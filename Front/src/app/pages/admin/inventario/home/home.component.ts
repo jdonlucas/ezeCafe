@@ -56,7 +56,13 @@ export class HomeComponent implements OnInit {
       product: new FormControl('', [
         Validators.required
       ]),
+      brand: new FormControl('',[
+        Validators.required
+      ]),
       description: new FormControl('', [
+      ]),
+      grammageLiters: new FormControl('',[
+        Validators.required
       ]),
       quantity: new FormControl('', [
         Validators.required
@@ -87,7 +93,9 @@ export class HomeComponent implements OnInit {
   addInsumo() {
     const newInsumoData: any = {
       product: this.createInsumo.value.product,
+      brand: this.createInsumo.value.brand,
       description: this.createInsumo.value.description,
+      grammageLiters: this.createInsumo.value.grammageLiters,
       quantity: this.createInsumo.value.quantity
     }
     this._stockService.addInsumo(newInsumoData)
