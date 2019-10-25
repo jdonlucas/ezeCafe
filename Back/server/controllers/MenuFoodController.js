@@ -27,7 +27,7 @@ var MenuFoodController = {
 
     update(req, res) {
         let foodData = req.body.foodData;
-        let query = { returning: true, where: { id: req.params.id } };
+        let query = { returning: true, where: { id: req.body.params.id } };
         MenuFood.update(foodData, query)
           .then(foodUpdated => {
             res.json({ newFood: foodUpdated });
@@ -38,8 +38,7 @@ var MenuFoodController = {
     delete(req, res) {
         let foodId = req.body.foodId;
         MenuFood.destroy({
-            where: { id: foodId },
-            truncate: true
+            where: { id: foodId }
         })
             .then(foodDeleted => {
                 res.json({ foodStatus: foodDeleted });

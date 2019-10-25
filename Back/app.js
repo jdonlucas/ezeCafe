@@ -21,6 +21,7 @@ var app = express();
 
 //app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
 app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
+
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,

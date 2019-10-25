@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   MenuBeverages.associate = function(models) {
     MenuBeverages.hasMany(models.MenuBeveragesSpecific,{
-      foreignKey: 'specific',
+      as: 'prices',
+      foreignKey: 'beverageId',
       onDelete: 'cascade'
     })
   };

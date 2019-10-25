@@ -15,9 +15,12 @@ router.post('/newBeverageSpecific', MenuBeveragesController.createSpecific);
 router.post('/updateBeverage', MenuBeveragesController.update);
 router.post('/updateBeverageSpecific', MenuBeveragesController.updateSpecific);
 router.get('/listAllBeverages', MenuBeveragesController.index);
+router.post('/listAllBeveragesSpecific', MenuBeveragesController.indexSpecific);
 router.post('/showBeverage', MenuBeveragesController.show);
 router.post('/showBeverageSpecific', MenuBeveragesController.showSpecific);
 router.post('/deleteBeverage', MenuBeveragesController.delete);
+router.post('/deleteBeverageSpecific', MenuBeveragesController.deleteSpecific);
+
 
 
 
