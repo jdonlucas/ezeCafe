@@ -55,7 +55,7 @@ var MenuBeveragesController = {
 
     update(req, res) {
         let beverageData = req.body.beverageData;
-        let query = { returning: true, where: { id: req.body.params.id } };
+        let query = { where: { id: req.body.params.id } };
         MenuBeverages.update(beverageData, query)
           .then(beverageUpdated => {
             res.json({ newBeverageData: beverageUpdated });
@@ -64,12 +64,9 @@ var MenuBeveragesController = {
     },
     updateSpecific(req,res) {
         let beverageData = req.body.beverageData;
-        let query = { returning: true, where: {
-            '$MenuBeverages.id$': req.body.params.id 
-        },
-        include: [
-            {model: MenuBeverages, as: MenuBeverages.tableName}
-        ]};
+        let query = { where: {
+            id: req.body.params.id 
+        }};
         MenuBeveragesSpecific.update(beverageData, query)
             .then(specificUpdated => {
                 res.json({ newSpecificData: specificUpdated });
@@ -87,6 +84,18 @@ var MenuBeveragesController = {
             })
             .catch(err => res.status(500).send(err));
     },
+    deleteSpecific(req, res) {
+        let beverageId = req.body.beverageId;
+        MenuBeveragesSpecific.destroy({
+            where:  {
+                id: beverageId
+            }
+        })
+            .then(beverageDeleted => {
+                res.json({ beverageStatus: beverageDeleted });
+            })
+            .catch(err => res.status(500).send(err));
+    }
 
 };
 

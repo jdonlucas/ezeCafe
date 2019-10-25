@@ -27,7 +27,7 @@ var MenuFoodController = {
 
     update(req, res) {
         let foodData = req.body.foodData;
-        let query = { returning: true, where: { id: req.params.id } };
+        let query = { returning: true, where: { id: req.body.params.id } };
         MenuFood.update(foodData, query)
           .then(foodUpdated => {
             res.json({ newFood: foodUpdated });

@@ -21,9 +21,13 @@ export class BebidasComponent implements OnInit {
   public addBeverageSpecific: FormGroup;
   public updateGeneral: FormGroup;
   public updateSpecific: FormGroup;
+  public createPrice: FormGroup;
   public beverageId: any;
   public title: string;
   public updateVarGeneral: any;
+  public beverageParentId: any;
+  public editId: any;
+  public editData: any;
 
   constructor(
     private _store: Store<AppState>,
@@ -65,6 +69,17 @@ export class BebidasComponent implements OnInit {
       priceUpdate: new FormControl('',[
       ])
     })
+    this.createPrice = new FormGroup({
+      sizeCreate: new FormControl('', [
+        Validators.required
+      ]),
+      milkCreate: new FormControl('',[
+
+      ]),
+      priceCreate: new FormControl('',[
+        Validators.required
+      ])
+    })
   }
 
   showBeverages (option: any) {
@@ -104,11 +119,16 @@ export class BebidasComponent implements OnInit {
       $('#addBeverage').show();
       this.addBeverage.reset();
     } else if (num == 3) {
-      $('#showSpecificBeverageList').hide();
-      $('#showGeneralList').show();
+      $('#showSpecificBeveragesList').hide();
+      $('#showGeneralBeverages').show();
     } else if (num == 4) {
-      $('#deleteGeneralbeverages').hide();
-      $('#deleteSpecificBeverages').show();
+      $('#deleteSpecificBeverages').hide();
+      $('#deleteGeneralbeverages').show();
+    } else if (num == 5) {
+      $('#updateSpecificBeverages').hide();
+      $('#updateGeneralbeverages').show();
+    } else if (num == 6){
+      $('#createPrice').show();
     }
   }
 
@@ -139,14 +159,19 @@ export class BebidasComponent implements OnInit {
         this.errors = err;
       })
   }
-  pushTitle(titleProduct: any, num: any){
+  pushTitle(titleProduct: any, num: any,id: any){
     this.title = titleProduct;
     if (num == 1) {
-      $('#showGeneralList').hide();
-      $('#showSpecificGeneralList').show();
+      $('#showGeneralbeverages').hide();
+      $('#showSpecificBeveragesList').show();
     } else if (num == 2) {
-      $('#deleteGeneralBeverages').hide();
-      $('#deleteSpecificGenerals').show();
+      this.beverageParentId = id;
+      $('#deleteGeneralbeverages').hide();
+      $('#deleteSpecificBeverages').show();
+    } else if (num == 3) {
+      this.beverageParentId = id;
+      $('#updateGeneralbeverages').hide();
+      $('#updateSpecificBeverages').show();
     }
   }
   deleteBeverage(beverageId: any) {
@@ -159,7 +184,6 @@ export class BebidasComponent implements OnInit {
       })
   }
   editThisField(beverageId: any) {
-    $('#updateGeneralbeverages').hide();
     $('#uGeneral').show();
     this.updateVarGeneral = beverageId; 
   }
@@ -170,8 +194,59 @@ export class BebidasComponent implements OnInit {
     this._menuService.updateBeverage(newInfo,this.updateVarGeneral)
       .then(response => {
         $('#uGeneral').hide();
-        $('#updateGeneralbeverages').show();
+        this.showBeverages(4);
       })
   }
+  deleteSpecificBeverage(id: any) {
+    this._menuService.deleteBeverageSpecific(id)
+      .then(response => {
+        console.log(response);
+        this.showBeveragesSpecific(this.beverageParentId);
+        $('#alertM p').html('Se eliminó la bebida.');
+        $('#alertM').show();
+        $('#alertM').fadeOut(4000);
+      })
+  }
+  editThisSpecific(id: any, size: any, milk: any, price: any){
+    this.editId = id;
+    this.editData = {
+      size: size,
+      milk: milk,
+      price: price
+    };
+    this.updateSpecific.controls['sizeUpdate'].setValue(size);
+    this.updateSpecific.controls['milkUpdate'].setValue(milk);
+    this.updateSpecific.controls['priceUpdate'].setValue(price);
+    $('#uSpecific').show();
+  }
+  updateBeverageSpecific() {
+    const newInfo = {
+      size: this.updateSpecific.value.sizeUpdate,
+      milk: this.updateSpecific.value.milkUpdate,
+      price: this.updateSpecific.value.priceUpdate
+    }
+    this._menuService.updateBeverageSpecific(newInfo,this.editId)
+      .then(response => {
+        $('#uSpecific').hide();
+        this.showBeveragesSpecific(this.beverageParentId);
+      })
+      .catch(err => {
+        this.errors = err;
+      })
+  }
+  createNewBeverageSpecific() {
+    const beverageData = {
+      size: this.createPrice.value.sizeCreate,
+      milk: this.createPrice.value.milkCreate,
+      price: this.createPrice.value.priceCreate,
+      beverageId: this.beverageParentId
+    }
+    this._menuService.newSpecificBeverage(beverageData)
+      .then(response => {
+        $('#createPrice').hide();
+        this.showBeveragesSpecific(this.beverageParentId);
+      })
+  }
+
 
 }

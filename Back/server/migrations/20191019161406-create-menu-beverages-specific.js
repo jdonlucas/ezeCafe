@@ -24,9 +24,11 @@ module.exports = {
       beverageId: {
         allowNull: false,
         type: Sequelize.UUID,
+        onDelete: 'CASCADE',
         references: {
           model: 'MenuBeverages',
-          key: 'id'
+          key: 'id',
+          as: 'beverage'
         }
       },
       updatedAt: {

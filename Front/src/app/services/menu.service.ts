@@ -17,9 +17,12 @@ export class MenuService {
       foodData: foodData
     }).toPromise();
   }
-  updateFood(foodData: any) {
+  updateFood(foodData: any, foodId: any) {
       return this._http.post('http://localhost:3000/api/menu/updateFood',{
-        foodData: foodData
+        foodData: foodData,
+        params: {
+          id: foodId
+        }
     }).toPromise()
   }
   showFood() {
@@ -65,11 +68,16 @@ export class MenuService {
     }).toPromise()
   }
   updateBeverageSpecific (beverageData: any, id: any) {
-    return this._http.post('http://localhost:3000/api/menu/newBeverageSpecific',{
+    return this._http.post('http://localhost:3000/api/menu/updateBeverageSpecific',{
       beverageData: beverageData,
       params: {
         id: id
       }
+    }).toPromise()
+  }
+  deleteBeverageSpecific(beverageId: any) {
+    return this._http.post('http://localhost:3000/api/menu/deleteBeverageSpecific',{
+      beverageId: beverageId
     }).toPromise()
   }
 }

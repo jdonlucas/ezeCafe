@@ -36,7 +36,7 @@
     cursor: pointer;
 }
 #eliminar, #add, #addPrices, #showSpecificBeveragesList, #deleteSpecificBeverages, 
-#updateSpecificBeverages, #uGeneral {
+#updateSpecificBeverages, #uGeneral, #mostrar, #delete, #update, #uSpecific, #createPrice {
     display: none;
 }
 #add h2 {
@@ -44,7 +44,26 @@
 }
 .authButton button {
     width: auto;
+    margin: 15px;
 }
 #addPrices h2 {
     margin-bottom: 30px;
+}
+
+.alertMessage {
+    display: none;
+    position: absolute;
+    z-index: 9000;
+    width: 100%;
+    top: 140.5px;
+    text-align: center;
+    padding-left: 20%;
+}
+.alertMessage p {
+    margin: auto;
+    width: 270px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 9px;
 }

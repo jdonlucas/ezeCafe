@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   MenuBeveragesSpecific.associate = function(models) {
     MenuBeveragesSpecific.belongsTo(models.MenuBeverages,{
-      foreignKey: 'id', 
+      foreignKey: 'beverageId', 
       as: 'beverage'
     });
   };

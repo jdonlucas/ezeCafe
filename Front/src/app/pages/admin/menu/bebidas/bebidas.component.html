@@ -18,7 +18,7 @@
                 <table>
                     <tr>
                         <td><button (click)="show(1)">Agregar bebida</button></td>
-                        <td><button>Actualizar bebida</button></td>
+                        <td><button (click)="showBeverages(3)">Actualizar bebida</button></td>
                     </tr>
                     <tr>
                         <td><button (click)="showBeverages(1)">Mostrar bebidas</button></td>
@@ -37,7 +37,7 @@
                         </thead>
                         <tr *ngFor="let beverage of beveragesList">
                           <td align="center">{{ beverage.product }}</td>
-                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id,1); pushTitle(beverage.product)">Mostrar más</button></td>
+                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id); pushTitle(beverage.product,1,beverage.id)">Mostrar más</button></td>
                         </tr>
                     </table>
                 </div>
@@ -66,7 +66,6 @@
                 <div id="addPrices">
                     <h2>Agregar precios</h2>
                     <div class="col-md-10">
-                        <div class="card">
                             <table class="table" style="width:100%">
                                 <thead class="black white-text">
                                   <tr>
@@ -81,7 +80,6 @@
                                   <td align="center">{{ beverage.price }}</td>
                                 </tr>
                             </table>
-                        </div>
                         <form [formGroup]="addBeverageSpecific">
                             <div class="form-group">
                                 <div class="md-form">
@@ -137,25 +135,27 @@
                         </thead>
                         <tr *ngFor="let beverage of beveragesList">
                           <td align="center">{{ beverage.product }}</td>
-                          <td align="center"><button class="link-dark" (click)="deleteBeverage(product.id)">Eliminar</button></td>
-                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id,2); pushTitle(beverage.product)">Mostrar más</button></td>
+                          <td align="center"><button class="link-dark" (click)="deleteBeverage(beverage.id)">Eliminar</button></td>
+                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id); pushTitle(beverage.product,2,beverage.id)">Mostrar más</button></td>
                         </tr>
                     </table>
                 </div>
                 <div id="deleteSpecificBeverages">
-                    <h2>{{ productTitle }}</h2>
+                    <h2>{{ title }}</h2>
                     <table class="table" style="width:100%">
                         <thead class="black white-text">
                           <tr>
                             <th class="text-center">Tamaño</th>
                             <th class="text-center">Leche</th>
                             <th class="text-center">Precio</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tr *ngFor="let beverage of beveragesSpecificList">
                           <td align="center">{{ beverage.size }}</td>
                           <td align="center">{{ beverage.milk }}</td>
                           <td align="center">{{ beverage.price }}</td>
+                          <td align="center"><button class="link-dark" (click)="deleteSpecificBeverage(beverage.id)">Eliminar</button></td>
                         </tr>
                     </table>
                     <div class="authButton">
@@ -176,10 +176,11 @@
                         <tr *ngFor="let beverage of beveragesList">
                           <td align="center">{{ beverage.product }}</td>
                           <td align="center"><button class="link-dark" (click)="editThisField(beverage.id)">Editar</button></td>
-                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id,2); pushTitle(beverage.product)">Mostrar más</button></td>
+                          <td align="center"><button class="link-dark" (click)="showBeveragesSpecific(beverage.id); pushTitle(beverage.product,3,beverage.id)">Mostrar más</button></td>
                         </tr>
                     </table>
                     <div id="uGeneral">
+                        <h3>Ingresa el nuevo nombre.</h3>
                         <form [formGroup]="updateGeneral">
                             <div class="form-group">
                                 <div class="md-form">
@@ -208,10 +209,11 @@
                           <td align="center">{{ beverage.size }}</td>
                           <td align="center">{{ beverage.milk }}</td>
                           <td align="center">{{ beverage.price }}</td>
-                          <td align="center"><button class="link-dark" (click)="editThisSpecific(beverage.id)">Editar</button></td>
+                          <td align="center"><button class="link-dark" (click)="editThisSpecific(beverage.id,beverage.size,beverage.milk,beverage.price)">Editar</button></td>
                         </tr>
                     </table>
                     <div id="uSpecific"> 
+                        <h3>Sólo edita los campos que quieras modificar.</h3>
                         <form [formGroup]="updateSpecific">
                             <div class="form-group">
                                 <div class="md-form">
@@ -227,17 +229,45 @@
                             </div>
                             <div class="form-group">
                                 <div class="md-form">
-                                    <input type="text" id="priceUpdate" class="form-control" placeholder="Tamaño" [ngClass]="{ 'is-invalid': updateSpecific.get('priceUpdate').touched && updateSpecific.get('priceUpdate').invalid }"
+                                    <input type="text" id="priceUpdate" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': updateSpecific.get('priceUpdate').touched && updateSpecific.get('priceUpdate').invalid }"
                                     formControlName="priceUpdate" />
                                 </div>
                             </div>
                             <div class="authButton">
-                                <button type="submit" [disabled]="!updateSpecific.valid" (click)="updateBeverageGeneral()">Actualizar</button>
+                                <button type="submit" [disabled]="!updateSpecific.valid" (click)="updateBeverageSpecific()">Actualizar</button>
                             </div>
                         </form>
                     </div>
+                    <div id="createPrice">
+                        <h3>Ingresa los datos para el nuevo precio.</h3>
+                        <form [formGroup]="createPrice">
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="sizeCreate" class="form-control" placeholder="Tamaño" [ngClass]="{ 'is-invalid': createPrice.get('sizeCreate').touched && createPrice.get('sizeCreate').invalid }"
+                                    formControlName="sizeCreate" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="milkCreate" class="form-control" placeholder="Leche" [ngClass]="{ 'is-invalid': createPrice.get('milkCreate').touched && createPrice.get('milkCreate').invalid }"
+                                    formControlName="milkCreate" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="md-form">
+                                    <input type="text" id="priceCreate" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': createPrice.get('priceCreate').touched && createPrice.get('priceCreate').invalid }"
+                                    formControlName="priceCreate" />
+                                </div>
+                            </div>
+                            <div class="authButton">
+                                <button type="submit" [disabled]="!createPrice.valid" (click)="createNewBeverageSpecific()">Crear</button>
+                            </div>
+                        </form>
+
+                    </div>
                     <div class="authButton">
-                        <button type="submit" (click)="show(4)">Regresar</button>
+                        <button type="submit" (click)="show(5)">Regresar</button>
+                        <button type="submit" (click)="show(6)">Agregar precio</button>
                     </div>
                 </div>
             </div>
