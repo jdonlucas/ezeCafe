@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  public orderData: any;
+
+  constructor(
+    private _store: Store<AppState>,) { }
 
   ngOnInit() {
+    this._store.select('comanda').subscribe(comanda => {
+      let comandaData = comanda.comandaData ? comanda.comandaData : {};
+      this.orderData = comandaData.id ? comandaData.id : {};
+    });
   }
+  
 
 }

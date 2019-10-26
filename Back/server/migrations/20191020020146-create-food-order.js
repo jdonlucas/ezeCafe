@@ -8,9 +8,6 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      id: {
-        type: Sequelize.UUID
-      },
       foodId: {
         type: Sequelize.UUID
       },

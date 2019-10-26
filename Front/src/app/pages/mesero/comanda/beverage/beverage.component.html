@@ -1,1 +1,10 @@
-<p>beverage works!</p>
+<div class="breadcrumb">
+        <li><a routerLink="/mesero/comanda/menu">Regresar</a></li>
+    </div>
+<div id="beveragesGeneral">
+    <table>
+        <tr *ngFor="let food of beveragesList">
+            <td><button class="menuButton" (click)='addBeverage(food.id)'>{{ food.product }}</button></td>
+        </tr>
+    </table>
+</div>

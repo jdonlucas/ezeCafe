@@ -29,15 +29,14 @@ var MenuBeveragesController = {
             .catch(error => res.status(400).send(error));
     },
     showSpecific(req, res) {
-        const specificId = req.query.beverageId;
+        const specificId = req.body.beverageId;
         return MenuBeveragesSpecific.findAll({
             where: {
-                '$MenuBeverages.id$': specificId 
-            },
-            include: [
-                {model: MenuBeverages, as: MenuBeverages.tableName}
-            ]
-        });
+                beverageId: specificId 
+            }
+        })
+            .then(beverage => res.status(200).json({ beverage }))
+            .catch(error => res.status(400).send(error));
     },
 
     create(req, res) {

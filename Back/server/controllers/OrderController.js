@@ -39,13 +39,13 @@ var OrderController = {
     createFood(req,res) {
         let foodData = req.body.foodData;
         FoodOrder.create(foodData).then(foodOrderCreated => {
-            res.json({newFoodOrder});
+            res.json({newFoodOrder: foodOrderCreated});
         }).catch(err => res.status(500).send(err));
     },
     createBeverage(req,res) {
         let beverageData = req.body.beverageData;
         BeverageOrder.create(beverageData).then(beverageCrated => {
-            res.json({newBeverageOrder});
+            res.json({newBeverageOrder: beverageCrated});
         }).catch(err => res.status(500).send(err));
     },
 

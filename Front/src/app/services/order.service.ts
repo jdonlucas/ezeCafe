@@ -12,7 +12,7 @@ export class OrderService {
   ) {
   }
 
-  newOrder(orderData: string) {
+  newOrder(orderData: any) {
     return this._http.post('http://localhost:3000/api/order/newOrder', { 
       orderData: orderData
     }).toPromise();
@@ -23,19 +23,19 @@ export class OrderService {
   showOrders() {
     return this._http.post('http://localhost:3000/api/order/listAllOrders',{}).toPromise();
   }
-  deleteOrder(orderId: string) {
+  deleteOrder(orderId: any) {
     return this._http.post('http://localhost:3000/api/order/deleteOrder', { 
         orderId: orderId
     }).toPromise();
   }
 
   //associations
-  newFoodOrder(foodData: string) {
+  newFoodOrder(foodData: any) {
     return this._http.post('http://localhost:3000/api/order/newFoodOrder', { 
         foodData: foodData
     }).toPromise();
   }
-  newBeverageOrder(beverageData: string) {
+  newBeverageOrder(beverageData: any) {
     return this._http.post('http://localhost:3000/api/order/newBeverageOrder', { 
         beverageData: beverageData
     }).toPromise();

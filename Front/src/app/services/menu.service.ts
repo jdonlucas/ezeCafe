@@ -62,6 +62,11 @@ export class MenuService {
       beverageSpecificId: beverageId
     }).toPromise()
   }
+  showOneBeverage (beverageId: any) {
+    return this._http.post('http://localhost:3000/api/menu/showBeverageSpecific',{
+      beverageId: beverageId.id
+    }).toPromise()
+  }
   newSpecificBeverage (beverageData: any) {
     return this._http.post('http://localhost:3000/api/menu/newBeverageSpecific',{
       beverageData: beverageData
