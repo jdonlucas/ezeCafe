@@ -6,8 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
-    },
-    subtotal: DataTypes.FLOAT
+    }
   }, {});
   Order.associate = function(models) {
     Order.hasOne(models.Sales,{

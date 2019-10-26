@@ -13,12 +13,12 @@ export class MenuService {
   }
   // comida
   addFood(foodData: any) {
-    return this._http.post('http://db.ezecafe.com.mx/api/menu/newFood', {
+    return this._http.post('http://localhost:3000/api/menu/newFood', {
       foodData: foodData
     }).toPromise();
   }
   updateFood(foodData: any, foodId: any) {
-      return this._http.post('http://db.ezecafe.com.mx/api/menu/updateFood',{
+      return this._http.post('http://localhost:3000/api/menu/updateFood',{
         foodData: foodData,
         params: {
           id: foodId
@@ -26,22 +26,22 @@ export class MenuService {
     }).toPromise()
   }
   showFood() {
-      return this._http.get('http://db.ezecafe.com.mx/api/menu/listAllFood').toPromise()
+      return this._http.get('http://localhost:3000/api/menu/listAllFood').toPromise()
   }
 
   deleteFood(foodId: any) {
-      return this._http.post('http://db.ezecafe.com.mx/api/menu/deleteFood',{
+      return this._http.post('http://localhost:3000/api/menu/deleteFood',{
         foodId: foodId
     }).toPromise()
   }
   // bebidas
   newBeverage(beverageData: any) {
-      return this._http.post('http://db.ezecafe.com.mx/api/menu/newBeverage',{
+      return this._http.post('http://localhost:3000/api/menu/newBeverage',{
         beverageData: beverageData
     }).toPromise()
   }
   updateBeverage(beverageData: any, beverageId: any) {
-      return this._http.post('http://db.ezecafe.com.mx/api/menu/updateBeverage',{
+      return this._http.post('http://localhost:3000/api/menu/updateBeverage',{
         beverageData: beverageData,
         params: {
           id: beverageId
@@ -49,26 +49,26 @@ export class MenuService {
     }).toPromise()
   }
   showBeverages() {
-      return this._http.get('http://db.ezecafe.com.mx/api/menu/listAllBeverages').toPromise()
+      return this._http.get('http://localhost:3000/api/menu/listAllBeverages').toPromise()
   }
   deleteBeverage(beverageId: any) {
-    return this._http.post('http://db.ezecafe.com.mx/api/menu/deleteBeverage',{
+    return this._http.post('http://localhost:3000/api/menu/deleteBeverage',{
       beverageId: beverageId
     }).toPromise()
   }
   // bebidas especifico
   showSpecificBeverage (beverageId: any) {
-    return this._http.post('http://db.ezecafe.com.mx/api/menu/listAllBeveragesSpecific',{
+    return this._http.post('http://localhost:3000/api/menu/listAllBeveragesSpecific',{
       beverageSpecificId: beverageId
     }).toPromise()
   }
   newSpecificBeverage (beverageData: any) {
-    return this._http.post('http://db.ezecafe.com.mx/api/menu/newBeverageSpecific',{
+    return this._http.post('http://localhost:3000/api/menu/newBeverageSpecific',{
       beverageData: beverageData
     }).toPromise()
   }
   updateBeverageSpecific (beverageData: any, id: any) {
-    return this._http.post('http://db.ezecafe.com.mx/api/menu/updateBeverageSpecific',{
+    return this._http.post('http://localhost:3000/api/menu/updateBeverageSpecific',{
       beverageData: beverageData,
       params: {
         id: id
@@ -76,7 +76,7 @@ export class MenuService {
     }).toPromise()
   }
   deleteBeverageSpecific(beverageId: any) {
-    return this._http.post('http://db.ezecafe.com.mx/api/menu/deleteBeverageSpecific',{
+    return this._http.post('http://localhost:3000/api/menu/deleteBeverageSpecific',{
       beverageId: beverageId
     }).toPromise()
   }

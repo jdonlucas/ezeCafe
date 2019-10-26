@@ -1,4 +1,6 @@
 const Order = require('../models').Order;
+const FoodOrder = require('../models').FoodOrder;
+const BeverageOrder = require('../models').BeveragesOrder;
 
 var OrderController = {
     index(req, res) {
@@ -12,7 +14,17 @@ var OrderController = {
         return Order.findAll({
             where: {
                 id: orderId,
-            }
+            },
+            include: [
+                {
+                    model: FoodOrder,
+                    as: 'food'
+                },
+                {
+                    model: BeveragesOrder,
+                    as: 'beverages'
+                }
+            ]
         })
             .then(order => res.status(200).json({ order }))
             .catch(error => res.status(400).send(error));
@@ -24,6 +36,18 @@ var OrderController = {
             res.json({ newOrder: orderCreated });
         }).catch(err => res.status(500).send(err));
     },
+    createFood(req,res) {
+        let foodData = req.body.foodData;
+        FoodOrder.create(foodData).then(foodOrderCreated => {
+            res.json({newFoodOrder});
+        }).catch(err => res.status(500).send(err));
+    },
+    createBeverage(req,res) {
+        let beverageData = req.body.beverageData;
+        BeverageOrder.create(beverageData).then(beverageCrated => {
+            res.json({newBeverageOrder});
+        }).catch(err => res.status(500).send(err));
+    },
 
     update(req, res) {
     },
@@ -31,8 +55,7 @@ var OrderController = {
     delete(req, res) {
         let orderId = req.body.orderId;
         Order.destroy({
-            where: { id: orderId },
-            truncate: true
+            where: { id: orderId }
         })
             .then(orderDeleted => {
                 res.json({ orderStatus: orderDeleted });
