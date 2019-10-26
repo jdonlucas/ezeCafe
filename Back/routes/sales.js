@@ -13,7 +13,4 @@ router.post('/newStatus', SalesController.createStatusCaja);
 router.post('/updateStatus', SalesController.updateStatusCaja);
 router.get('/listAllStatus', SalesController.indexStatusCaja);
 
-
-
-
 module.exports = router;
