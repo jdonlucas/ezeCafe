@@ -1,0 +1,22 @@
+<div class="breadcrumb">
+    <li><a routerLink="/">Inicio</a></li>
+    <li>
+        <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
+        <a *ngIf="userData.Role.name == 'Admin'" routerLink="/admin/users">Administración de usuarios</a>
+    </li>
+    <li><a *ngIf="userData.Role.name == 'Admin' || userData.Role.name == 'SuperAdmin'" routerLink="/admin/inventario">Inventario</a></li>
+</div>
+<div class="container h-100">
+<div class="row justify-content-center align-items-center h-100">
+    <div class="card border-0 my-auto">
+        <div class="content my-auto">
+            <div class="menuButton">
+                <button routerLink="/admin/menu/alimentos">Alimentos</button>
+            </div>
+            <div class="menuButton">
+                <button routerLink="/admin/menu/bebidas">Bebidas</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
