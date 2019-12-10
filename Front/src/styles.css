@@ -1,6 +1,7 @@
 /* Global styles */
 :root {
     --black-color: rgb(0, 0, 0);
+    --main-black: rgb(31, 31, 30);
     --black-clear-color: rgb(56, 54, 54);
     --black-disabled-color: rgba(0, 0, 0, 0.692);
     --white-color: rgb(255, 255, 255);
@@ -17,6 +18,8 @@ html, body {
     height: 93%;
     font-size: 15px;
     font-family: var(--font-type)!important;
+    background-color: var(--main-black);
+    color: ivory;
 }
 /*------------- Header */
 nav {
@@ -83,14 +86,20 @@ nav li a:hover {
 }
 .breadcrumb {
     margin: 0;
+    background-color: #0d0d0c;
 }
 .breadcrumb li {
-    color: black;
+    color: ivory;
     margin-left: 10px;
 }
 .breadcrumb li a {
-    color: black;
+    color: ivory;
 }
 .breadcrumb li a:hover {
     text-decoration: underline;
+}
+.card {
+    background-color: var(--main-black);
+    border: 1px solid rgba(0, 0, 0,0.2);
+    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.16), 0 2px 20px 0 rgba(0, 0, 0, 0.22);
 }

@@ -9,3 +9,18 @@
 .logout:hover {
     background-color: var(--black-clear-color);
 }
+.sidenav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: fit-content;
+    background-color: #050505;
+    z-index: 999999;
+    display: none;
+}
+.sidenav ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 15px;
+}
