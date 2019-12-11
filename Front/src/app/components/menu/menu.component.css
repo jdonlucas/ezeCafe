@@ -16,6 +16,7 @@
     width: fit-content;
     background-color: #05050500;
     display: block;
+    z-index: 99999999;
 }
 .sidenav ul{
     list-style-type: none;

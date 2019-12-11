@@ -15,7 +15,7 @@
 html, body {
     padding: 0px;
     margin: 0px;
-    height: 93%;
+    height: 100%;
     font-size: 15px;
     font-family: var(--font-type)!important;
 }
@@ -86,6 +86,9 @@ nav li a:hover {
     margin: 0;
     background-color: #0d0d0c;
     border-radius: 0;
+    z-index: 9999999;
+    position: absolute;
+    width: 100%;
 }
 .breadcrumb li {
     color: ivory;
@@ -99,4 +102,13 @@ nav li a:hover {
 }
 .cont {
     width: 100%;
+}
+.card {
+    margin: 15px;
+}
+.container {
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
