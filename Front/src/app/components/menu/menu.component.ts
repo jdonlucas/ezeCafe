@@ -5,7 +5,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-
+import { faInbox } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -16,6 +18,9 @@ export class MenuComponent implements OnInit {
   faCoffee = faCoffee;
   faSignOutAlt = faSignOutAlt;
   faBars = faBars;
+  faInbox = faInbox;
+  faPaperPlane = faPaperPlane;
+  faCog = faCog;
 
   public userData: any;
 

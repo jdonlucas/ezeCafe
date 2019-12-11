@@ -21,9 +21,11 @@
             </ul>
         </div>
     </nav>
-    <!--<ul>
-        <li>
-            <button class="logout" (click)="logout()"><fa-icon [icon]="faSignOutAlt"></fa-icon></button>
-        </li>
-    </ul>-->
+</div>
+<div class="leftMenu" *ngIf="userData.id">
+    <ul>
+        <li><fa-icon [icon]="faInbox"></fa-icon>Inicio</li>
+        <li><fa-icon [icon]="faPaperPlane"></fa-icon>Órdenes</li>
+        <li><fa-icon [icon]="faCog"></fa-icon>Ajustes</li>
+    </ul>
 </div>
