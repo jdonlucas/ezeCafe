@@ -12,8 +12,7 @@
 .sidenav {
     position: absolute;
     top: 0;
-    right: 0;
-    width: fit-content;
+    width: 100%;
     background-color: #05050500;
     display: block;
     z-index: 99999999;
@@ -22,4 +21,22 @@
     list-style-type: none;
     padding: 0;
     margin: 9px;
+}
+.sidenav li {
+    padding: 0;
+}
+#hamburguer {
+    background: rgba(255, 255, 255, 0);
+    border: none;
+    border-radius: 100%;
+    color: seashell;
+    margin-right: 10px;
+    width: 38px;
+    height: 38px;
+}
+#hamburguer:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+#hamburguer:focus {
+    background: rgba(255, 255, 255, 0.4);
 }

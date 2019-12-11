@@ -1,7 +1,29 @@
-<div class="sidenav">
-    <ul>
+<div class="sidenav" *ngIf="userData.id">
+    <nav>
+        <div id="left">
+            <ul>
+                <li>
+                    <button id="hamburguer"><fa-icon [icon]="faBars"></fa-icon></button>
+                </li>
+                <li>
+                    <fa-icon [icon]="faCoffee"></fa-icon> EZE CAFÉ
+                </li>
+            </ul>
+        </div>
+        <div id="rigth">
+            <ul>
+                <li>
+                    <p>{{userData.Name}}</p>
+                </li>
+                <li>
+                    <button class="logout" (click)="logout()"><fa-icon [icon]="faSignOutAlt"></fa-icon></button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--<ul>
         <li>
-            <button class="logout" *ngIf="userData.id" (click)="logout()"><fa-icon [icon]="faSignOutAlt"></fa-icon></button>
+            <button class="logout" (click)="logout()"><fa-icon [icon]="faSignOutAlt"></fa-icon></button>
         </li>
-    </ul>
+    </ul>-->
 </div>
