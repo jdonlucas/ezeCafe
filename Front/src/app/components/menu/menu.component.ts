@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { AuthService } from 'src/app/services/auth.service';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-menu',
@@ -9,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+
+  faSignOutAlt = faSignOutAlt;
 
   public userData: any;
 

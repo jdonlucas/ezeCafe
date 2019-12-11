@@ -21,6 +21,9 @@ import { ComponentsModule } from './components/components.module';
 //Security
 import { AuthInterceptor } from './security/auth.interceptor';
 
+//Font-awesome
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -32,6 +35,7 @@ import { AuthInterceptor } from './security/auth.interceptor';
     HttpClientModule,
     ReactiveFormsModule,
     ComponentsModule,
+    FontAwesomeModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
