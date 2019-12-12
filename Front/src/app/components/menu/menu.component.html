@@ -3,7 +3,7 @@
         <div id="left">
             <ul>
                 <li>
-                    <button id="hamburguer"><fa-icon [icon]="faBars"></fa-icon></button>
+                    <button id="hamburguer" (click)="toggle();"><fa-icon [icon]="faBars"></fa-icon></button>
                 </li>
                 <li>
                     <fa-icon [icon]="faCoffee"></fa-icon> EZE CAFÉ
@@ -22,11 +22,12 @@
         </div>
     </nav>
 </div>
-<div class="leftMenu" *ngIf="userData.id">
+<div class="leftMenu" *ngIf="userData.id && show" [@slideLeftInOut]>
     <div id="toolsDiv"></div>
     <ul>
-        <li><fa-icon [icon]="faInbox"></fa-icon> Inicio</li>
+        <li><fa-icon [icon]="faInbox"></fa-icon> <a routerLink="/"> Inicio</a></li>
         <li><fa-icon [icon]="faPaperPlane"></fa-icon> Órdenes</li>
-        <li><fa-icon [icon]="faCog"></fa-icon> Ajustes</li>
+        <li class="settings" *ngIf="userData.UserRole == 3 || userData.UserRole == 4"><fa-icon [icon]="faCog"></fa-icon> Ajustes</li>
     </ul>
 </div>
+<div class="blackout" *ngIf="userData.id && show" (click)="toggle();"></div>

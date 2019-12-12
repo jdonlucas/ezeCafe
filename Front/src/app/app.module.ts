@@ -17,6 +17,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 //Components
 import { ComponentsModule } from './components/components.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Security
 import { AuthInterceptor } from './security/auth.interceptor';
@@ -30,6 +31,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

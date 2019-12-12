@@ -6,9 +6,6 @@
     border-radius: 4px;
     width: 50px;
 }
-.logout:hover {
-    background-color: var(--black-clear-color);
-}
 .sidenav {
     position: absolute;
     top: 0;
@@ -35,10 +32,10 @@
     height: 38px;
 }
 #hamburguer:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
 }
 #hamburguer:focus {
-    background: rgba(255, 255, 255, 0.4);
+    outline: none;
 }
 .leftMenu {
     top: 0;
@@ -47,20 +44,42 @@
     position: absolute;
     background: #fff;
     box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084);
+    z-index: 3;
 }
 #toolsDiv {
     position: relative;
-    height: 76px;
+    height: 66px;
 }
 .leftMenu ul {
     list-style-type: none;
     padding: 0;
-    margin: 10px;
+    margin: 0;
     text-align: left;
 } 
 .leftMenu li {
-    padding: 5px;
+    padding: 10px;
     font-size: 17px;
     font-weight: 400;
     color: #666;
+    padding-left: 30px;
+    padding-right: 55px;
+}
+.leftMenu li:hover {
+    background: #f6f6f6;
+}
+.leftMenu li.settings {
+    border-top: solid 1px #eee;
+    border-bottom: solid 1px #eee;
+}
+.leftMenu a {
+    color: #666;
+}
+.blackout {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }
