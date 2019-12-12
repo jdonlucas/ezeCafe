@@ -6,10 +6,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { HomeComponent } from './home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BajaComponent } from './baja/baja.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, UsuariosComponent, BajaComponent],
+  declarations: [HomeComponent, UsuariosComponent, BajaComponent, SettingsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
