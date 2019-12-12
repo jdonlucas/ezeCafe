@@ -1,19 +1,17 @@
-<div class="breadcrumb">
-    <li><a routerLink="/">Inicio</a></li>
-    <li>
-        <a *ngIf="userData.Role.name == 'SuperAdmin'" routerLink="/superadmin/users">Administración de usuarios</a>
-        <a *ngIf="userData.Role.name == 'Admin'" routerLink="/admin/users">Administración de usuarios</a>
-    </li>
-    <li><a *ngIf="userData.Role.name == 'Admin' || userData.Role.name == 'SuperAdmin'" routerLink="/admin/inventario">Inventario</a></li>
-</div>
-<div class="container">
-    <div class="row justify-content-center align-items-center h-100">
-        <div class="card border-0 my-auto">
-            <div class="content my-auto">
-                <div class="menuButton">
-                    <button (click)="startOrder()">Iniciar comanda</button>
-                </div>
-            </div>
+<div class="container2">
+    <h1 class="titleSection">Comandas</h1>
+    <div class="whiteframe">
+        <div class="frameContent">
+            <ul class="orders">
+                <li *ngFor="let order of orders">
+                    <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div>{{order.createdAt}}</div></div>
+                    <div class="total">{{order.subtotal}}</div>
+                    <div class="status">{{order.status}}</div>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
+<div class="addButton">
+    <button class="crearComanda" (click)="startOrder();"><fa-icon [icon]="faPlus"></fa-icon></button>
 </div>

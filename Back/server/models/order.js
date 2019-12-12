@@ -6,6 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
+    },
+    name: {
+      type: DataTypes.STRING
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'Pendiente'
     }
   }, {});
   Order.associate = function(models) {

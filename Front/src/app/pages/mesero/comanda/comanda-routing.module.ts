@@ -9,7 +9,7 @@ import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent, canActivate: [UserGuard], data: { whichUser: 'Mesero' }},
-  { path: 'menu', component: MenuComponent, canActivate: [UserGuard], data: { whichUser: 'Mesero' }},
+  { path: 'crear', component: MenuComponent, canActivate: [UserGuard], data: { whichUser: 'Mesero' }},
   { path: 'food', component: FoodComponent, canActivate: [UserGuard], data: { whichUser: 'Mesero' }},
   { path: 'beverage', component: BeverageComponent, canActivate: [UserGuard], data: { whichUser: 'Mesero' }}
 
