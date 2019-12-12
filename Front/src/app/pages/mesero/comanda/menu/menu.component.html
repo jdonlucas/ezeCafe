@@ -1,13 +1,22 @@
 <div class="container2">
     <h1 class="titleSection">Nueva comanda</h1>
     <div class="container3">
-        <div class="whiteframe">
-            <ul>
-                <li>regergergergergergergergerge</li>
-            </ul>
-            <div class="total">
-                <p>Total:</p>
-                <p>$55.00 mxn</p>
+        <div>
+            <form [formGroup]="orderForm">
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="text" id="name" class="form-control" placeholder="Nombre de comanda (opcional)" formControlName="name" />
+                    </div>
+                </div>
+            </form>
+            <div class="whiteframe">
+                <ul>
+                    <li>regergergergergergergergerge</li>
+                </ul>
+                <div class="total">
+                    <p>Total:</p>
+                    <p>$55.00 mxn</p>
+                </div>
             </div>
         </div>
     </div>
