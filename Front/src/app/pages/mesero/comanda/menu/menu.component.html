@@ -21,5 +21,19 @@
                 </div>
             </div>
         </div>
+        <div class="menu">
+            <div class="tabs">
+                <button class="selected">Bebidas</button>
+                <button>Alimentos</button>
+            </div>
+            <div class="menuContent">
+                <div id="food" class="button-matrix">
+                    <button *ngFor="let food of foodList" type="button" class="butn">{{food.product}}</button>
+                </div>
+                <div id="beverage">
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>

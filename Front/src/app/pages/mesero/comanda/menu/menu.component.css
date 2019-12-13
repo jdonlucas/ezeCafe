@@ -28,7 +28,7 @@
     padding: 0 10px;
     background: #fff;
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-    width: 35%;
+    width: 35vw;
     top: 190px;
     bottom: 20px;
 }
@@ -37,12 +37,63 @@
     width: 100%;
     padding: inherit;
     margin: -10px;
+    bottom: 10px;
 }
 .totalContent {
     display: flex;
     border-top: 2px solid black;
     justify-content: space-between;
+    padding-top: 5px;
 }
 .infoComanda {
     width: 35vw;
+}
+.menu {
+    margin-left: 1vw;
+    width: 60%;
+}
+.tabs {
+    margin-top: 10px;
+}
+.tabs button {
+    border: none;
+    background: transparent;
+    color: #495057;
+    width: 50%;
+    padding-top: 18px;
+    padding-bottom: 10px;
+}
+.tabs button:hover {
+    background: rgb(238, 237, 237);
+}
+.tabs button.selected {
+    border-bottom: 1px solid black;
+}
+.butn {
+  float: left;
+  border-radius: 0;
+  border: 1px solid gray;
+  margin: 2px;
+  margin-bottom: 4px;
+  padding: 15px;
+  width: 30%;
+  height: 15vh;
+}
+.button-matrix > .butn:nth-child(3n+4) {
+  clear: left;
+  margin-left: 0;
+}
+.button-matrix > .butn:nth-child(n+4) {
+  margin-top: -1px;
+}
+.button-matrix > .butn:first-child {
+  margin-left: 0; 
+}
+.button-matrix > .butn:last-child {
+  border-top-right-radius: 0;
+}
+
+/* Decorations */
+.button-matrix {
+  margin: 20px;
 }
