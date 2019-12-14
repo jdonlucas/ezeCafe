@@ -121,8 +121,9 @@ export class AuthService {
         if (noAuth) { // si el usuario no esta autenticado le permite ver la vista del login
           isAuth = !isAuth;
         }
-        if (!isAuth && !noAuth) { // si es token expiró cierra la sesion del usuario
+        if (!isAuth && !noAuth) { // si el token expiró cierra la sesion del usuario
           this.logout();
+          authData = {}; // y vacia la info del usuario
         } else if (!isAuth && noAuth) { // si el usuario esta autenticado y quiere acceder a login lo manda al home
           this._router.navigate(['/' + userData.toLowerCase()]);
         }

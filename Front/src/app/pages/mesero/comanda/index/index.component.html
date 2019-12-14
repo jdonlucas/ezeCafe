@@ -8,6 +8,7 @@
                     <div class="total">{{order.subtotal}}</div>
                     <div class="status">{{order.status}}</div>
                 </li>
+                <li *ngIf="!orders">Aún no hay comandas el día de hoy.</li>
             </ul>
         </div>
     </div>
