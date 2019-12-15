@@ -1,4 +1,5 @@
 /* Global styles */
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 :root {
     --black-color: rgb(0, 0, 0);
     --main-black: rgb(31, 31, 30);
@@ -8,7 +9,7 @@
     --white-pale-color: rgb(223, 221, 219);
     --font-titles: 23px;
     --font-title-type: Bernardo Moda, Fallback, sans-serif;
-    --font-type: Roboto, sans-serif;
+    --font-type: 'Nunito', sans-serif;
 }
 
 /*------------- General */
@@ -119,4 +120,10 @@ nav li a:hover {
     text-transform: uppercase;
     padding-bottom: 10px;
     border-bottom: solid 1px #eee;
+}
+.ezeButton {
+    background: rgb(0, 0, 0);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }

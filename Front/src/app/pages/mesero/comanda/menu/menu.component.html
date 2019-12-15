@@ -10,30 +10,42 @@
                 </div>
             </form>
             <div class="whiteframe">
-                <ul>
-                    <li>regergergergergergergergerge</li>
+                <ul class="itemList">
+                    <li *ngFor="let i of itemsList"><div><fa-icon [icon]="faTrash"></fa-icon>&emsp;{{i.name}}</div><div>${{i.price}}</div></li>
                 </ul>
                 <div class="total">
                     <div class="totalContent">
                         <p>Total:</p>
-                        <p>$55.00 mxn</p>
+                        <p>${{totalAmount}} mxn</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="menu">
             <div class="tabs">
-                <button class="selected">Bebidas</button>
-                <button>Alimentos</button>
+                <button id="beveragesButton" class="selected" (click)="toggle($event)">Bebidas</button>
+                <button id="foodButton" (click)="toggle($event)">Alimentos</button>
             </div>
             <div class="menuContent">
-                <div id="food" class="button-matrix">
-                    <button *ngFor="let food of foodList" type="button" class="butn">{{food.product}}</button>
+                <div id="food" class="button-matrix" *ngIf="!show">
+                    <button *ngFor="let food of foodList" type="button" class="butn" (click)="addFood(food.product,food.price)">{{food.product}}</button>
                 </div>
-                <div id="beverage">
-
+                <div id="beverage" class="button-matrix" *ngIf="show">
+                    <button *ngFor="let beverage of beveragesList" type="button" class="butn" (click)="showBeveragesSpecific(beverage.id)">{{beverage.product}}</button>
+                </div>
+                <div id="controlButtons">
+                    <button class="ezeButton">Guardar</button>
+                    <button class="ezeButton">Cerrar Comanda</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div id="specific" *ngIf="showSpecific">
+    <div class="topDiv">
+        <div class="button-matrix">
+            <button *ngFor="let b of beveragesSpecificList" class="butn" (click)="addBeverage(b.beverage.product + ' ' + b.type,b.price)">{{b.type}}</button>
+        </div>
+    </div>
+</div>
+<div id="backgroundDiv" *ngIf="showSpecific" (click)="hideSpecific()"></div>

@@ -8,10 +8,7 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      size: {
-        type: Sequelize.STRING
-      },
-      milk: {
+      type: {
         type: Sequelize.STRING
       },
       price: {

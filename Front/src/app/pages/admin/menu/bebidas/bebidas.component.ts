@@ -45,10 +45,8 @@ export class BebidasComponent implements OnInit {
       ])
     });
     this.addBeverageSpecific = new FormGroup({
-      size: new FormControl('', [
+      type: new FormControl('', [
         Validators.required
-      ]),
-      milk: new FormControl('',[
       ]),
       price: new FormControl('',[
         Validators.required
@@ -62,19 +60,14 @@ export class BebidasComponent implements OnInit {
       ])
     });
     this.updateSpecific = new FormGroup({
-      sizeUpdate: new FormControl('',[
-      ]),
-      milkUpdate: new FormControl('',[
+      typeUpdate: new FormControl('',[
       ]),
       priceUpdate: new FormControl('',[
       ])
     })
     this.createPrice = new FormGroup({
-      sizeCreate: new FormControl('', [
+      typeCreate: new FormControl('', [
         Validators.required
-      ]),
-      milkCreate: new FormControl('',[
-
       ]),
       priceCreate: new FormControl('',[
         Validators.required
@@ -145,8 +138,7 @@ export class BebidasComponent implements OnInit {
   }
   addNewBeverageSpecific(beverageId: any){
     let specificData = {
-      size: this.addBeverageSpecific.value.size,
-      milk: this.addBeverageSpecific.value.milk,
+      type: this.addBeverageSpecific.value.type,
       price: this.addBeverageSpecific.value.price,
       beverageId: beverageId
     }
@@ -207,22 +199,19 @@ export class BebidasComponent implements OnInit {
         $('#alertM').fadeOut(4000);
       })
   }
-  editThisSpecific(id: any, size: any, milk: any, price: any){
+  editThisSpecific(id: any, type: any, price: any){
     this.editId = id;
     this.editData = {
-      size: size,
-      milk: milk,
+      type: type,
       price: price
     };
-    this.updateSpecific.controls['sizeUpdate'].setValue(size);
-    this.updateSpecific.controls['milkUpdate'].setValue(milk);
+    this.updateSpecific.controls['typeUpdate'].setValue(type);
     this.updateSpecific.controls['priceUpdate'].setValue(price);
     $('#uSpecific').show();
   }
   updateBeverageSpecific() {
     const newInfo = {
-      size: this.updateSpecific.value.sizeUpdate,
-      milk: this.updateSpecific.value.milkUpdate,
+      type: this.updateSpecific.value.typeUpdate,
       price: this.updateSpecific.value.priceUpdate
     }
     this._menuService.updateBeverageSpecific(newInfo,this.editId)
@@ -236,8 +225,7 @@ export class BebidasComponent implements OnInit {
   }
   createNewBeverageSpecific() {
     const beverageData = {
-      size: this.createPrice.value.sizeCreate,
-      milk: this.createPrice.value.milkCreate,
+      type: this.createPrice.value.typeCreate,
       price: this.createPrice.value.priceCreate,
       beverageId: this.beverageParentId
     }

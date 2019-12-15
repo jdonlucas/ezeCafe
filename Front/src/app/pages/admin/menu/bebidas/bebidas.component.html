@@ -47,14 +47,12 @@
                     <table class="table" style="width:100%">
                         <thead class="black white-text">
                           <tr>
-                            <th class="text-center">Tamaño</th>
-                            <th class="text-center">Leche</th>
+                            <th class="text-center">Tipo</th>
                             <th class="text-center">Precio</th>
                           </tr>
                         </thead>
                         <tr *ngFor="let beverage of beveragesSpecificList">
-                          <td align="center">{{ beverage.size }}</td>
-                          <td align="center">{{ beverage.milk }}</td>
+                          <td align="center">{{ beverage.type }}</td>
                           <td align="center">{{ beverage.price }}</td>
                         </tr>
                     </table>
@@ -70,28 +68,20 @@
                             <table class="table" style="width:100%">
                                 <thead class="black white-text">
                                   <tr>
-                                    <th class="text-center">Tamaño</th>
-                                    <th class="text-center">Leche</th>
+                                    <th class="text-center">Tipo</th>
                                     <th class="text-center">Precio</th>
                                   </tr>
                                 </thead>
                                 <tr *ngFor="let beverage of beveragesSpecificList">
-                                  <td align="center">{{ beverage.size }}</td>
-                                  <td align="center">{{ beverage.milk }}</td>
+                                  <td align="center">{{ beverage.type }}</td>
                                   <td align="center">{{ beverage.price }}</td>
                                 </tr>
                             </table>
                         <form [formGroup]="addBeverageSpecific">
                             <div class="form-group">
                                 <div class="md-form">
-                                    <input type="text" id="size" class="form-control" placeholder="Tamaño" [ngClass]="{ 'is-invalid': addBeverageSpecific.get('size').touched && addBeverageSpecific.get('size').invalid }"
-                                    formControlName="size" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="md-form">
-                                    <input type="text" id="milk" class="form-control" placeholder="Leche" [ngClass]="{ 'is-invalid': addBeverageSpecific.get('milk').touched && addBeverageSpecific.get('milk').invalid }"
-                                    formControlName="milk" />
+                                    <input type="text" id="type" class="form-control" placeholder="Tipo" [ngClass]="{ 'is-invalid': addBeverageSpecific.get('type').touched && addBeverageSpecific.get('type').invalid }"
+                                    formControlName="type" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -146,15 +136,13 @@
                     <table class="table" style="width:100%">
                         <thead class="black white-text">
                           <tr>
-                            <th class="text-center">Tamaño</th>
-                            <th class="text-center">Leche</th>
+                            <th class="text-center">Tipo</th>
                             <th class="text-center">Precio</th>
                             <th></th>
                           </tr>
                         </thead>
                         <tr *ngFor="let beverage of beveragesSpecificList">
-                          <td align="center">{{ beverage.size }}</td>
-                          <td align="center">{{ beverage.milk }}</td>
+                          <td align="center">{{ beverage.type }}</td>
                           <td align="center">{{ beverage.price }}</td>
                           <td align="center"><button class="link-dark" (click)="deleteSpecificBeverage(beverage.id)">Eliminar</button></td>
                         </tr>
@@ -200,15 +188,13 @@
                     <table class="table" style="width:100%">
                         <thead class="black white-text">
                           <tr>
-                            <th class="text-center">Tamaño</th>
-                            <th class="text-center">Leche</th>
+                            <th class="text-center">Tipo</th>
                             <th class="text-center">Precio</th>
                             <th></th>
                           </tr>
                         </thead>
                         <tr *ngFor="let beverage of beveragesSpecificList">
-                          <td align="center">{{ beverage.size }}</td>
-                          <td align="center">{{ beverage.milk }}</td>
+                          <td align="center">{{ beverage.type }}</td>
                           <td align="center">{{ beverage.price }}</td>
                           <td align="center"><button class="link-dark" (click)="editThisSpecific(beverage.id,beverage.size,beverage.milk,beverage.price)">Editar</button></td>
                         </tr>
@@ -218,14 +204,8 @@
                         <form [formGroup]="updateSpecific">
                             <div class="form-group">
                                 <div class="md-form">
-                                    <input type="text" id="sizeUpdate" class="form-control" placeholder="Tamaño" [ngClass]="{ 'is-invalid': updateSpecific.get('sizeUpdate').touched && updateSpecific.get('sizeUpdate').invalid }"
-                                    formControlName="sizeUpdate" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="md-form">
-                                    <input type="text" id="milkUpdate" class="form-control" placeholder="Leche" [ngClass]="{ 'is-invalid': updateSpecific.get('milkUpdate').touched && updateSpecific.get('milkUpdate').invalid }"
-                                    formControlName="milkUpdate" />
+                                    <input type="text" id="typeUpdate" class="form-control" placeholder="Tipo" [ngClass]="{ 'is-invalid': updateSpecific.get('typeUpdate').touched && updateSpecific.get('typeUpdate').invalid }"
+                                    formControlName="typeUpdate" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -244,14 +224,8 @@
                         <form [formGroup]="createPrice">
                             <div class="form-group">
                                 <div class="md-form">
-                                    <input type="text" id="sizeCreate" class="form-control" placeholder="Tamaño" [ngClass]="{ 'is-invalid': createPrice.get('sizeCreate').touched && createPrice.get('sizeCreate').invalid }"
-                                    formControlName="sizeCreate" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="md-form">
-                                    <input type="text" id="milkCreate" class="form-control" placeholder="Leche" [ngClass]="{ 'is-invalid': createPrice.get('milkCreate').touched && createPrice.get('milkCreate').invalid }"
-                                    formControlName="milkCreate" />
+                                    <input type="text" id="typeCreate" class="form-control" placeholder="Tipo" [ngClass]="{ 'is-invalid': createPrice.get('typeCreate').touched && createPrice.get('typeCreate').invalid }"
+                                    formControlName="typeCreate" />
                                 </div>
                             </div>
                             <div class="form-group">

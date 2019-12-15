@@ -12,7 +12,14 @@ var MenuBeveragesController = {
         return MenuBeveragesSpecific.findAll({
             where: {
                 beverageId: beverageSpecific
-            }
+            },
+            include: [
+                {
+                    model: MenuBeverages,
+                    as: 'beverage',
+                    attributes: ['product']
+                }
+            ]
         })
             .then(menuBeveragesSpecific => res.status(200).json({ menuBeveragesSpecific }))
             .catch(error => res.status(400).send(error));
