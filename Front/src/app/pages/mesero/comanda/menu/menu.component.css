@@ -31,6 +31,7 @@
     width: 35vw;
     top: 190px;
     bottom: 20px;
+    max-width: 555px;
 }
 .total {
     position: absolute;
@@ -46,11 +47,12 @@
     padding-top: 5px;
 }
 .infoComanda {
-    width: 35vw;
+    width: 38vw;
+    max-width: 555px;
 }
 .menu {
     margin-left: 1vw;
-    width: 60%;
+    width: 59vw;
 }
 .tabs {
     margin-top: 10px;
@@ -71,6 +73,12 @@
 }
 .tabs button:focus {
     outline: none;
+}
+.menuContent {
+    position: absolute;
+    bottom: 19px;
+    top: 180px;
+    width: 55%;
 }
 .butn {
   border-radius: 0;
@@ -157,5 +165,26 @@
 .ezeButton {
     width: 50%;
     padding-top: 10px;
+    padding-bottom: 10px;
+}
+#controlButtons {
+    position: absolute;
+    bottom: 0;
+    width: -webkit-fill-available;
+}
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+.top h1 {
+    width: 100%;
+}
+.top fa-icon {
+    color: #999;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    border-bottom: solid 1px #eee;
+    margin-bottom: auto;
     padding-bottom: 10px;
 }

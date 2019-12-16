@@ -30,6 +30,7 @@
     margin-right: 10px;
     width: 38px;
     height: 38px;
+    line-height: 37px;
 }
 #hamburguer:hover {
     background: rgba(255, 255, 255, 0.1);
