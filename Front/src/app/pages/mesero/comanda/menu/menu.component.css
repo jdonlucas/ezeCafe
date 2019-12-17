@@ -203,16 +203,20 @@
     outline: none;
 }
 .confirmButton {
-    width: 10%;
+    width: 20%;
     padding-top: 10px;
     padding-bottom: 10px;
+    border-radius: 8px;
+    margin: 10px;
     background-color: #fff;
 }
 .denyButton {
-    width: 10%;
+    width: 20%;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin: 20px;
+    border-radius: 8px;
+    margin: 10px;
+    margin-bottom: 20px;
     background-color: black;
     color: white;
 }
@@ -228,4 +232,11 @@
     margin: 20px;
     border-radius: 8px;
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.64), 0px 2px 1px -1px rgba(0, 0, 0, 0.62);
+    text-align: center;
+
+}
+h2{
+    padding: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
 }
