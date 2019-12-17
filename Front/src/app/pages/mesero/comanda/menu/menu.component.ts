@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MenuService } from 'src/app/services/menu.service';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-menu',
@@ -97,6 +98,7 @@ export class MenuComponent implements OnInit {
   }
   removeItem(item: any) {
     let index = this.itemsList.indexOf(item);
+    this.totalAmount = this.totalAmount - item.price;
     if (index > -1) {
       this.itemsList.splice(index,1);
     }
