@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MenuService } from 'src/app/services/menu.service';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-menu',
@@ -21,6 +20,7 @@ export class MenuComponent implements OnInit {
   public showSpecific = false;
   public itemsList = [];
   public totalAmount: number;
+  public showConfirm = false;
   faTrash = faTrashAlt;
 
   constructor(
@@ -86,6 +86,7 @@ export class MenuComponent implements OnInit {
   }
   hideSpecific() {
     this.showSpecific = false;
+    this.showConfirm = false;
   }
   addBeverage(name,price) {
     this.itemsList.push({name: name,price: price});
@@ -102,6 +103,9 @@ export class MenuComponent implements OnInit {
     if (index > -1) {
       this.itemsList.splice(index,1);
     }
+  }
+  toggleDiv(){
+     this.showConfirm = !this.showConfirm;
   }
 
 }

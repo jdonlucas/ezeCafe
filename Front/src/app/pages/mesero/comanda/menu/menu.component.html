@@ -1,7 +1,7 @@
 <div class="container2">
     <div class="top">
             <h1 class="titleSection">Nueva comanda</h1>
-            <button><fa-icon [icon]="faTrash"></fa-icon></button>
+            <button (click)="toggleDiv();"><fa-icon [icon]="faTrash"></fa-icon></button>
     </div>
     <div class="container3">
         <div class="infoComanda">
@@ -51,4 +51,8 @@
         </div>
     </div>
 </div>
-<div id="backgroundDiv" *ngIf="showSpecific" (click)="hideSpecific()"></div>
+<div id="confirm" class="alertContainer" *ngIf="showConfirm">
+    <h2>¿Seguro que quieres borrar la comanda?</h2>
+    <button class="confirmButton"> Eliminar</button><button class="denyButton"> Cancelar </button>
+</div>
+<div id="backgroundDiv" *ngIf="showSpecific || showConfirm" (click)="hideSpecific()"></div>
