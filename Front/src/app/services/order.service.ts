@@ -21,7 +21,7 @@ export class OrderService {
     return this._http.get('http://localhost:3000/api/order/showOrder').toPromise();
   }
   showOrders() {
-    return this._http.post('http://localhost:3000/api/order/listAllOrders',{}).toPromise();
+    return this._http.get('http://localhost:3000/api/order/listAllOrders').toPromise();
   }
   deleteOrder(orderId: any) {
     return this._http.post('http://localhost:3000/api/order/deleteOrder', { 

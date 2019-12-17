@@ -4,9 +4,15 @@
         <div class="frameContent">
             <ul class="orders">
                 <li *ngFor="let order of orders">
-                    <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div>{{order.createdAt}}</div></div>
-                    <div class="total">{{order.subtotal}}</div>
-                    <div class="status">{{order.status}}</div>
+                    <div class="gInfo">
+                        <div class="status {{order.status}}" >{{order.status}}</div>
+                        <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div class="date">{{order.createdAt}}</div></div>
+                        <div class="total">${{order.subtotal}} mxn</div>
+                    </div>
+                    <div class="editButtons">
+                        <button><fa-icon [icon]="faEdit"></fa-icon></button>
+                        <button><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                    </div>
                 </li>
                 <li *ngIf="!orders">Aún no hay comandas el día de hoy.</li>
             </ul>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MenuService } from 'src/app/services/menu.service';
+import { OrderService } from 'src/app/services/order.service';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-menu',
@@ -19,12 +21,16 @@ export class MenuComponent implements OnInit {
   public show = true;
   public showSpecific = false;
   public itemsList = [];
+  public foodItems = [];
+  public beverageItems = [];
   public totalAmount: number;
   public showConfirm = false;
   faTrash = faTrashAlt;
 
   constructor(
+    private _router: Router,
     private _menuService: MenuService,
+    private _orderService: OrderService
     ) { }
 
   ngOnInit() {
@@ -88,14 +94,16 @@ export class MenuComponent implements OnInit {
     this.showSpecific = false;
     this.showConfirm = false;
   }
-  addBeverage(name,price) {
+  addBeverage(name,price,b) {
     this.itemsList.push({name: name,price: price});
+    this.beverageItems.push({id: b.id});
     this.hideSpecific();
     this.totalAmount = this.totalAmount + price;
   }
-  addFood(name,price) {
-    this.itemsList.push({name: name,price: price});
-    this.totalAmount = this.totalAmount + price;
+  addFood(food) {
+    this.itemsList.push({name: food.product,price: food.price});
+    this.foodItems.push({id: food.id});
+    this.totalAmount = this.totalAmount + food.price;
   }
   removeItem(item: any) {
     let index = this.itemsList.indexOf(item);
@@ -106,6 +114,60 @@ export class MenuComponent implements OnInit {
   }
   toggleDiv(){
      this.showConfirm = !this.showConfirm;
+  }
+  saveOrder(){
+    let foodData, beverageData;
+    const orderData = {
+      name: this.orderForm.value.name,
+      status: 'pendiente',
+      subtotal: this.totalAmount
+    };
+    this._orderService.newOrder(orderData).then(response => {
+      let order = response['newOrder'];
+      for(let i=0;i<this.foodItems.length;i++){
+        foodData = {
+          foodId: this.foodItems[i].id,
+          orderId: order.id
+        };
+        this._orderService.newFoodOrder(foodData);
+      };
+      for(let i=0;i<this.beverageItems.length;i++){
+        beverageData = {
+          beveragesId: this.beveragesList[i].id,
+          orderId: order.id
+        };
+        this._orderService.newBeverageOrder(beverageData);
+      };
+      this._router.navigate(['/comandas/index']);
+    })
+      .catch(err => this.errors = err);
+  }
+  closeOrder(){
+    let foodData, beverageData;
+    const orderData = {
+      name: this.orderForm.value.name,
+      status: 'cerrada',
+      subtotal: this.totalAmount
+    };
+    this._orderService.newOrder(orderData).then(response => {
+      let order = response['newOrder'];
+      for(let i=0;i<this.foodItems.length;i++){
+        foodData = {
+          foodId: this.foodItems[i].id,
+          orderId: order.id
+        };
+        this._orderService.newFoodOrder(foodData);
+      };
+      for(let i=0;i<this.beverageItems.length;i++){
+        beverageData = {
+          beveragesId: this.beveragesList[i].id,
+          orderId: order.id
+        };
+        this._orderService.newBeverageOrder(beverageData);
+      };
+      this._router.navigate(['/comandas/index']);
+    })
+      .catch(err => this.errors = err);
   }
 
 }

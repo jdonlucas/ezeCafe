@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: 'pendiente'
       },
+      subtotal: {
+        allowNull: false,
+        type: Sequelize.FLOAT
+      },
       UserId: {
         type: Sequelize.UUID,
         references: {
