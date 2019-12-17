@@ -137,5 +137,32 @@ export class MenuComponent implements OnInit {
     })
       .catch(err => this.errors = err);
   }
+  closeOrder(){
+    let foodData, beverageData;
+    const orderData = {
+      name: this.orderForm.value.name,
+      status: 'cerrada',
+      subtotal: this.totalAmount
+    };
+    this._orderService.newOrder(orderData).then(response => {
+      let order = response['newOrder'];
+      for(let i=0;i<this.foodItems.length;i++){
+        foodData = {
+          foodId: this.foodItems[i].id,
+          orderId: order.id
+        };
+        this._orderService.newFoodOrder(foodData);
+      };
+      for(let i=0;i<this.beverageItems.length;i++){
+        beverageData = {
+          beveragesId: this.beveragesList[i].id,
+          orderId: order.id
+        };
+        this._orderService.newBeverageOrder(beverageData);
+      };
+      this._router.navigate(['/comandas/index']);
+    })
+      .catch(err => this.errors = err);
+  }
 
 }
