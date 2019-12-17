@@ -25,6 +25,9 @@ export class MenuComponent implements OnInit {
   public beverageItems = [];
   public totalAmount: number;
   public showConfirm = false;
+  public closeC = false;
+  public confirm = true;
+  public alert = false;
   faTrash = faTrashAlt;
 
   constructor(
@@ -93,6 +96,7 @@ export class MenuComponent implements OnInit {
   hideSpecific() {
     this.showSpecific = false;
     this.showConfirm = false;
+    this.closeC = false;
   }
   addBeverage(name,price,b) {
     this.itemsList.push({name: name,price: price});
@@ -142,32 +146,43 @@ export class MenuComponent implements OnInit {
     })
       .catch(err => this.errors = err);
   }
+  confirmClose() {
+    this.closeC = !this.closeC;
+    this.confirm = true;
+    this.alert = false;
+  }
   closeOrder(){
-    let foodData, beverageData;
-    const orderData = {
-      name: this.orderForm.value.name,
-      status: 'cerrada',
-      subtotal: this.totalAmount
-    };
-    this._orderService.newOrder(orderData).then(response => {
-      let order = response['newOrder'];
-      for(let i=0;i<this.foodItems.length;i++){
-        foodData = {
-          foodId: this.foodItems[i].id,
-          orderId: order.id
-        };
-        this._orderService.newFoodOrder(foodData);
+    if(this.totalAmount != 0) {
+      let foodData, beverageData;
+      const orderData = {
+        name: this.orderForm.value.name,
+        status: 'cerrada',
+        subtotal: this.totalAmount
       };
-      for(let i=0;i<this.beverageItems.length;i++){
-        beverageData = {
-          beveragesId: this.beveragesList[i].id,
-          orderId: order.id
+      this._orderService.newOrder(orderData).then(response => {
+        let order = response['newOrder'];
+        for(let i=0;i<this.foodItems.length;i++){
+          foodData = {
+            foodId: this.foodItems[i].id,
+            orderId: order.id
+          };
+          this._orderService.newFoodOrder(foodData);
         };
-        this._orderService.newBeverageOrder(beverageData);
-      };
-      this._router.navigate(['/comandas/index']);
-    })
-      .catch(err => this.errors = err);
+        for(let i=0;i<this.beverageItems.length;i++){
+          beverageData = {
+            beveragesId: this.beveragesList[i].id,
+            orderId: order.id
+          };
+          this._orderService.newBeverageOrder(beverageData);
+        };
+        this._router.navigate(['/comandas/index']);
+      })
+        .catch(err => this.errors = err);
+    } else {
+      this.confirm = false;
+      this.alert = true;
+    }
+    
   }
 
 }

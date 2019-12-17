@@ -38,7 +38,7 @@
                 </div>
                 <div id="controlButtons">
                     <button class="ezeButton" (click)="saveOrder();">Guardar</button>
-                    <button class="ezeButton">Cerrar Comanda</button>
+                    <button class="ezeButton" (click)="confirmClose()">Cerrar Comanda</button>
                 </div>
             </div>
         </div>
@@ -52,7 +52,19 @@
     </div>
 </div>
 <div id="confirm" class="alertContainer" *ngIf="showConfirm">
-    <h2>¿Seguro que quieres borrar la comanda?</h2>
-    <button class="confirmButton"> Eliminar</button><button class="denyButton"> Cancelar </button>
+    <div class="paddingContainer">
+        <h2>¿Seguro que quieres borrar la comanda?</h2>
+        <button class="confirmButton"> Eliminar</button><button class="denyButton"> Cancelar </button>
+    </div>
 </div>
-<div id="backgroundDiv" *ngIf="showSpecific || showConfirm" (click)="hideSpecific()"></div>
+<div class="alertContainer" *ngIf="closeC">
+    <div class="paddingContainer" *ngIf="confirm">
+        <h2>¿Seguro que deseas cerrar comanda?</h2>
+        <button class="ezeButton" (click)="closeOrder()">Sí, cerrar</button><button class="ezeButton" (click)="hideSpecific()">Cancelar</button> 
+    </div>
+    <div id="alertOrder" *ngIf="alert">
+        <h2>¡No puedes cerrar comanda en ceros!</h2>
+        <p>._.</p>
+    </div>
+</div>
+<div id="backgroundDiv" *ngIf="showSpecific || showConfirm || closeC" (click)="hideSpecific()"></div>

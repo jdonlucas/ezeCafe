@@ -203,20 +203,17 @@
     outline: none;
 }
 .confirmButton {
-    width: 20%;
+    width: 50%;
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 8px;
-    margin: 10px;
     background-color: #fff;
 }
 .denyButton {
-    width: 20%;
+    width: 50%;
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 8px;
-    margin: 10px;
-    margin-bottom: 20px;
     background-color: black;
     color: white;
 }
@@ -239,4 +236,14 @@ h2{
     padding: 20px;
     padding-bottom: 10px;
     margin-bottom: 0px;
+}
+.paddingContainer {
+    padding: 20px;
+}
+.paddingContainer h2 {
+    padding-top: 0px;
+}
+#alertOrder {
+    padding: 20px;
+    text-align: center;
 }
