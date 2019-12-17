@@ -1,7 +1,7 @@
 <div class="container2">
     <div class="top">
             <h1 class="titleSection">Nueva comanda</h1>
-            <fa-icon [icon]="faTrash"></fa-icon>
+            <button><fa-icon [icon]="faTrash"></fa-icon></button>
     </div>
     <div class="container3">
         <div class="infoComanda">
@@ -14,7 +14,7 @@
             </form>
             <div class="whiteframe">
                 <ul class="itemList">
-                    <li *ngFor="let i of itemsList"><div><fa-icon [icon]="faTrash"></fa-icon>&emsp;{{i.name}}</div><div>${{i.price}}</div></li>
+                    <li *ngFor="let i of itemsList"><div><button (click)="removeItem(i);"><fa-icon [icon]="faTrash"></fa-icon></button>&emsp;{{i.name}}</div><div>${{i.price}}</div></li>
                 </ul>
                 <div class="total">
                     <div class="totalContent">

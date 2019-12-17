@@ -95,5 +95,11 @@ export class MenuComponent implements OnInit {
     this.itemsList.push({name: name,price: price});
     this.totalAmount = this.totalAmount + price;
   }
+  removeItem(item: any) {
+    let index = this.itemsList.indexOf(item);
+    if (index > -1) {
+      this.itemsList.splice(index,1);
+    }
+  }
 
 }
