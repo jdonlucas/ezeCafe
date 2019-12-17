@@ -20,8 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Order',
         key: 'id'
       }
-    },
-    quantity: DataTypes.INTEGER
+    }
   }, {});
   BeveragesOrder.associate = function(models) {
     // associations can be defined here

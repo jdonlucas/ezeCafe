@@ -9,6 +9,6 @@ router.post('/showOrder', OrderController.show);
 router.post('/deleteOrder', OrderController.delete);
 //routes for food/beverages order
 router.post('/newFoodOrder', OrderController.createFood);
-router.get('/newBeverageOrder', OrderController.createBeverage);
+router.post('/newBeverageOrder', OrderController.createBeverage);
 
 module.exports = router;

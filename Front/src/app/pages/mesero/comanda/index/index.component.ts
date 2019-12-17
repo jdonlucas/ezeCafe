@@ -4,6 +4,8 @@ import { AppState } from 'src/app/app.reducer';
 import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-index',
@@ -17,6 +19,8 @@ export class IndexComponent implements OnInit {
   public orders: any;
   public errorCode: any;
   faPlus = faPlus;
+  faTrashAlt = faTrashAlt;
+  faEdit = faEdit;
 
   constructor(
     private _store: Store<AppState>,
@@ -29,6 +33,7 @@ export class IndexComponent implements OnInit {
       let authData = auth.authData ? auth.authData : {};
       this.userData = authData.user ? authData.user : {};
     });
+    this.fetchOrders();
   }
 
   fetchOrders() {

@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       defaultValue: 'Pendiente'
+    },
+    subtotal: {
+      allowNull: false,
+      type: DataTypes.FLOAT
     }
   }, {});
   Order.associate = function(models) {
