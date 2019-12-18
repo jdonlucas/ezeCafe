@@ -5,6 +5,7 @@ import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
+import { Router } from "@angular/router";
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -19,6 +20,9 @@ export class EditComponent implements OnInit {
   public beveragesSpecificList: any;
   public showSpecific = false;
   public show = true;
+  public showConfirm = false;
+  public orderId: any;
+  public closeC = false;
   public errors: any
   public userData: any;
   public totalAmount: number;
@@ -26,6 +30,7 @@ export class EditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private _store: Store<AppState>,
+    private _router: Router,
     private _menuService: MenuService,
     private _orderService: OrderService,
     private _salesService: SalesService) { }
@@ -38,7 +43,7 @@ export class EditComponent implements OnInit {
     this.totalAmount = 0.00;
     this.fetchBeverages();
     this.fetchFood();
-    console.log(this.route.snapshot.params.id);
+    this.orderId = this.route.snapshot.params.id;
   }
 
   fetchBeverages() {
@@ -88,6 +93,25 @@ export class EditComponent implements OnInit {
       let bButton = document.getElementById('foodButton');
       bButton.classList.remove("selected");
     }
+  }
+  toggleDiv(){
+     this.showConfirm = !this.showConfirm;
+  }
+  hideSpecific() {
+    this.showSpecific = false;
+    this.showConfirm = false;
+    this.closeC = false;
+  }
+  deleteOrder(){
+    if(this.userData.UserRole > 2) {
+      this._orderService.deleteOrder(this.orderId);
+    } else {
+      let orderData = {
+        status: 'cancelada'
+      }
+      this._orderService.updateOrder(this.orderId,orderData)
+    }
+    this._router.navigate(['/comandas/index']);
   }
 
 }

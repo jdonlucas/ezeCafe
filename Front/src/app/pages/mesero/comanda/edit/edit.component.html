@@ -38,3 +38,10 @@
         </div>
     </div>
 </div>
+<div id="confirm" class="alertContainer" *ngIf="showConfirm">
+    <div class="paddingContainer">
+        <h2>¿Seguro que quieres borrar la comanda?</h2>
+        <button class="ezeButton" (click)="deleteOrder();"> Eliminar</button><button class="ezeButton" (click)="toggleDiv();"> Cancelar </button>
+    </div>
+</div>
+<div class="backgroundDiv" *ngIf="showSpecific || showConfirm || closeC" (click)="hideSpecific()"></div>
