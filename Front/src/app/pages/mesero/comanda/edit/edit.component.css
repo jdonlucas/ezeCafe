@@ -44,6 +44,12 @@
     width: 38vw;
     max-width: 555px;
 }
+.infoComanda h3 {
+    color: #495057;
+    padding-top: 25px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #a8a8a8;
+}
 .menu {
     margin-left: 1vw;
     width: 59vw;

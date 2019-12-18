@@ -113,6 +113,12 @@ nav li a:hover {
     left: 50%;
     transform: translate(-50%,-50%);
 }
+.container2 {
+    margin: 50px;
+}
+.container3 {
+    display: flex;
+}
 .titleSection {
     color: #999;
     font-size: 20px;
@@ -126,4 +132,33 @@ nav li a:hover {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+}
+.backgroundDiv {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9;
+}
+.alertContainer{
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: fit-content;
+    background: #fff;
+    border: 1px solid gray;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.64), 0px 2px 1px -1px rgba(0, 0, 0, 0.62);
+    text-align: center;
+}
+.paddingContainer {
+    padding: 20px;
+}
+.paddingContainer h2 {
+    padding-top: 0px;
 }

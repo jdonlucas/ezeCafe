@@ -28,6 +28,14 @@ export class OrderService {
         orderId: orderId
     }).toPromise();
   }
+  updateOrder(orderId: any,orderData: any) {   
+    return this._http.post('http://localhost:3000/api/order/updateOrder', {
+        orderData: orderData,
+        params: {
+            id: orderId
+        }
+    }).toPromise();
+  }
 
   //associations
   newFoodOrder(foodData: any) {

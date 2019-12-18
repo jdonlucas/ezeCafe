@@ -7,9 +7,10 @@ import { IndexComponent } from './index/index.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EditComponent } from './edit/edit.component';
 
 @NgModule({
-  declarations: [IndexComponent, MenuComponent],
+  declarations: [IndexComponent, MenuComponent, EditComponent],
   imports: [
     CommonModule,
     ComandaRoutingModule,

@@ -50,6 +50,13 @@ var OrderController = {
     },
 
     update(req, res) {
+        let orderData = req.body.orderData;
+        let query = { where: { id: req.body.params.id } };
+        Order.update(orderData, query)
+          .then(orderUpdated => {
+            res.json({ newOrder: orderUpdated });
+          })
+          .catch(err => res.status(500).send(err));
     },
     
     delete(req, res) {

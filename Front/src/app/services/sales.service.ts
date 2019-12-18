@@ -31,7 +31,7 @@ export class SalesService {
     }
     deleteSale(id: any) {
         return this._http.post('http://localhost:3000/api/sales/deleteSale', {
-            salesId: id,
+            saleId: id,
         }).toPromise();
     }
     createNewRegisterStatus(cajaData: any) {

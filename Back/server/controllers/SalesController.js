@@ -59,7 +59,7 @@ var SalesController = {
     delete(req, res) {
         let saleId = req.body.saleId;
         Sales.destroy({
-            where: { id: saleId }
+            where: { OrderId: saleId }
         })
             .then(saleDeleted => {
                 res.json({ saleStatus: saleDeleted });

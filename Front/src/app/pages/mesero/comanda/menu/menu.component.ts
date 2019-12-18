@@ -212,6 +212,12 @@ export class MenuComponent implements OnInit {
   }
   saveSale(payMethod) {
     let saleData: any;
+    let ingreso: any;
+    if (this.paymentForm.value.amount == ''){
+      ingreso = this.totalAmount;
+    } else {
+      ingreso = this.paymentForm.value.amount;
+    }
     if(payMethod == "card"){
       saleData = {
         pago: 'tarjeta',
@@ -222,7 +228,7 @@ export class MenuComponent implements OnInit {
     } else if (payMethod == "cash") {
       saleData = {
         pago: 'efectivo',
-        ingreso: this.paymentForm.value.amount,
+        ingreso: ingreso,
         costo: this.totalAmount,
         OrderId: this.order.id
       } 
