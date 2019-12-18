@@ -14,7 +14,7 @@
                         <button><fa-icon [icon]="faTrashAlt"></fa-icon></button>
                     </div>
                 </li>
-                <li *ngIf="!orders">Aún no hay comandas el día de hoy.</li>
+                <li *ngIf="!orders.length">Aún no hay comandas el día de hoy.</li>
             </ul>
         </div>
     </div>

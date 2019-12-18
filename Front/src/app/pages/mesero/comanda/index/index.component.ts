@@ -16,7 +16,7 @@ export class IndexComponent implements OnInit {
 
   public userData: any;
   public newOrder: any;
-  public orders: any;
+  public orders = [];
   public errorCode: any;
   faPlus = faPlus;
   faTrashAlt = faTrashAlt;

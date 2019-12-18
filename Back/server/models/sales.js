@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    pago: DataTypers.STRING,
+    pago: DataTypes.STRING,
     ingreso: DataTypes.FLOAT,
     costo: DataTypes.FLOAT
   }, {});

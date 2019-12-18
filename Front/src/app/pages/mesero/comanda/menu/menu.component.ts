@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators, FormControlName } from "@angular/forms";
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
+import { SalesService } from 'src/app/services/sales.service';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Router } from "@angular/router";
 
@@ -14,6 +17,7 @@ export class MenuComponent implements OnInit {
 
   public orderData: any;
   public orderForm: FormGroup;
+  public paymentForm: FormGroup;
   public foodList: any;
   public beveragesList: any;
   public beveragesSpecificList: any;
@@ -28,18 +32,32 @@ export class MenuComponent implements OnInit {
   public closeC = false;
   public confirm = true;
   public alert = false;
+  public pago = false;
+  public calculator = false;
+  private order: any;
+  public userData: any;
   faTrash = faTrashAlt;
 
   constructor(
+    private _store: Store<AppState>,
     private _router: Router,
     private _menuService: MenuService,
-    private _orderService: OrderService
+    private _orderService: OrderService,
+    private _salesService: SalesService
     ) { }
 
   ngOnInit() {
+    this._store.select('auth').subscribe(auth => {
+      let authData = auth.authData ? auth.authData : {};
+      this.userData = authData.user ? authData.user : {};
+    });
     this.orderForm = new FormGroup ({
       name: new FormControl('',[])
-    })
+    });
+    this.paymentForm = new FormGroup ({
+      amount: new FormControl('',[]),
+      change: new FormControl('',[])
+    });
     this.fetchBeverages();
     this.fetchFood();
     this.totalAmount = 0.00;
@@ -157,32 +175,63 @@ export class MenuComponent implements OnInit {
       const orderData = {
         name: this.orderForm.value.name,
         status: 'cerrada',
-        subtotal: this.totalAmount
+        subtotal: this.totalAmount,
+        UserId: this.userData.id
       };
       this._orderService.newOrder(orderData).then(response => {
-        let order = response['newOrder'];
+        this.order = response['newOrder'];
         for(let i=0;i<this.foodItems.length;i++){
           foodData = {
             foodId: this.foodItems[i].id,
-            orderId: order.id
+            orderId: this.order.id
           };
           this._orderService.newFoodOrder(foodData);
         };
         for(let i=0;i<this.beverageItems.length;i++){
           beverageData = {
             beveragesId: this.beveragesList[i].id,
-            orderId: order.id
+            orderId: this.order.id
           };
           this._orderService.newBeverageOrder(beverageData);
         };
-        this._router.navigate(['/comandas/index']);
+        this.confirm = false;
+        this.pago = true;
       })
         .catch(err => this.errors = err);
     } else {
       this.confirm = false;
       this.alert = true;
     }
-    
+  }
+  cash() {
+    this.pago = false;
+    this.calculator = true;
+  }
+  public onChange(event: Event): void {
+    this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
+  }
+  saveSale(payMethod) {
+    let saleData: any;
+    if(payMethod == "card"){
+      saleData = {
+        pago: 'tarjeta',
+        ingreso: this.totalAmount,
+        costo: this.totalAmount,
+        OrderId: this.order.id
+      } 
+    } else if (payMethod == "cash") {
+      saleData = {
+        pago: 'efectivo',
+        ingreso: this.paymentForm.value.amount,
+        costo: this.totalAmount,
+        OrderId: this.order.id
+      } 
+    }
+    this._salesService.createSale(saleData)
+      .then(response => {
+        this._router.navigate(['/comandas/index']);
+      })
+      .catch(err => this.errors = err);
   }
 
 }

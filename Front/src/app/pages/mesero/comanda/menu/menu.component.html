@@ -54,7 +54,7 @@
 <div id="confirm" class="alertContainer" *ngIf="showConfirm">
     <div class="paddingContainer">
         <h2>¿Seguro que quieres borrar la comanda?</h2>
-        <button class="confirmButton"> Eliminar</button><button class="denyButton"> Cancelar </button>
+        <button class="ezeButton" routerLink="/comandas/index"> Eliminar</button><button class="ezeButton" (click)="toggleDiv();"> Cancelar </button>
     </div>
 </div>
 <div class="alertContainer" *ngIf="closeC">
@@ -62,9 +62,27 @@
         <h2>¿Seguro que deseas cerrar comanda?</h2>
         <button class="ezeButton" (click)="closeOrder()">Sí, cerrar</button><button class="ezeButton" (click)="hideSpecific()">Cancelar</button> 
     </div>
+    <div class="paddingContainer" *ngIf="pago">
+        <h2>Selecciona la forma de pago</h2>
+        <button class="ezeButton" (click)="saveSale('card')">Pago con tarjeta</button><button class="ezeButton" (click)="cash();">Pago en efectivo</button>
+    </div>
+    <div class="paddingContainer" *ngIf="calculator">
+        <form [formGroup]="paymentForm">
+            <div class="form-group">
+                <div class="md-form">
+                    <input type="number" id="amount" class="form-control" placeholder="Ingreso" (change)="onChange($event)" formControlName="amount" />
+                </div>
+            </div>
+            <div class="md-form">
+                <input type="text" id="change" class="form-control" placeholder="Cambio"  value="" formControlName="change" disabled />
+            </div>
+            <button class="ezeButton">Guardar y salir</button>
+        </form>
+    </div>
     <div id="alertOrder" *ngIf="alert">
         <h2>¡No puedes cerrar comanda en ceros!</h2>
         <p>._.</p>
     </div>
 </div>
-<div id="backgroundDiv" *ngIf="showSpecific || showConfirm || closeC" (click)="hideSpecific()"></div>
+<div class="backgroundDiv" *ngIf="showSpecific || showConfirm || closeC" (click)="hideSpecific()"></div>
+<div class="backgroundDiv" *ngIf="calculator"></div>
