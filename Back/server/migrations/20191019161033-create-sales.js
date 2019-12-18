@@ -18,9 +18,9 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       OrderId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
-          model: 'Order',
+          model: 'Orders',
           key: 'id'
         }
       },
