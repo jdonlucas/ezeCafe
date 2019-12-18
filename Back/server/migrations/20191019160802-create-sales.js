@@ -8,8 +8,21 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      price: {
+      pago: {
+        type: Sequelize.STRING
+      },
+      ingreso: {
         type: Sequelize.FLOAT
+      },
+      costo: {
+        type: Sequelize.FLOAT
+      },
+      OrderId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Order',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
