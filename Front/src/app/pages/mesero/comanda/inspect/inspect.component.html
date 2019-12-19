@@ -1,0 +1,19 @@
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">{{orderName}}</h1>
+        <button routerLink="/comandas/index"><fa-icon [icon]="faUndo"></fa-icon></button>
+    </div>
+    <div class="listContainer">
+        <div class="whiteframe">
+            <ul class="itemList">
+                <li *ngFor="let i of itemsList"><div>{{i.name}}</div><div>${{i.price}}</div></li>
+            </ul>
+            <div class="total">
+                <div class="totalContent">
+                    <p>Total:</p>
+                    <p>${{totalAmount}} mxn</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
