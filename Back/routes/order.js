@@ -11,5 +11,7 @@ router.post('/updateOrder', OrderController.update);
 //routes for food/beverages order
 router.post('/newFoodOrder', OrderController.createFood);
 router.post('/newBeverageOrder', OrderController.createBeverage);
+router.post('/updateFoodOrder', OrderController.updateFoodOrder);
+router.post('/updateBeverageOrder', OrderController.updateBeverageOrder);
 
 module.exports = router;

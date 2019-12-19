@@ -117,14 +117,46 @@ export class MenuComponent implements OnInit {
     this.closeC = false;
   }
   addBeverage(name,price,b) {
+    let find: boolean;
+    this.beverageItems.forEach(x => {
+      if(x.id == b.id) {
+        find = true;
+      } else {
+        find = false;
+      }
+    })
+    if(!find){
+      this.beverageItems.push({id: b.id,quantity: 1});
+    } else {
+      for(let i=0;i<this.beverageItems.length;i++) {
+        if(this.beverageItems[i].id == b.id) {
+          this.beverageItems[i].quantity = this.beverageItems[i].quantity + 1
+        }
+      }
+    }
     this.itemsList.push({name: name,price: price});
-    this.beverageItems.push({id: b.id});
     this.hideSpecific();
     this.totalAmount = this.totalAmount + price;
   }
   addFood(food) {
+    let find: boolean;
+    this.foodItems.forEach(x => {
+      if(x.id == food.id) {
+        find = true;
+      } else {
+        find = false;
+      }
+    })
+    if(!find){
+      this.foodItems.push({id: food.id,quantity: 1});
+    } else {
+      for(let i=0;i<this.foodItems.length;i++) {
+        if(this.foodItems[i].id == food.id) {
+          this.foodItems[i].quantity = this.foodItems[i].quantity + 1
+        }
+      }
+    }
     this.itemsList.push({name: food.product,price: food.price});
-    this.foodItems.push({id: food.id});
     this.totalAmount = this.totalAmount + food.price;
   }
   removeItem(item: any) {
@@ -142,21 +174,25 @@ export class MenuComponent implements OnInit {
     const orderData = {
       name: this.orderForm.value.name,
       status: 'pendiente',
-      subtotal: this.totalAmount
+      subtotal: this.totalAmount,
+      UserId: this.userData.id
     };
     this._orderService.newOrder(orderData).then(response => {
       let order = response['newOrder'];
       for(let i=0;i<this.foodItems.length;i++){
         foodData = {
           foodId: this.foodItems[i].id,
-          orderId: order.id
+          orderId: order.id,
+          quantity: this.foodItems[i].quantity
         };
+        console.log(foodData)
         this._orderService.newFoodOrder(foodData);
       };
       for(let i=0;i<this.beverageItems.length;i++){
         beverageData = {
           beveragesId: this.beverageItems[i].id,
-          orderId: order.id
+          orderId: order.id,
+          quantity: this.beverageItems[i].quantity
         };
         this._orderService.newBeverageOrder(beverageData);
       };
@@ -183,14 +219,16 @@ export class MenuComponent implements OnInit {
         for(let i=0;i<this.foodItems.length;i++){
           foodData = {
             foodId: this.foodItems[i].id,
-            orderId: this.order.id
+            orderId: this.order.id,
+            quantity: this.foodItems[i].quantity
           };
           this._orderService.newFoodOrder(foodData);
         };
         for(let i=0;i<this.beverageItems.length;i++){
           beverageData = {
             beveragesId: this.beverageItems[i].id,
-            orderId: this.order.id
+            orderId: this.order.id,
+            quantity: this.beverageItems[i].quantity
           };
           this._orderService.newBeverageOrder(beverageData);
         };

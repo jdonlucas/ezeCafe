@@ -8,9 +8,10 @@ import { MenuComponent } from './menu/menu.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditComponent } from './edit/edit.component';
+import { InspectComponent } from './inspect/inspect.component';
 
 @NgModule({
-  declarations: [IndexComponent, MenuComponent, EditComponent],
+  declarations: [IndexComponent, MenuComponent, EditComponent, InspectComponent],
   imports: [
     CommonModule,
     ComandaRoutingModule,

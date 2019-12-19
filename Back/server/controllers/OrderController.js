@@ -1,6 +1,9 @@
 const Order = require('../models').Order;
 const FoodOrder = require('../models').FoodOrder;
 const BeverageOrder = require('../models').BeveragesOrder;
+const MenuFood = require('../models').MenuFood;
+const MenuBeveragesSpecific = require('../models').MenuBeveragesSpecific;
+const MenuBeverages = require('../models').MenuBeverages;
 
 var OrderController = {
     index(req, res) {
@@ -18,16 +21,23 @@ var OrderController = {
             },
             include: [
                 {
-                    model: FoodOrder,
+                    model: MenuFood,
                     as: 'food'
                 },
                 {
-                    model: BeveragesOrder,
-                    as: 'beverages'
+                    model: MenuBeveragesSpecific,
+                    as: 'beverages',
+                    include: [
+                        {
+                            model: MenuBeverages,
+                            as: 'beverage',
+                            attributes: ['product']
+                        }
+                    ]
                 }
             ]
         })
-            .then(order => res.status(200).json({ order }))
+            .then(order => res.status(200).json(order))
             .catch(error => res.status(400).send(error));
     },
 
@@ -48,6 +58,24 @@ var OrderController = {
         BeverageOrder.create(beverageData).then(beverageCrated => {
             res.json({newBeverageOrder: beverageCrated});
         }).catch(err => res.status(500).send(err));
+    },
+    updateFoodOrder(req,res) {
+        let orderFoodData = req.body.foodData;
+        let query = { where: { id: req.body.params.id }};
+        FoodOrder.update(orderFoodData, query)
+            .then(foodOrderUpdated => {
+                res.json({ newFood: foodOrderUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    updateBeverageOrder(req,res) {
+        let beverageOrder = req.body.beverageOrder;
+        let query = { where: { id: req.body.params.id }};
+        BeverageOrder.update(beverageOrder, query)
+            .then(beverageOrder => {
+                res.json({ newBeverage: beverageOrder })
+            })
+            .catch(err => res.status(500).send(err));
     },
 
     update(req, res) {

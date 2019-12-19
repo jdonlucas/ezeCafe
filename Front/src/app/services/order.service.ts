@@ -50,5 +50,21 @@ export class OrderService {
         beverageData: beverageData
     }).toPromise();
   }
+  updateFoodOrder(id: any,foodData: any) {
+    return this._http.post('http://localhost:3000/api/order/updateFoodOrder', {
+      foodData: foodData,
+      params: {
+        id: id
+      }
+    }).toPromise();
+  }
+  updateBeverageOrder(id: any,beverageData: any) {
+    return this._http.post('http://localhost:3000/api/order/updateBeverageOrder', {
+      beverageOrder: beverageData,
+      params: {
+        id: id
+      }
+    }).toPromise();
+  }
     
 }

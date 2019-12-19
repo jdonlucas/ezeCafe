@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Order',
         key: 'id'
       }
+    },
+    quantity: {
+      allowNull: false,
+      type: DataTypes.STRING
     }
   }, {});
   FoodOrder.associate = function(models) {
