@@ -68,19 +68,21 @@ export class IndexComponent implements OnInit {
   }
   confirmDelete(){
     this._salesService.deleteSale(this.orderId);
-    this._orderService.deleteOrder(this.orderId);
-    this.hide();
-    this.fetchOrders();
-    this.orderId = '';
+    this._orderService.deleteOrder(this.orderId).then(res => {
+      this.hide();
+      this.fetchOrders();
+      this.orderId = '';
+    }).catch(err => {});
   }
   confirmCancel(){
     let orderData = {
       status: 'cancelada'
     }
     this._orderService.updateOrder(this.orderId,orderData)
-      .then(response => {}).catch(err => {});
-    this.hide();
-    this.fetchOrders();
-    this.orderId = '';
+      .then(response => {
+        this.hide();
+        this.fetchOrders();
+        this.orderId = '';
+      }).catch(err => {});
   }
 }

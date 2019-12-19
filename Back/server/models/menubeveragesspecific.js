@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'beverageId', 
       as: 'beverage'
     });
+    MenuBeveragesSpecific.belongsToMany(models.Order,{
+      through: 'BeveragesOrder',
+      as: 'beveragesOrder',
+      foreignKey: 'beveragesId',
+      hooks: true
+    })
   };
   return MenuBeveragesSpecific;
 };

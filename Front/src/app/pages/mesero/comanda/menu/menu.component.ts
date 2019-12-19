@@ -155,7 +155,7 @@ export class MenuComponent implements OnInit {
       };
       for(let i=0;i<this.beverageItems.length;i++){
         beverageData = {
-          beveragesId: this.beveragesList[i].id,
+          beveragesId: this.beverageItems[i].id,
           orderId: order.id
         };
         this._orderService.newBeverageOrder(beverageData);
@@ -189,7 +189,7 @@ export class MenuComponent implements OnInit {
         };
         for(let i=0;i<this.beverageItems.length;i++){
           beverageData = {
-            beveragesId: this.beveragesList[i].id,
+            beveragesId: this.beverageItems[i].id,
             orderId: this.order.id
           };
           this._orderService.newBeverageOrder(beverageData);

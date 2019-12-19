@@ -10,7 +10,8 @@ var OrderController = {
     },
 
     show(req, res) {
-        const orderId = req.query.orderId;
+        const orderId = req.body.orderId;
+        console.log(orderId)
         return Order.findAll({
             where: {
                 id: orderId,

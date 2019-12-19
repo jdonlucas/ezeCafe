@@ -31,13 +31,15 @@ module.exports = (sequelize, DataTypes) => {
       through: 'FoodOrder',
       as: 'food',
       foreignKey: 'orderId',
-      otherKey: 'foodId'
+      onDelete: 'cascade',
+      hooks: true
     });
     Order.belongsToMany(models.MenuBeveragesSpecific,{
       through: 'BeveragesOrder',
       as: 'beverages',
-      foreignKey: 'orderBeveragesId',
-      otherKey: 'beveragesId'
+      foreignKey: 'orderId',
+      onDelete: 'cascade',
+      hooks: true
     })
   };
 

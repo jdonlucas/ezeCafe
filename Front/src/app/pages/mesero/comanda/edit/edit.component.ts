@@ -44,6 +44,10 @@ export class EditComponent implements OnInit {
     this.fetchBeverages();
     this.fetchFood();
     this.orderId = this.route.snapshot.params.id;
+    this._orderService.showOrder(this.orderId).then(res => {
+      let orderData = res['order'];
+      console.log(orderData);
+    }).catch(err => { this.errors = err; })
   }
 
   fetchBeverages() {

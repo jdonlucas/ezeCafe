@@ -17,8 +17,10 @@ export class OrderService {
       orderData: orderData
     }).toPromise();
   }
-  showOrder() {
-    return this._http.get('http://localhost:3000/api/order/showOrder').toPromise();
+  showOrder(id: any) {
+    return this._http.post('http://localhost:3000/api/order/showOrder',{
+      orderId: id
+    }).toPromise();
   }
   showOrders() {
     return this._http.get('http://localhost:3000/api/order/listAllOrders').toPromise();
