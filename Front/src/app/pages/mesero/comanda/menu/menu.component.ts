@@ -185,7 +185,6 @@ export class MenuComponent implements OnInit {
           orderId: order.id,
           quantity: this.foodItems[i].quantity
         };
-        console.log(foodData)
         this._orderService.newFoodOrder(foodData);
       };
       for(let i=0;i<this.beverageItems.length;i++){

@@ -1,23 +1,28 @@
-<div class="breadcrumb">
-    <li><a routerLink="/admin/users">Administración de usuarios</a></li>
-    <li><a routerLink="/admin/inventario">Inventario</a></li>
-    <li><a routerLink="/admin/menu">Menú</a></li>
-    <li><a routerLink="/mesero/comanda">Comanda</a></li>
-</div>
-<div class="container h-100">
-    <div class="row justify-content-center align-items-center h-100">
-        <div class="card my-auto">
-            <div class="card-body">
-                <div class="row welcome">
-                    <h2>Bienvenido a la plataforma Eze Café</h2>
-                    <p>En esta plataforma podrás llevar un control de 
-                        inventario, generar comandas, y concretar cobros.
-                    </p>
-                    <p>Si tienes alguna duda, ponte en contacto con el 
-                        administrador.
-                    </p>
-                </div>
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">Inicio</h1>
+    </div>
+    <div class="summaryBoxes">
+        <div class="summaryBox summary-total">
+            <div class="summary-main">
+                <div class="summary-value">{{totalOrders}}</div>
+                <div class="summary-desc">Comandas totales</div>
             </div>
+            <div class="summary-footer"><a routerLink="/comandas/index">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a></div>
+        </div>
+        <div class="summaryBox summary-pending">
+            <div class="summary-main">
+                <div class="summary-value">{{pendingOrders}}</div>
+                <div class="summary-desc">Comandas pendientes</div>
+            </div>
+            <div class="summary-footer"><a routerLink="/comandas/index/pending">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a></div>
+        </div>
+        <div class="summaryBox summary-amount">
+            <div class="summary-main">
+                <div class="summary-value">${{total}} mxn</div>
+                <div class="summary-desc">Total vendido</div>
+            </div>
+            <div class="summary-footer">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></div>
         </div>
     </div>
 </div>

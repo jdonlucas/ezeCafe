@@ -1,13 +1,42 @@
-.container {
-    width: 70%;
+.summaryBoxes {
+    display: flex;
+    color: #fff;
+    margin: 30px 0;
+    justify-content: space-between;
 }
-.welcome h2{
-    margin: 20px;
-    margin-bottom: 30px;
+.summaryBox {
+    width: 200px;
+    border-radius: 2px;
 }
-.welcome p {
-    margin: 20px;
+.summary-total {
+    background: #00c0ef;
 }
-.card {
-    margin: 0
+.summary-pending {
+    background: #F39C12;
+}
+.summary-amount {
+    background: #00A65A;
+}
+.summary-main {
+    margin: 10px;
+}
+.summary-value {
+    font-size: 25px;
+    font-weight: 900;
+}
+.summary-desc {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 10px 10px 20px 0;
+}
+.summary-footer {
+    padding: 4px;
+    font-size: 12px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+}
+.summary-footer a {
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
 }

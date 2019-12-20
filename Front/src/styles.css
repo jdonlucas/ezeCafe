@@ -162,3 +162,7 @@ nav li a:hover {
 .paddingContainer h2 {
     padding-top: 0px;
 }
+.summary-footer a {
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}

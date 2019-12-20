@@ -6,6 +6,7 @@ import { SuperadminRoutingModule } from './superadmin-routing.module';
 import { HomeComponent } from './home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BajaComponent } from './baja/baja.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { BajaComponent } from './baja/baja.component';
   imports: [
     CommonModule,
     SuperadminRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ]
 })
 export class SuperadminModule { }

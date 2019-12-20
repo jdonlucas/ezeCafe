@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BajaComponent } from './baja/baja.component';
 import { SettingsComponent } from './settings/settings.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SettingsComponent } from './settings/settings.component';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ]
 })
 export class AdminModule { }
