@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
+import { faMugHot } from '@fortawesome/free-solid-svg-icons';
+import { faHamburger } from '@fortawesome/free-solid-svg-icons';
+import { faUserTag } from '@fortawesome/free-solid-svg-icons';
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +14,10 @@ import { AppState } from 'src/app/app.reducer';
 export class HomeComponent implements OnInit {
 
   public userData: any;
+  faMugHot = faMugHot;
+  faHamburger = faHamburger;
+  faUserTag = faUserTag;
+  faArrowCircleRight = faArrowCircleRight;
 
   constructor(
     private _store: Store<AppState>

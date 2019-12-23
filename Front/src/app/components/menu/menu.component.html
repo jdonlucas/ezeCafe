@@ -25,9 +25,9 @@
 <div class="leftMenu" *ngIf="userData.id && show" [@slideLeftInOut]>
     <div id="toolsDiv"></div>
     <ul>
-        <li><fa-icon [icon]="faInbox"></fa-icon> <a routerLink="/" (click)="toggle();"> Inicio</a></li>
-        <li><fa-icon [icon]="faPaperPlane"></fa-icon> <a routerLink="/comandas/index" (click)="toggle();"> Órdenes</a></li>
-        <li class="settings" *ngIf="userData.UserRole == 3 || userData.UserRole == 4"><fa-icon [icon]="faCog"></fa-icon> Ajustes</li>
+        <li><a routerLink="/" (click)="toggle();"><fa-icon [icon]="faInbox"></fa-icon> Inicio</a></li>
+        <li><a routerLink="/comandas/index" (click)="toggle();"><fa-icon [icon]="faPaperPlane"></fa-icon> Órdenes</a></li>
+        <li class="settings" *ngIf="userData.UserRole > 2"><a routerLink="/admin/settings" (click)="toggle();"><fa-icon [icon]="faCog"></fa-icon> Ajustes</a></li>
     </ul>
 </div>
 <div class="blackout" *ngIf="userData.id && show" (click)="toggle();"></div>

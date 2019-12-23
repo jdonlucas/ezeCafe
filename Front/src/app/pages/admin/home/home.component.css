@@ -9,13 +9,13 @@
     border-radius: 2px;
 }
 .summary-total {
-    background: #00c0ef;
+    background: #ed6663;
 }
 .summary-pending {
-    background: #F39C12;
+    background: #b52b65;
 }
 .summary-amount {
-    background: #00A65A;
+    background: #621055;
 }
 .summary-main {
     margin: 10px;

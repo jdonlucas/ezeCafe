@@ -1,25 +1,42 @@
-.content{
-    overflow:auto;
+.summaryBoxes {
     display: flex;
-    width: 100%;
-    justify-content: center;
-    height: inherit;
+    color: #fff;
+    margin: 30px 0;
+    justify-content: space-between;
 }
-.menuButton button {
-    border-radius: 4px;
-    border-color: none;
-    background-color: var(--black-color);
-    color: var(--white-color);
-    cursor: pointer;
-    text-decoration: none;
-    border: none;
-    width: 250px;
-    padding: 7px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin: 40px;
-    font-size: 42px;
+.summaryBox {
+    width: 200px;
+    border-radius: 2px;
 }
-.menuButton button:hover {
-    background-color: var(--black-clear-color);
+.summary-total {
+    background: #f67280;
+}
+.summary-pending {
+    background: #b52b65;
+}
+.summary-amount {
+    background: #621055;
+}
+.summary-horn {
+    background: #ffa372;
+}
+.summary-main {
+    margin: 10px;
+    height: 100px;
+}
+.summary-value {
+    font-size: 25px;
+    font-weight: 900;
+}
+.summary-desc {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 10px 10px 20px 0;
+}
+.summary-footer {
+    padding: 4px;
+    font-size: 12px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.8);
 }

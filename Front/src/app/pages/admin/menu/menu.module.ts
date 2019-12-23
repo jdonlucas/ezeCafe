@@ -6,6 +6,7 @@ import { MenuRoutingModule } from './menu-routing.module';
 import { AlimentosComponent } from './alimentos/alimentos.component';
 import { BebidasComponent } from './bebidas/bebidas.component';
 import { HomeComponent } from './home/home.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { HomeComponent } from './home/home.component';
   imports: [
     CommonModule,
     MenuRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ]
 })
 export class MenuModule { }

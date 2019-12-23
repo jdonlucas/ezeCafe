@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 declare var $: any;
 
@@ -18,6 +19,7 @@ export class AlimentosComponent implements OnInit {
   public addFood: FormGroup;
   public editFood: FormGroup;
   public parentId: any;
+  faArrowLeft = faArrowLeft;
 
   constructor(
     private _store: Store<AppState>,
@@ -37,32 +39,14 @@ export class AlimentosComponent implements OnInit {
       ])
     });
     this.editFood = new FormGroup({
-      product: new FormControl('',[
+      productEdit: new FormControl('',[
         Validators.required
       ]),
-      price: new FormControl('',[
+      priceEdit: new FormControl('',[
         Validators.required
       ])
     })
-  }
-
-  show(number: any) {
-    if (number == 1) {
-      $('#options').hide();
-      $('#add').show();
-    } else if (number == 2) {
-      $('#options').hide();
-      $('#show').show();
-      this.showFood();
-    } else if (number == 3) {
-      $('#options').hide();
-      $('#update').show();
-      this.showFood();
-    } else if (number == 4) {
-      $('#options').hide();
-      $('#delete').show();
-      this.showFood();
-    }
+    this.showFood();
   }
 
   showFood() {
@@ -87,8 +71,8 @@ export class AlimentosComponent implements OnInit {
   edit(id: any,product: any,price: any) {
     this.parentId = id;
     $('#editFood').show();
-    this.editFood.controls['product'].setValue(product);
-    this.editFood.controls['price'].setValue(price);
+    this.editFood.controls['productEdit'].setValue(product);
+    this.editFood.controls['priceEdit'].setValue(price);
   }
   updateFood() {
     const newFoodData = {
