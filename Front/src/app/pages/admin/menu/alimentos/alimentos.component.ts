@@ -4,8 +4,10 @@ import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
-declare var $: any;
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-alimentos',
@@ -16,10 +18,17 @@ export class AlimentosComponent implements OnInit {
 
   public userData: any;
   public foodList: any;
+  public foodListSearch: any;
   public addFood: FormGroup;
   public editFood: FormGroup;
+  public searchFood: FormGroup;
   public parentId: any;
+  public add = true;
+  public editF = false;
   faArrowLeft = faArrowLeft;
+  faTrashAlt = faTrashAlt;
+  faEdit = faEdit;
+  faSearch = faSearch;
 
   constructor(
     private _store: Store<AppState>,
@@ -29,6 +38,10 @@ export class AlimentosComponent implements OnInit {
     this._store.select('auth').subscribe(auth => {
       let authData = auth.authData ? auth.authData : {};
       this.userData = authData.user ? authData.user : {};
+    });
+    this.searchFood = new FormGroup({
+      filter: new FormControl('',[
+      ])
     });
     this.addFood = new FormGroup({
       product: new FormControl('',[
@@ -53,6 +66,7 @@ export class AlimentosComponent implements OnInit {
     this._menuService.showFood()
       .then(response => {
         this.foodList = response['foodList'];
+        this.foodListSearch = this.foodList.slice()
       })
   }
   addNewFood(){
@@ -62,28 +76,29 @@ export class AlimentosComponent implements OnInit {
     }
     this._menuService.addFood(foodData)
       .then(response => {
-        $('#alertM').html('Se creó nuevo alimento.')
-        $('#alertM').show();
-        $('#alertM').fadeOut(5000);
         this.addFood.reset();
+        this.showFood();
       })
   }
   edit(id: any,product: any,price: any) {
+    this.add = false;
+    this.editF = true;
     this.parentId = id;
-    $('#editFood').show();
     this.editFood.controls['productEdit'].setValue(product);
     this.editFood.controls['priceEdit'].setValue(price);
   }
   updateFood() {
     const newFoodData = {
-      product: this.editFood.value.product,
-      price: this.editFood.value.price
+      product: this.editFood.value.productEdit,
+      price: this.editFood.value.priceEdit
     }
     this._menuService.updateFood(newFoodData,this.parentId)
       .then(response => {
-        $('#editFood').hide();
         this.showFood();
         this.editFood.reset();
+        this.searchFood.reset();
+        this.add = true;
+        this.editF = false;
       })
   }
   deleteFood(id: any) {
@@ -91,6 +106,20 @@ export class AlimentosComponent implements OnInit {
       .then(response => {
         this.showFood();
       })
+  }
+  public onChange(event: Event): void {
+    let word = (<HTMLInputElement>event.target).value;
+    let _self = this;
+    _self.foodListSearch = [];
+    if(word == '') {
+      _self.foodListSearch = this.foodList.slice();
+    } else {
+      this.foodList.find(function(item) {
+        if(item.product.includes(word)) {
+          _self.foodListSearch.push(item);
+        }
+      })
+    }
   }
 
 }

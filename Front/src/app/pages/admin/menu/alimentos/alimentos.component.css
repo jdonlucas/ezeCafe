@@ -23,9 +23,6 @@
 .options button:hover {
     background-color: var(--black-clear-color);
 }
-#add, #update, #delete, #show, #editFood {
-    display: none
-}
 
 .authButton button {
     width: auto;
@@ -73,8 +70,72 @@
 }
 .foodContainer {
     display: flex;
+    height: 600px;
 }
 .foodItem {
     width: 50%;
     margin: 10px;
+}
+.foodItem ul {
+    padding: 0;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.foodItem li {
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    justify-content: space-between;
+    padding: 10px;
+}
+.whiteframe {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 10px;
+    background: #fff;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    height: 90%;
+}
+.whiteframe ul {
+    max-height: 100%;
+    overflow: auto;
+}
+.last {
+    border-bottom: none!important;
+}
+.total {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #00c0ef;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    height: fit-content;
+    line-height: 20px;
+    margin-left: 20px;
+}
+.items {
+    display: flex;
+}
+.editButton {
+    background: transparent;
+    border: none;
+}
+.eButtons {
+    display: flex;
+}
+.searchIcon {
+    color: #666;
+    margin: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.md-form {
+    margin-bottom: 10px;
+}
+.centerV {
+    transform: translateY(27%);
+}
+.fullWidth {
+    width: 100%;
 }
