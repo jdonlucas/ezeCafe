@@ -5,6 +5,7 @@ import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
@@ -23,6 +24,7 @@ export class BebidasComponent implements OnInit {
   public userData: any;
   public beveragesList = [];
   public beveragesSpecificList = [];
+  public foodListSearch = [];
   public errors: any;
   public addBeverage: FormGroup;
   public addBeverageSpecific: FormGroup;
@@ -35,16 +37,19 @@ export class BebidasComponent implements OnInit {
   public beverageParentId: any;
   public editId: any;
   public editData: any;
+  public title: any
   public add = true;
   public update = false;
   public addSpecific = false;
   public seeSpecific = false;
+  public updateSpecificBeverages = false;
   faArrowLeft = faArrowLeft;
   faTrashAlt = faTrashAlt;
   faEdit = faEdit;
   faSearch = faSearch;
   faEye = faEye;
   faTimesCircle = faTimesCircle;
+  faPlus = faPlus;
 
   constructor(
     private _store: Store<AppState>,
@@ -100,6 +105,7 @@ export class BebidasComponent implements OnInit {
     this._menuService.showBeverages()
       .then(response => {
         this.beveragesList = response['menuBeverages'];
+        this.foodListSearch = this.beveragesList.slice();
       })
       .catch(err => {
         this.errors = err;
@@ -108,6 +114,13 @@ export class BebidasComponent implements OnInit {
   hide() {
     this.addSpecific = false;
     this.seeSpecific = false;
+    this.updateSpecificBeverages = false;
+  }
+  showList(name: any) {
+    this.seeSpecific = true;
+    this.title = name.product;
+    this.beverageParentId = name.id;
+    this.beverageId = name.id;
   }
   showBeveragesSpecific (id: any) {
     this._menuService.showSpecificBeverage(id)
@@ -122,6 +135,7 @@ export class BebidasComponent implements OnInit {
     this._menuService.newBeverage({ product: this.addBeverage.value.product })
       .then(response => {
         this.beverageId = response["newBeverage"].id;
+        this.title = response["newBeverage"].product;
         this.addSpecific = true;
         this.showBeveragesSpecific(this.beverageId);
       })
@@ -145,6 +159,14 @@ export class BebidasComponent implements OnInit {
         this.errors = err;
       })
   }
+  addS() {
+    this.addSpecific = true;
+    this.seeSpecific = false;
+  }
+  editS() {
+    this.addSpecific = false;
+    this.seeSpecific = true;
+  }
   deleteBeverage(beverageId: any) {
     this._menuService.deleteBeverage(beverageId)
       .then(response => {
@@ -152,8 +174,9 @@ export class BebidasComponent implements OnInit {
       })
   }
   editThisField(beverageId: any) {
-    $('#uGeneral').show();
     this.updateVarGeneral = beverageId; 
+    this.add = false;
+    this.update = true;
   }
   updateBeverageGeneral() {
     const newInfo = {
@@ -161,7 +184,13 @@ export class BebidasComponent implements OnInit {
     }
     this._menuService.updateBeverage(newInfo,this.updateVarGeneral)
       .then(response => {
+        this.update = false;
+        this.add = true;
       })
+  }
+  cancel() {
+    this.update = false;
+    this.add = true;
   }
   deleteSpecificBeverage(id: any) {
     this._menuService.deleteBeverageSpecific(id)
@@ -170,14 +199,15 @@ export class BebidasComponent implements OnInit {
         this.showBeveragesSpecific(this.beverageParentId);
       })
   }
-  editThisSpecific(id: any, type: any, price: any){
-    this.editId = id;
+  editThisSpecific(b: any){
+    this.updateSpecificBeverages = true;
+    this.editId = b.id;
     this.editData = {
-      type: type,
-      price: price
+      type: b.type,
+      price: b.price
     };
-    this.updateSpecific.controls['typeUpdate'].setValue(type);
-    this.updateSpecific.controls['priceUpdate'].setValue(price);
+    this.updateSpecific.controls['typeUpdate'].setValue(b.type);
+    this.updateSpecific.controls['priceUpdate'].setValue(b.price);
   }
   updateBeverageSpecific() {
     const newInfo = {
@@ -187,6 +217,7 @@ export class BebidasComponent implements OnInit {
     this._menuService.updateBeverageSpecific(newInfo,this.editId)
       .then(response => {
         this.showBeveragesSpecific(this.beverageParentId);
+        this.updateSpecificBeverages = false;
       })
       .catch(err => {
         this.errors = err;
@@ -203,6 +234,21 @@ export class BebidasComponent implements OnInit {
         $('#createPrice').hide();
         this.showBeveragesSpecific(this.beverageParentId);
       })
+  }
+
+  public onChange(event: Event): void {
+    let word = (<HTMLInputElement>event.target).value;
+    let _self = this;
+    _self.foodListSearch = [];
+    if(word == '') {
+      _self.foodListSearch = this.beveragesList.slice();
+    } else {
+      this.beveragesList.find(function(item) {
+        if(item.product.includes(word)) {
+          _self.foodListSearch.push(item);
+        }
+      })
+    }
   }
 
 

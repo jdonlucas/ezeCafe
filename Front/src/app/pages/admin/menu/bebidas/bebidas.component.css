@@ -121,27 +121,30 @@
     background: transparent;
     border: none;
 }
+.editButton:focus {
+    outline: none;
+}
 .eButtons {
     display: flex;
 }
 .searchIcon {
     color: #666;
     margin: 5px;
-    margin-top: 10px;
+    margin-top: 13px;
     margin-right: 10px;
 }
 .md-form {
     margin-bottom: 10px;
 }
 .centerV {
-    transform: translateY(27%);
+    transform: translateY(47%);
 }
 .fullWidth {
     width: 100%;
     padding: 5px;
 }
 .addBeverage{
-    height: 96%;
+    height: 90%;
 }
 .exitButton {
     position: absolute;
@@ -165,4 +168,31 @@
 }
 .seeContainer {
     width: 500px;
+}
+.allDiv {
+    width: 100%;
+}
+.addButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+}
+.crearComanda {
+    z-index: 20;
+    color: rgb(255,255,255);
+    background-color: #704241;
+    width: 56px;
+    height: 56px;
+    font-size: 14px;
+    vertical-align: middle;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+    border-radius: 50%;
+    border: none;
+    transition: .2s linear;
+    transition-property: background-color,box-shadow;
+    cursor: pointer;
+}
+.crearComanda:focus {
+    outline: none;
 }
