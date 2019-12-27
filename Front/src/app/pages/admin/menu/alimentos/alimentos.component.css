@@ -134,8 +134,9 @@
     margin-bottom: 10px;
 }
 .centerV {
-    transform: translateY(27%);
+    transform: translateY(57%);
 }
 .fullWidth {
     width: 100%;
+    padding: 5px;
 }

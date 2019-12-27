@@ -7,7 +7,6 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-alimentos',

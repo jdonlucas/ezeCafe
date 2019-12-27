@@ -133,6 +133,9 @@ nav li a:hover {
     border-radius: 5px;
     cursor: pointer;
 }
+.ezeButton:disabled {
+    background: rgb(73, 73, 73);
+}
 .backgroundDiv {
     position: absolute;
     top: 0;
@@ -165,4 +168,7 @@ nav li a:hover {
 .summary-footer a {
     color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
+}
+.centerDiv {
+    transform: translateY(100%);
 }

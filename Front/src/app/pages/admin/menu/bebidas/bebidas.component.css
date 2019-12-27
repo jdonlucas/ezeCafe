@@ -23,31 +23,10 @@
 .options button:hover {
     background-color: var(--black-clear-color);
 }
-.link-dark {
-    color: rgb(0, 0, 0);
-    font-weight: 300;
-    background-color: #FFFFFF00;
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-.link-dark:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-#eliminar, #add, #addPrices, #showSpecificBeveragesList, #deleteSpecificBeverages, 
-#updateSpecificBeverages, #uGeneral, #mostrar, #delete, #update, #uSpecific, #createPrice {
-    display: none;
-}
-#add h2 {
-    font-size: 42px;
-}
+
 .authButton button {
     width: auto;
     margin: 15px;
-}
-#addPrices h2 {
-    margin-bottom: 30px;
 }
 
 .alertMessage {
@@ -57,7 +36,6 @@
     width: 100%;
     top: 140.5px;
     text-align: center;
-    padding-left: 20%;
 }
 .alertMessage p {
     margin: auto;
@@ -66,4 +44,125 @@
     padding-bottom: 10px;
     border: 2px solid black;
     border-radius: 9px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+.top h1 {
+    width: 100%;
+}
+.top button {
+    background: transparent;
+    border: none;
+    color: #999;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    border-bottom: solid 1px #eee;
+    margin-bottom: auto;
+    padding-bottom: 9px;
+    cursor: pointer;
+}
+.top button:focus {
+    outline: none;
+}
+.foodContainer {
+    display: flex;
+    height: 600px;
+}
+.foodItem {
+    width: 50%;
+    margin: 10px;
+}
+.foodItem ul {
+    padding: 0;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.foodItem li {
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    justify-content: space-between;
+    padding: 10px;
+}
+.whiteframe {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 10px;
+    background: #fff;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    height: 90%;
+}
+.whiteframe ul {
+    max-height: 100%;
+    overflow: auto;
+}
+.last {
+    border-bottom: none!important;
+}
+.total {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #00c0ef;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    height: fit-content;
+    line-height: 20px;
+    margin-left: 20px;
+}
+.items {
+    display: flex;
+}
+.editButton {
+    background: transparent;
+    border: none;
+}
+.eButtons {
+    display: flex;
+}
+.searchIcon {
+    color: #666;
+    margin: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.md-form {
+    margin-bottom: 10px;
+}
+.centerV {
+    transform: translateY(27%);
+}
+.fullWidth {
+    width: 100%;
+    padding: 5px;
+}
+.addBeverage{
+    height: 96%;
+}
+.exitButton {
+    position: absolute;
+    background: transparent;
+    border: none;
+    top: 5px;
+    right: 1px;
+}
+.addContainer {
+    width: 60%;
+}
+.center {
+    text-align: center;
+}
+.divCenter {
+    margin: auto;
+}
+.inheritWidth {
+    width: auto;
+    margin: 30px;
+}
+.seeContainer {
+    width: 500px;
 }

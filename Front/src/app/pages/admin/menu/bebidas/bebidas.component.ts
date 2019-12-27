@@ -3,6 +3,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+
 
 declare var $: any;
 
@@ -14,20 +21,30 @@ declare var $: any;
 export class BebidasComponent implements OnInit {
 
   public userData: any;
-  public beveragesList: any;
-  public beveragesSpecificList: any;
+  public beveragesList = [];
+  public beveragesSpecificList = [];
   public errors: any;
   public addBeverage: FormGroup;
   public addBeverageSpecific: FormGroup;
   public updateGeneral: FormGroup;
   public updateSpecific: FormGroup;
   public createPrice: FormGroup;
+  public searchFood: FormGroup;
   public beverageId: any;
-  public title: string;
   public updateVarGeneral: any;
   public beverageParentId: any;
   public editId: any;
   public editData: any;
+  public add = true;
+  public update = false;
+  public addSpecific = false;
+  public seeSpecific = false;
+  faArrowLeft = faArrowLeft;
+  faTrashAlt = faTrashAlt;
+  faEdit = faEdit;
+  faSearch = faSearch;
+  faEye = faEye;
+  faTimesCircle = faTimesCircle;
 
   constructor(
     private _store: Store<AppState>,
@@ -42,6 +59,10 @@ export class BebidasComponent implements OnInit {
     this.addBeverage = new FormGroup({
       product: new FormControl('', [
         Validators.required
+      ])
+    });
+    this.searchFood = new FormGroup({
+      filter: new FormControl('',[
       ])
     });
     this.addBeverageSpecific = new FormGroup({
@@ -73,19 +94,9 @@ export class BebidasComponent implements OnInit {
         Validators.required
       ])
     })
+    this.beverages();
   }
-
-  showBeverages (option: any) {
-    if (option == 1){
-      $('#options').hide();
-      $('#mostrar').show();
-    } else if (option == 2) {
-      $('#options').hide();
-      $('#delete').show();
-    } else if (option == 3) {
-      $('#options').hide();
-      $('#update').show();
-    }
+  beverages(){
     this._menuService.showBeverages()
       .then(response => {
         this.beveragesList = response['menuBeverages'];
@@ -93,6 +104,10 @@ export class BebidasComponent implements OnInit {
       .catch(err => {
         this.errors = err;
       })
+  }
+  hide() {
+    this.addSpecific = false;
+    this.seeSpecific = false;
   }
   showBeveragesSpecific (id: any) {
     this._menuService.showSpecificBeverage(id)
@@ -103,34 +118,12 @@ export class BebidasComponent implements OnInit {
         this.errors = err;
       })
   }
-  show(num: any) {
-    if(num == 1) {
-      $('#options').hide();
-      $('#add').show();
-    } else if (num == 2) {
-      $('#addPrices').hide();
-      $('#addBeverage').show();
-      this.addBeverage.reset();
-    } else if (num == 3) {
-      $('#showSpecificBeveragesList').hide();
-      $('#showGeneralBeverages').show();
-    } else if (num == 4) {
-      $('#deleteSpecificBeverages').hide();
-      $('#deleteGeneralbeverages').show();
-    } else if (num == 5) {
-      $('#updateSpecificBeverages').hide();
-      $('#updateGeneralbeverages').show();
-    } else if (num == 6){
-      $('#createPrice').show();
-    }
-  }
-
   addNewBeverage(){
     this._menuService.newBeverage({ product: this.addBeverage.value.product })
       .then(response => {
         this.beverageId = response["newBeverage"].id;
-        $('#addBeverage').hide();
-        $('#addPrices').show();
+        this.addSpecific = true;
+        this.showBeveragesSpecific(this.beverageId);
       })
       .catch(err => {
         this.errors = err;
@@ -146,33 +139,16 @@ export class BebidasComponent implements OnInit {
       .then(response => {
         this.showBeveragesSpecific(beverageId);
         this.addBeverageSpecific.reset();
+        this.beverages();
       })
       .catch(err => {
         this.errors = err;
       })
   }
-  pushTitle(titleProduct: any, num: any,id: any){
-    this.title = titleProduct;
-    if (num == 1) {
-      $('#showGeneralbeverages').hide();
-      $('#showSpecificBeveragesList').show();
-    } else if (num == 2) {
-      this.beverageParentId = id;
-      $('#deleteGeneralbeverages').hide();
-      $('#deleteSpecificBeverages').show();
-    } else if (num == 3) {
-      this.beverageParentId = id;
-      $('#updateGeneralbeverages').hide();
-      $('#updateSpecificBeverages').show();
-    }
-  }
   deleteBeverage(beverageId: any) {
     this._menuService.deleteBeverage(beverageId)
       .then(response => {
-        this.showBeverages(4);
-        $('#alertM p').html('Se eliminó la bebida.');
-        $('#alertM').show();
-        $('#alertM').fadeOut(4000);
+        this.beverages();
       })
   }
   editThisField(beverageId: any) {
@@ -185,8 +161,6 @@ export class BebidasComponent implements OnInit {
     }
     this._menuService.updateBeverage(newInfo,this.updateVarGeneral)
       .then(response => {
-        $('#uGeneral').hide();
-        this.showBeverages(4);
       })
   }
   deleteSpecificBeverage(id: any) {
@@ -194,9 +168,6 @@ export class BebidasComponent implements OnInit {
       .then(response => {
         console.log(response);
         this.showBeveragesSpecific(this.beverageParentId);
-        $('#alertM p').html('Se eliminó la bebida.');
-        $('#alertM').show();
-        $('#alertM').fadeOut(4000);
       })
   }
   editThisSpecific(id: any, type: any, price: any){
@@ -207,7 +178,6 @@ export class BebidasComponent implements OnInit {
     };
     this.updateSpecific.controls['typeUpdate'].setValue(type);
     this.updateSpecific.controls['priceUpdate'].setValue(price);
-    $('#uSpecific').show();
   }
   updateBeverageSpecific() {
     const newInfo = {
@@ -216,7 +186,6 @@ export class BebidasComponent implements OnInit {
     }
     this._menuService.updateBeverageSpecific(newInfo,this.editId)
       .then(response => {
-        $('#uSpecific').hide();
         this.showBeveragesSpecific(this.beverageParentId);
       })
       .catch(err => {
