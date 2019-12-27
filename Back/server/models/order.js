@@ -40,6 +40,13 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'orderId',
       onDelete: 'cascade',
       hooks: true
+    });
+    Order.belongsToMany(models.MenuSpecial,{
+      through: 'specialOrder',
+      as: 'special',
+      foreignKey: 'orderId',
+      onDelete: 'cascade',
+      hooks: true
     })
   };
 
