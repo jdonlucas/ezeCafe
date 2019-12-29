@@ -172,10 +172,9 @@ nav li a:hover {
 .centerDiv {
     transform: translateY(100%);
 }
+body app-root app-print { width: 58mm; height: 300mm } 
 @media print {
     app-root > * { display: none; }
     app-root app-print { display: block; }
-    @page {
-        size: 2cm 7cm portrait;
-    }
+    body app-root app-print { width: 58mm; height: fit-content;page-break-inside: avoid;}
 }

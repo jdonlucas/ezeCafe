@@ -59,9 +59,9 @@ export class InvoiceComponent implements OnInit {
           this.totalAmount = this.totalAmount + parseFloat(this.menuItem[i].price);
         }
       }
+      Promise.all(this.itemsList)
+        .then(() => this.printService.onDataReady());
     }).catch(err => { this.errors = err; })
-    //Promise.all(this.itemsList)
-    //  .then(() => this.printService.onDataReady());
   }
 
 }
