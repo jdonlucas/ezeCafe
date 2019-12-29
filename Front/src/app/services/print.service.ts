@@ -23,8 +23,11 @@ export class PrintService {
       setTimeout(() => {
         window.print();
         this.isPrinting = false;
-        this.router.navigate([{ outlets: { print: null }}]);
-        this.router.navigate(['/comandas/index']);
+        this.router.navigate([{ outlets: { print: null }}]).then(() =>
+          this.router.navigate(['/']).then(() =>
+            this.router.navigate(['/comandas/index'])
+          )
+        );
       });
     }
 }

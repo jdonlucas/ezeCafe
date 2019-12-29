@@ -366,7 +366,6 @@ export class EditComponent implements OnInit {
     this._salesService.createSale(saleData)
       .then(response => {
         this._printService.printDocument('invoice',this.orderId);
-        //this._router.navigate(['/comandas/index']);
       })
       .catch(err => this.errors = err);
   }
