@@ -20,6 +20,7 @@ var MenuSpecialController = {
 
     create(req, res,) {
         let specialData = req.body.specialData;
+        console.log(specialData);
         MenuSpecial.create(specialData).then(specialCreated => {
             res.json({ newMenuSpecial: specialCreated });
         }).catch(err => res.status(500).send(err));

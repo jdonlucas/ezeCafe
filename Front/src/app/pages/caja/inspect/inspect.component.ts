@@ -6,6 +6,7 @@ import { SalesService } from 'src/app/services/sales.service';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 
+
 @Component({
   selector: 'app-inspect',
   templateUrl: './inspect.component.html',
@@ -107,4 +108,5 @@ export class InspectComponent implements OnInit {
   public onChange(event: Event): void {
     this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
   }
+
 }

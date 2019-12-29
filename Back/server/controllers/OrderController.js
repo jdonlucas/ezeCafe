@@ -1,13 +1,24 @@
 const Order = require('../models').Order;
 const FoodOrder = require('../models').FoodOrder;
 const BeverageOrder = require('../models').BeveragesOrder;
+const specialOrder = require('../models').specialOrder;
 const MenuFood = require('../models').MenuFood;
 const MenuBeveragesSpecific = require('../models').MenuBeveragesSpecific;
 const MenuBeverages = require('../models').MenuBeverages;
+const MenuSpecial = require('../models').MenuSpecial;
+const User = require('../models').User;
+const Sales = require('../models').Sales;
 
 var OrderController = {
     index(req, res) {
-        return Order.findAll()
+        return Order.findAll({ include: [
+            {
+                model: User
+            },
+            {
+                model: Sales
+            }
+        ]})
             .then(orderHistory => res.status(200).json({ orderHistory }))
             .catch(error => res.status(400).send(error));
     },
@@ -34,6 +45,16 @@ var OrderController = {
                             attributes: ['product']
                         }
                     ]
+                },
+                {
+                    model: MenuSpecial,
+                    as: 'special'
+                },
+                {
+                    model: User
+                },
+                {
+                    model: Sales
                 }
             ]
         })
@@ -59,6 +80,12 @@ var OrderController = {
             res.json({newBeverageOrder: beverageCrated});
         }).catch(err => res.status(500).send(err));
     },
+    createSpecial(req,res) {
+        let specialData = req.body.specialData;
+        specialOrder.create(specialData).then(specialOrderCreated => {
+            res.json({newSpecialOrder: specialOrderCreated});
+        }).catch(err => res.status(500).send(err));
+    },
     updateFoodOrder(req,res) {
         let orderFoodData = req.body.foodData;
         let query = { where: { id: req.body.params.id }};
@@ -74,6 +101,15 @@ var OrderController = {
         BeverageOrder.update(beverageOrder, query)
             .then(beverageOrder => {
                 res.json({ newBeverage: beverageOrder })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    updateSpecialOrder(req,res) {
+        let orderSpecialData = req.body.specialData;
+        let query = { where: { id: req.body.params.id }};
+        specialOrder.update(orderSpecialData, query)
+            .then(specialOrderUpdated => {
+                res.json({ newSpecial: specialOrderUpdated })
             })
             .catch(err => res.status(500).send(err));
     },

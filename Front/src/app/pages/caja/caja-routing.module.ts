@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserGuard } from 'src/app/guards/user.guard';
 import { HomeComponent } from './home/home.component';
 import { SalesComponent } from './sales/sales.component';
+import { InspectComponent } from './inspect/inspect.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [UserGuard], data: { whichUser: 'Caja' }},
   { path: 'sales', component: SalesComponent, canActivate: [UserGuard], data: { whichUser: 'Caja' }},
+  { path: 'venta/:id', component: InspectComponent, canActivate: [UserGuard], data: { whichUser: 'Caja' }},
 ];
 
 @NgModule({

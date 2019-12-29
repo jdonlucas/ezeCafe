@@ -8,11 +8,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
+  providers: [DatePipe]
 })
 export class IndexComponent implements OnInit {
 
@@ -32,7 +34,8 @@ export class IndexComponent implements OnInit {
     private _store: Store<AppState>,
     public _router: Router,
     public _orderService: OrderService,
-    private _salesService: SalesService) {
+    private _salesService: SalesService,
+    private datePipe: DatePipe) {
     }
 
   ngOnInit() {
@@ -44,8 +47,16 @@ export class IndexComponent implements OnInit {
   }
 
   fetchOrders() {
+    let today = new Date();
     this._orderService.showOrders().then(response => {
-        this.orders = response["orderHistory"];
+        for(let i=0;i<response["orderHistory"].length;i++) {
+          if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(response["orderHistory"][i].createdAt,'yyyy-MM-dd')) {
+            this.orders.push(response["orderHistory"][i]);
+          }
+        }
+        this.orders.sort((a,b) => 
+          b.createdAt.localeCompare(a.createdAt)
+        );
       }).catch(err => {
         this.errorCode = err.error;
       })

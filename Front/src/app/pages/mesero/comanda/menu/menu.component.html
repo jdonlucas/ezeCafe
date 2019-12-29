@@ -28,13 +28,17 @@
             <div class="tabs">
                 <button id="beveragesButton" class="selected" (click)="toggle($event)">Bebidas</button>
                 <button id="foodButton" (click)="toggle($event)">Alimentos</button>
+                <button id="menuButton" (click)="toggle($event)">Promociones</button>
             </div>
             <div class="menuContent">
-                <div id="food" class="button-matrix" *ngIf="!show">
+                <div id="food" class="button-matrix" *ngIf="showFood">
                     <button *ngFor="let food of foodList" type="button" class="butn" (click)="addFood(food)">{{food.product}}</button>
                 </div>
                 <div id="beverage" class="button-matrix" *ngIf="show">
                     <button *ngFor="let beverage of beveragesList" type="button" class="butn" (click)="showBeveragesSpecific(beverage.id)">{{beverage.product}}</button>
+                </div>
+                <div id="menu" class="button-matrix" *ngIf="showMenu">
+                    <button *ngFor="let item of menuList" type="button" class="butn {{item.type}}" (click)="addMenu(item)">{{item.product}} ({{item.type}})</button>
                 </div>
                 <div id="controlButtons">
                     <button class="ezeButton" (click)="saveOrder();">Guardar</button>

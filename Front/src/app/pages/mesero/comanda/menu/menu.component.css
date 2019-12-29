@@ -55,7 +55,7 @@
     border: none;
     background: transparent;
     color: #495057;
-    width: 50%;
+    width: 33%;
     padding-top: 18px;
     padding-bottom: 10px;
 }
@@ -108,10 +108,11 @@
     margin: 5px;
     margin-top: 20px;
     margin-left: 0;
-    overflow: hidden;
+    overflow: auto;
     position: relative;
     width: 100%;
     text-align: center;
+    max-height: 86%;
 }
 
 #specific {
@@ -197,4 +198,10 @@
 #alertOrder {
     padding: 20px;
     text-align: center;
+}
+.empleado {
+    background: rgb(243, 7, 145);
+}
+.promocion {
+    background: rgb(176, 7, 243);
 }

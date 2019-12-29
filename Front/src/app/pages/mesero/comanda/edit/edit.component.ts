@@ -18,13 +18,17 @@ export class EditComponent implements OnInit {
 
   public foodList: any;
   public beveragesList: any;
+  public menuList: any;
   public paymentForm: FormGroup;
   public foodItem = [];
   public beveragesItem = [];
+  public menuItem = [];
   public itemsList = [];
   public beveragesSpecificList: any;
   public showSpecific = false;
   public show = true;
+  public showFood = false;
+  public showMenu = false;
   public showConfirm = false;
   public orderId: any;
   public closeC = false;
@@ -57,10 +61,12 @@ export class EditComponent implements OnInit {
     this.totalAmount = 0.00;
     this.fetchBeverages();
     this.fetchFood();
+    this.fetchMenu();
     this.orderId = this.route.snapshot.params.id;
     this._orderService.showOrder(this.orderId).then(res => {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
+      this.menuItem = res[0].special;
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){
         for(let j=0;j<this.foodItem[i].FoodOrder.quantity;j++){
@@ -72,6 +78,12 @@ export class EditComponent implements OnInit {
         for(let j=0;j<this.beveragesItem[i].BeveragesOrder.quantity;j++){
           this.itemsList.push({name: this.beveragesItem[i].beverage.product + ' ' + this.beveragesItem[i].type, price: this.beveragesItem[i].price,id:this.beveragesItem[i].id});
           this.totalAmount = this.totalAmount + this.beveragesItem[i].price;
+        }
+      }
+      for(let i=0;i<this.menuItem.length;i++){
+        for(let j=0;j<this.menuItem[i].specialOrder.quantity;j++){
+          this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price});
+          this.totalAmount = this.totalAmount + parseFloat(this.menuItem[i].price);
         }
       }
     }).catch(err => { this.errors = err; })
@@ -105,24 +117,46 @@ export class EditComponent implements OnInit {
       })
       .catch(err => this.errors = err);
   }
+  fetchMenu() {
+    this._menuService.showSpecial()
+      .then(response => {
+        this.menuList = response['specialList'].sort((a,b) => 
+          a.product.localeCompare(b.product)
+        );
+      })
+      .catch(err => this.errors = err);
+  }
 
   toggle(btnId: any) {
     let divId = btnId.target.id;
     let element = document.getElementById(divId);
     if (divId == 'foodButton') {
-      this.show = false;
+      this.showFood = true;
+      this.show = this.showMenu = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
       let bButton = document.getElementById('beveragesButton');
       bButton.classList.remove("selected");
-    } else {
+      document.getElementById('menuButton').classList.remove('selected')
+    } else if (divId == 'beveragesButton') {
       this.show = true;
+      this.showFood = this.showMenu = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
       let bButton = document.getElementById('foodButton');
       bButton.classList.remove("selected");
+      document.getElementById('menuButton').classList.remove('selected')
+    } else {
+      this.showMenu = true;
+      this.showFood = this.show = false;
+      if(!element.classList.contains('selected')) {
+        element.classList.add('selected');
+      }
+      let bButton = document.getElementById('foodButton');
+      bButton.classList.remove("selected");
+      document.getElementById('beveragesButton').classList.remove('selected')
     }
   }
   toggleDiv(){
@@ -171,10 +205,37 @@ export class EditComponent implements OnInit {
     } else {
       let foodData = { quantity: parseFloat(quantity) + 1 };
       this._orderService.updateFoodOrder(order,foodData);
-      
     }
     this.itemsList.push({name: food.product,price: food.price});
     this.totalAmount = this.totalAmount + food.price;
+    this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+  }
+  addMenu(special) {
+    let find: boolean;
+    let quantity: any;
+    let order: any;
+    this.menuItem.forEach(x => {
+      if(x.id == special.id) {
+        find = true;
+        quantity = x.specialOrder.quantity
+        order = x.specialOrder.id
+      } else {
+        find = false;
+      }
+    })
+    if(!find){
+      let specialData = {
+        specialId: special.id,
+        orderId: this.orderId,
+        quantity: 1
+      };
+      this._orderService.newSpecialOrder(specialData);
+    } else {
+      let specialData = { quantity: parseFloat(quantity) + 1 };
+      this._orderService.updateSpecialOrder(order,specialData);
+    }
+    this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price});
+    this.totalAmount = this.totalAmount + special.price;
     this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
   }
   addBeverage(name,price,b) {
@@ -237,12 +298,22 @@ export class EditComponent implements OnInit {
         which = 'food';
       } 
     });
+    this.menuItem.forEach(x => {
+      if(x.id == item.id) {
+        quantity = x.specialOrder.quantity
+        order = x.specialOrder.id;
+        which = 'special';
+      } 
+    });
     if(which == 'food') {
       let foodData = { quantity: parseFloat(quantity) - 1 };
       this._orderService.updateFoodOrder(order,foodData);
     } else if(which == 'beverage') {
       let beverage = { quantity: parseFloat(quantity) - 1};
       this._orderService.updateBeverageOrder(order,beverage)
+    } else if(which == 'special') {
+      let special = { quantity: parseFloat(quantity) - 1};
+      this._orderService.updateSpecialOrder(order,special)
     }
   }
   confirmClose() {

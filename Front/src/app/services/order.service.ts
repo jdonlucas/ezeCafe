@@ -50,6 +50,11 @@ export class OrderService {
         beverageData: beverageData
     }).toPromise();
   }
+  newSpecialOrder(specialData: any) {
+    return this._http.post('http://localhost:3000/api/order/newSpecialOrder', { 
+      specialData: specialData
+    }).toPromise();
+  }
   updateFoodOrder(id: any,foodData: any) {
     return this._http.post('http://localhost:3000/api/order/updateFoodOrder', {
       foodData: foodData,
@@ -61,6 +66,14 @@ export class OrderService {
   updateBeverageOrder(id: any,beverageData: any) {
     return this._http.post('http://localhost:3000/api/order/updateBeverageOrder', {
       beverageOrder: beverageData,
+      params: {
+        id: id
+      }
+    }).toPromise();
+  }
+  updateSpecialOrder(id: any,orderSpecialData: any) {
+    return this._http.post('http://localhost:3000/api/order/updateSpecialOrder', {
+      orderSpecialData: orderSpecialData,
       params: {
         id: id
       }

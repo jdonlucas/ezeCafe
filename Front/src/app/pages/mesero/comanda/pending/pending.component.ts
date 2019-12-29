@@ -8,11 +8,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pending',
   templateUrl: './pending.component.html',
-  styleUrls: ['./pending.component.css']
+  styleUrls: ['./pending.component.css'],
+  providers: [DatePipe]
 })
 export class PendingComponent implements OnInit {
 
@@ -32,7 +34,8 @@ export class PendingComponent implements OnInit {
     private _store: Store<AppState>,
     public _router: Router,
     public _orderService: OrderService,
-    private _salesService: SalesService) { }
+    private _salesService: SalesService,
+    private datePipe: DatePipe) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -42,13 +45,19 @@ export class PendingComponent implements OnInit {
     this.fetchOrders();
   }
   fetchOrders() {
+    let today = new Date();
     this._orderService.showOrders().then(response => {
         let ordersHis = response["orderHistory"];
         for(let i=0;i<ordersHis.length;i++){
           if(ordersHis[i].status == 'pendiente'){
-            this.orders.push(ordersHis[i]);
+            if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(ordersHis[i].createdAt,'yyyy-MM-dd')) {
+              this.orders.push(ordersHis[i]);
+            }
           }
         }
+        this.orders.sort((a,b) => 
+          b.createdAt.localeCompare(a.createdAt)
+        );
       }).catch(err => {
         this.errorCode = err.error;
       })

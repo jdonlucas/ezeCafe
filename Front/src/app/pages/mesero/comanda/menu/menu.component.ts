@@ -20,13 +20,17 @@ export class MenuComponent implements OnInit {
   public paymentForm: FormGroup;
   public foodList: any;
   public beveragesList: any;
+  public menuList: any;
   public beveragesSpecificList: any;
   public errors: any
   public show = true;
+  public showFood = false;
+  public showMenu = false;
   public showSpecific = false;
   public itemsList = [];
   public foodItems = [];
   public beverageItems = [];
+  public menuItems = [];
   public totalAmount: number;
   public showConfirm = false;
   public closeC = false;
@@ -60,6 +64,7 @@ export class MenuComponent implements OnInit {
     });
     this.fetchBeverages();
     this.fetchFood();
+    this.fetchMenu();
     this.totalAmount = 0.00;
   }
 
@@ -92,23 +97,46 @@ export class MenuComponent implements OnInit {
       .catch(err => this.errors = err);
   }
 
+  fetchMenu() {
+    this._menuService.showSpecial()
+      .then(response => {
+        this.menuList = response['specialList'].sort((a,b) => 
+          a.product.localeCompare(b.product)
+        );
+      })
+      .catch(err => this.errors = err);
+  }
+
   toggle(btnId: any) {
     let divId = btnId.target.id;
     let element = document.getElementById(divId);
     if (divId == 'foodButton') {
-      this.show = false;
+      this.showFood = true;
+      this.show = this.showMenu = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
       let bButton = document.getElementById('beveragesButton');
       bButton.classList.remove("selected");
-    } else {
+      document.getElementById('menuButton').classList.remove('selected')
+    } else if (divId == 'beveragesButton') {
       this.show = true;
+      this.showFood = this.showMenu = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
       let bButton = document.getElementById('foodButton');
       bButton.classList.remove("selected");
+      document.getElementById('menuButton').classList.remove('selected')
+    } else {
+      this.showMenu = true;
+      this.showFood = this.show = false;
+      if(!element.classList.contains('selected')) {
+        element.classList.add('selected');
+      }
+      let bButton = document.getElementById('foodButton');
+      bButton.classList.remove("selected");
+      document.getElementById('beveragesButton').classList.remove('selected')
     }
   }
   hideSpecific() {
@@ -159,6 +187,27 @@ export class MenuComponent implements OnInit {
     this.itemsList.push({name: food.product,price: food.price});
     this.totalAmount = this.totalAmount + food.price;
   }
+  addMenu(special) {
+    let find: boolean;
+    this.menuItems.forEach(x => {
+      if(x.id == special.id) {
+        find = true;
+      } else {
+        find = false;
+      }
+    })
+    if(!find){
+      this.menuItems.push({id: special.id,quantity: 1});
+    } else {
+      for(let i=0;i<this.menuItems.length;i++) {
+        if(this.menuItems[i].id == special.id) {
+          this.menuItems[i].quantity = this.menuItems[i].quantity + 1
+        }
+      }
+    }
+    this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price});
+    this.totalAmount = this.totalAmount + special.price;
+  }
   removeItem(item: any) {
     let index = this.itemsList.indexOf(item);
     this.totalAmount = this.totalAmount - item.price;
@@ -170,7 +219,7 @@ export class MenuComponent implements OnInit {
      this.showConfirm = !this.showConfirm;
   }
   saveOrder(){
-    let foodData, beverageData;
+    let foodData, beverageData, menuData;
     const orderData = {
       name: this.orderForm.value.name,
       status: 'pendiente',
@@ -195,6 +244,14 @@ export class MenuComponent implements OnInit {
         };
         this._orderService.newBeverageOrder(beverageData);
       };
+      for(let i=0;i<this.menuItems.length;i++){
+        menuData = {
+          specialId: this.menuItems[i].id,
+          orderId: order.id,
+          quantity: this.menuItems[i].quantity
+        };
+        this._orderService.newSpecialOrder(menuData);
+      };
       this._router.navigate(['/comandas/index']);
     })
       .catch(err => this.errors = err);
@@ -206,7 +263,7 @@ export class MenuComponent implements OnInit {
   }
   closeOrder(){
     if(this.totalAmount != 0) {
-      let foodData, beverageData;
+      let foodData, beverageData, menuData;
       const orderData = {
         name: this.orderForm.value.name,
         status: 'cerrada',
@@ -230,6 +287,14 @@ export class MenuComponent implements OnInit {
             quantity: this.beverageItems[i].quantity
           };
           this._orderService.newBeverageOrder(beverageData);
+        };
+        for(let i=0;i<this.menuItems.length;i++){
+          menuData = {
+            specialId: this.menuItems[i].id,
+            orderId: this.order.id,
+            quantity: this.menuItems[i].quantity
+          };
+          this._orderService.newSpecialOrder(menuData);
         };
         this.confirm = false;
         this.pago = true;

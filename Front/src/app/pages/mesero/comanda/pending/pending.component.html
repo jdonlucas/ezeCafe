@@ -6,7 +6,7 @@
                 <li *ngFor="let order of orders; let last = last" class="{{ last? 'last' : ''}}">
                     <div class="gInfo">
                         <div class="status {{order.status}}" >{{order.status}}</div>
-                        <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div class="date">{{order.createdAt}}</div></div>
+                        <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div class="date">{{order.createdAt | date:'shortTime'}}</div></div>
                         <div class="total">${{order.subtotal}} mxn</div>
                     </div>
                     <div class="editButtons">

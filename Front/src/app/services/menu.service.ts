@@ -85,4 +85,27 @@ export class MenuService {
       beverageId: beverageId
     }).toPromise()
   }
+  //menu promo y empleados
+  addSpecial(specialData: any) {
+    return this._http.post('http://localhost:3000/api/menu/newSpecial', {
+      specialData: specialData
+    }).toPromise();
+  }
+  updateSpecial(specialData: any, specialId: any) {
+      return this._http.post('http://localhost:3000/api/menu/updateSpecial',{
+        specialData: specialData,
+        params: {
+          id: specialId
+        }
+    }).toPromise()
+  }
+  showSpecial() {
+      return this._http.get('http://localhost:3000/api/menu/listAllSpecial').toPromise()
+  }
+
+  deleteSpecial(specialId: any) {
+      return this._http.post('http://localhost:3000/api/menu/deleteSpecial',{
+        specialId: specialId
+    }).toPromise()
+  }
 }

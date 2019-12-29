@@ -7,10 +7,11 @@ import { AlimentosComponent } from './alimentos/alimentos.component';
 import { BebidasComponent } from './bebidas/bebidas.component';
 import { HomeComponent } from './home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EspecialComponent } from './especial/especial.component';
 
 
 @NgModule({
-  declarations: [AlimentosComponent, BebidasComponent, HomeComponent],
+  declarations: [AlimentosComponent, BebidasComponent, HomeComponent, EspecialComponent],
   imports: [
     CommonModule,
     MenuRoutingModule,
