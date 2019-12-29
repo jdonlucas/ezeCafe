@@ -168,11 +168,14 @@ nav li a:hover {
 .summary-footer a {
     color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
-}
+}s
 .centerDiv {
     transform: translateY(100%);
 }
 @media print {
     app-root > * { display: none; }
     app-root app-print { display: block; }
+    @page {
+        size: 2cm 7cm portrait;
+    }
 }

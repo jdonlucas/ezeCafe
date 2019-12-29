@@ -1,1 +1,24 @@
-<p>invoice works</p>
+<div class="elements">
+    <ul>
+        <li class="head">
+            <div>
+                Producto
+            </div>
+            <div>
+                Precio
+            </div>
+        </li>
+        <li *ngFor="let item of itemsList; let last = last" class="{{ last ? 'last' : ''}}">
+            <div class="name">{{item.name}}</div>
+            <div class="price">${{item.price}}</div>
+        </li>
+        <li class="total">
+            <div>
+                Total:
+            </div>
+            <div>
+                ${{totalAmount}} MN
+            </div>
+        </li>
+    </ul>
+</div>

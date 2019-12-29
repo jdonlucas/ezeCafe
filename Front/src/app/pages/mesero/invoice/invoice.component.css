@@ -1,13 +1,29 @@
-.header, .header-space, .footer, .footer-space { height: 100px; }
-.header { position: fixed; top: 0; }
-.footer { position: fixed; bottom: 0; }
-@media screen {
-  :host {
-    display: none;
-  }
+.elements ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
-@media print {
-    app-invoice {
-      display: block;
-    }
+.elements li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed black;
+}
+.name {
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+.price {
+  margin-left: 10px;
+}
+.head {
+  border-bottom: 1px solid black!important;
+  margin-bottom: 5px;
+}
+.last {
+  border-bottom: 1px solid black!important;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+.total {
+  border-bottom: none!important;
 }

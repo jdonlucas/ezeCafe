@@ -60,8 +60,8 @@ export class InvoiceComponent implements OnInit {
         }
       }
     }).catch(err => { this.errors = err; })
-    Promise.all(this.itemsList)
-      .then(() => this.printService.onDataReady());
+    //Promise.all(this.itemsList)
+    //  .then(() => this.printService.onDataReady());
   }
 
 }

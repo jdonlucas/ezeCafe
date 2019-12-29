@@ -1,16 +1,24 @@
-<table>
-    <thead><tr><td>
-      <div class="header-space">&nbsp;</div>
-    </td></tr></thead>
-    <tbody><tr><td>
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
-    </td></tr></tbody>
-    <tfoot><tr><td>
-      <div class="footer-space">&nbsp;</div>
-    </td></tr></tfoot>
-</table>
-  
-<div class="header">COOL HEADER</div>
-<div class="footer">AWESOME FOOTER</div>
+<div class="printContent">
+  <div class="header">
+    <img class="logo" src="assets/img/ezeLogo.png" alt="logo">
+    <div class="infoData">
+      <p class="address">Municipio Libre #131, Local C</p>
+      <p>C.P.: 03303, Del. Benito Juárez</p>
+      <p>Tel: 55 62 71 54 43</p>
+    </div>
+  </div>
+  <table class="invoice">
+      <tbody><tr><td>
+        <div class="content">
+          <router-outlet></router-outlet>
+        </div>
+      </td></tr></tbody>
+  </table>
+    
+  <div class="footer">
+    <p>¡VISÍTANOS!</p>
+    <p class="address">ezecafe.com.mx</p>
+    <p class="address"><fa-icon [icon]="faInstagram"></fa-icon> eze.cafe <fa-icon [icon]="faTwitter"></fa-icon> @CafeEze</p>
+    <p><fa-icon [icon]="faFacebook"></fa-icon> /ezecafee</p>
+  </div>
+</div>
