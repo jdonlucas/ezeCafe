@@ -6,6 +6,7 @@ import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
+import { PrintService } from 'src/app/services/print.service';
 import { Router } from "@angular/router";
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -47,7 +48,8 @@ export class EditComponent implements OnInit {
     private _router: Router,
     private _menuService: MenuService,
     private _orderService: OrderService,
-    private _salesService: SalesService) { }
+    private _salesService: SalesService,
+    public _printService: PrintService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -363,7 +365,8 @@ export class EditComponent implements OnInit {
     }
     this._salesService.createSale(saleData)
       .then(response => {
-        this._router.navigate(['/comandas/index']);
+        this._printService.printDocument('invoice',this.orderId);
+        //this._router.navigate(['/comandas/index']);
       })
       .catch(err => this.errors = err);
   }

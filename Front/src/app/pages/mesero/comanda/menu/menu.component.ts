@@ -5,6 +5,7 @@ import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
+import { PrintService } from 'src/app/services/print.service';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Router } from "@angular/router";
 
@@ -47,7 +48,8 @@ export class MenuComponent implements OnInit {
     private _router: Router,
     private _menuService: MenuService,
     private _orderService: OrderService,
-    private _salesService: SalesService
+    private _salesService: SalesService,
+    public _printService: PrintService
     ) { }
 
   ngOnInit() {
@@ -337,6 +339,8 @@ export class MenuComponent implements OnInit {
     }
     this._salesService.createSale(saleData)
       .then(response => {
+        this._printService.printDocument('invoice',this.order.id);
+        this._router.navigate([ {outlets: {print: null}}])
         this._router.navigate(['/comandas/index']);
       })
       .catch(err => this.errors = err);

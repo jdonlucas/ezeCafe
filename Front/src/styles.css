@@ -172,3 +172,7 @@ nav li a:hover {
 .centerDiv {
     transform: translateY(100%);
 }
+@media print {
+    app-root > * { display: none; }
+    app-root app-print { display: block; }
+}
