@@ -138,3 +138,17 @@
 .tarjeta {
     background: #ef4c00;
 }
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+.top h1 {
+    width: 90%;
+}
+.top h2 {
+    color: #999;
+    font-size: 16px;
+    border-bottom: solid 1px #eee;
+    width: -webkit-fill-available;
+    text-align: right;
+}
