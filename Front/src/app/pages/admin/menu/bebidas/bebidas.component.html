@@ -1,0 +1,155 @@
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">Bebidas</h1>
+        <button routerLink="/admin/menu"><fa-icon [icon]="faArrowLeft"></fa-icon></button>
+    </div>
+    <div class="foodContainer">
+            <div class="foodItem">
+                <div id="deleteGeneralbeverages">
+                    <div class="md-form eButtons">
+                        <div class="searchIcon"><fa-icon [icon]="faSearch"></fa-icon></div>
+                        <form [formGroup]="searchFood" class="fullWidth">
+                            <input type="text" id="filter" class="form-control" (keyup)="onChange($event);" placeholder="Filtrar"
+                            formControlName="filter" />
+                        </form>
+                    </div>
+                    <div class="whiteframe">
+                        <ul>
+                            <li *ngFor="let beverage of foodListSearch; let last = last" class="{{ last? 'last' : ''}}">
+                                <div class="items">
+                                    <div>{{ beverage.product }}</div>
+                                </div>
+                                <div class="eButtons">
+                                    <button class="editButton" (click)="showBeveragesSpecific(beverage.id); showList(beverage);"><fa-icon [icon]="faEye"></fa-icon></button>
+                                    <button class="editButton" (click)="editThisField(beverage.id)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                                    <button class="editButton" (click)="deleteBeverage(beverage.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <div class="foodItem" *ngIf="add">
+            <div class="centerDiv center" id="addBeverage">
+                <h2>Agregar bebida</h2>
+                <div class="divCenter">
+                    <form [formGroup]="addBeverage">
+                        <div class="form-group">
+                            <div class="md-form">
+                                <input type="text" id="product" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': addBeverage.get('product').touched && addBeverage.get('product').invalid }"
+                                formControlName="product" />
+                            </div>
+                        </div>
+                        <button class="ezeButton fullWidth" [disabled]="!addBeverage.valid" (click)="addNewBeverage()">Agregar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="foodItem" *ngIf="update">
+            <div class="centerDiv center" id="updateGeneralbeverages">
+                <div id="uGeneral">
+                    <h3>Ingresa el nuevo nombre.</h3>
+                    <form [formGroup]="updateGeneral">
+                        <div class="form-group">
+                            <div class="md-form">
+                                <input type="text" id="productName" class="form-control" placeholder="Nuevo nombre de producto" [ngClass]="{ 'is-invalid': updateGeneral.get('productName').touched && updateGeneral.get('productName').invalid }"
+                                formControlName="productName" />
+                            </div>
+                        </div>
+                        <div class="authButton">
+                            <button type="submit" [disabled]="!updateGeneral.valid" (click)="updateBeverageGeneral()">Actualizar</button>
+                            <button class="ezeButton" (click)="cancel()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alertContainer foodContainer addContainer" *ngIf="addSpecific">
+    <div class="foodItem">
+        <h2>{{ title }}</h2>
+        <div class="whiteframe addBeverage">
+            <ul>
+                <li *ngFor="let beverage of beveragesSpecificList; let last = last" class="{{ last? 'last' : ''}}">
+                    <div class="items">
+                        <div>{{ beverage.type }}</div>
+                        <div class="total">{{ beverage.price }}</div>
+                    </div>
+                    <div class="eButtons">
+                        <button class="editButton"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                    </div>
+                </li>
+                <li class="last" *ngIf="!beveragesSpecificList.length">Aún no se agregan precios.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="foodItem">
+        <form class="centerDiv" [formGroup]="addBeverageSpecific">
+            <div class="form-group">
+                <div class="md-form">
+                    <input type="text" id="type" class="form-control" placeholder="Tipo" [ngClass]="{ 'is-invalid': addBeverageSpecific.get('type').touched && addBeverageSpecific.get('type').invalid }"
+                    formControlName="type" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="md-form">
+                    <input type="text" id="price" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': addBeverageSpecific.get('price').touched && addBeverageSpecific.get('price').invalid }"
+                    formControlName="price" />
+                </div>
+            </div>
+            <button class="ezeButton fullWidth" [disabled]="!addBeverageSpecific.valid" (click)="addNewBeverageSpecific(beverageId)">Agregar</button>
+        </form>
+        <button class="exitButton" (click)="hide()" *ngIf="beveragesSpecificList.length"><fa-icon [icon]="faTimesCircle"></fa-icon></button>
+    </div>
+    <div class="addButton" *ngIf="beveragesSpecificList.length">
+        <button class="crearComanda" (click)="editS();"><fa-icon [icon]="faEdit"></fa-icon></button>
+    </div>
+</div>
+<div class="alertContainer foodContainer seeContainer" *ngIf="seeSpecific">
+    <div class="{{ !updateSpecificBeverages ? 'foodItem inheritWidth allDiv' : 'foodItem inheritWidth'}}">
+        <h2>{{ title }}</h2>
+        <div class="whiteframe">
+            <ul>
+                <li *ngFor="let beverage of beveragesSpecificList; let last = last" class="{{ last? 'last' : ''}}">
+                    <div class="items">
+                      <div>{{ beverage.type }}</div>
+                      <div class="total">{{ beverage.price }}</div>
+                    </div>
+                    <div class="eButtons">
+                        <button class="editButton" (click)="editThisSpecific(beverage)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                        <button class="editButton" (click)="deleteSpecificBeverage(beverage.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <button class="exitButton" (click)="hide()"><fa-icon [icon]="faTimesCircle"></fa-icon></button>
+    </div>
+    <div class="foodItem" *ngIf="updateSpecificBeverages">
+        <div class="centerV" id="uSpecific"> 
+            <h3>Sólo edita los campos que quieras modificar.</h3>
+            <form [formGroup]="updateSpecific">
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="text" id="typeUpdate" class="form-control" placeholder="Tipo" [ngClass]="{ 'is-invalid': updateSpecific.get('typeUpdate').touched && updateSpecific.get('typeUpdate').invalid }"
+                        formControlName="typeUpdate" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="text" id="priceUpdate" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': updateSpecific.get('priceUpdate').touched && updateSpecific.get('priceUpdate').invalid }"
+                        formControlName="priceUpdate" />
+                    </div>
+                </div>
+                <div class="authButton">
+                    <button type="submit" [disabled]="!updateSpecific.valid" (click)="updateBeverageSpecific()">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="addButton">
+        <button class="crearComanda" (click)="addS();"><fa-icon [icon]="faPlus"></fa-icon></button>
+    </div>
+</div>
+<div class="backgroundDiv" *ngIf="addSpecific || seeSpecific"></div>

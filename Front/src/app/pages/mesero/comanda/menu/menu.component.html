@@ -1,0 +1,96 @@
+<div class="container2">
+    <div class="top">
+            <h1 class="titleSection">Nueva comanda</h1>
+            <button (click)="toggleDiv();"><fa-icon [icon]="faTrash"></fa-icon></button>
+    </div>
+    <div class="container3">
+        <div class="infoComanda">
+            <form [formGroup]="orderForm">
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="text" id="name" class="form-control" placeholder="Nombre de comanda (opcional)" formControlName="name" />
+                    </div>
+                </div>
+            </form>
+            <div class="whiteframe">
+                <ul class="itemList">
+                    <li *ngFor="let i of itemsList"><div><button (click)="removeItem(i);"><fa-icon [icon]="faTrash"></fa-icon></button>&emsp;{{i.name}}</div><div>${{i.price}}</div></li>
+                </ul>
+                <div class="total">
+                    <div class="totalContent">
+                        <p>Total:</p>
+                        <p>${{totalAmount}} mxn</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu">
+            <div class="tabs">
+                <button id="beveragesButton" class="selected" (click)="toggle($event)">Bebidas</button>
+                <button id="foodButton" (click)="toggle($event)">Alimentos</button>
+                <button id="menuButton" (click)="toggle($event)">Promociones</button>
+            </div>
+            <div class="menuContent">
+                <div id="food" class="button-matrix" *ngIf="showFood">
+                    <button *ngFor="let food of foodList" type="button" class="butn" (click)="addFood(food)">{{food.product}}</button>
+                </div>
+                <div id="beverage" class="button-matrix" *ngIf="show">
+                    <button *ngFor="let beverage of beveragesList" type="button" class="butn" (click)="showBeveragesSpecific(beverage.id)">{{beverage.product}}</button>
+                </div>
+                <div id="menu" class="button-matrix" *ngIf="showMenu">
+                    <button *ngFor="let item of menuList" type="button" class="butn {{item.type}}" (click)="addMenu(item)">{{item.product}} ({{item.type}})</button>
+                </div>
+                <div id="controlButtons">
+                    <button class="ezeButton" (click)="saveOrder();">Guardar</button>
+                    <button class="ezeButton" (click)="confirmClose()">Cerrar Comanda</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="specific" *ngIf="showSpecific">
+    <div class="topDiv">
+        <div class="button-matrix">
+            <button *ngFor="let b of beveragesSpecificList" class="butn" (click)="addBeverage(b.beverage.product + ' ' + b.type,b.price,b)">{{b.type}}</button>
+        </div>
+    </div>
+</div>
+<div id="confirm" class="alertContainer" *ngIf="showConfirm">
+    <div class="paddingContainer">
+        <h2>¿Seguro que quieres borrar la comanda?</h2>
+        <button class="ezeButton" routerLink="/comandas/index"> Eliminar</button><button class="ezeButton" (click)="toggleDiv();"> Cancelar </button>
+    </div>
+</div>
+<div class="alertContainer" *ngIf="closeC">
+    <div class="paddingContainer" *ngIf="confirm">
+        <h2>¿Seguro que deseas cerrar comanda?</h2>
+        <button class="ezeButton" (click)="closeOrder()">Sí, cerrar</button><button class="ezeButton" (click)="hideSpecific()">Cancelar</button> 
+    </div>
+    <div class="paddingContainer" *ngIf="pago">
+        <h2>Selecciona la forma de pago</h2>
+        <button class="ezeButton" (click)="saveSale('card')">Pago con tarjeta</button><button class="ezeButton" (click)="cash();">Pago en efectivo</button>
+    </div>
+    <div class="paddingContainer" *ngIf="calculator">
+        <form [formGroup]="paymentForm">
+            <h2>Ingresa el monto del cliente</h2>
+            <p>(Si se deja en blanco el monto de ingreso es el mismo que la comanda.)</p>
+            <div class="inputForms">
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="number" id="amount" class="form-control" placeholder="Ingreso" (keyup)="onChange($event)" formControlName="amount" />
+                    </div>
+                </div>
+                <div class="md-form">
+                    <input type="text" id="change" class="form-control" placeholder="Cambio"  value="" formControlName="change" disabled />
+                </div>
+            </div>
+            <button class="ezeButton" (click)="saveSale('cash')">Guardar y salir</button>
+        </form>
+    </div>
+    <div id="alertOrder" *ngIf="alert">
+        <h2>¡No puedes cerrar comanda en ceros!</h2>
+        <p>._.</p>
+    </div>
+</div>
+<div class="backgroundDiv" *ngIf="showSpecific || showConfirm || closeC" (click)="hideSpecific()"></div>
+<div class="backgroundDiv" *ngIf="calculator || pago"></div>

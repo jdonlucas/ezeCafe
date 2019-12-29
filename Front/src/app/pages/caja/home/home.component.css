@@ -1,0 +1,38 @@
+.summaryBoxes {
+    display: flex;
+    color: #fff;
+    margin: 30px 0;
+    justify-content: space-between;
+}
+.summaryBox {
+    width: 200px;
+    border-radius: 2px;
+}
+.summary-total {
+    background: #ed6663;
+}
+.summary-pending {
+    background: #b52b65;
+}
+.summary-amount {
+    background: #621055;
+}
+.summary-main {
+    margin: 10px;
+}
+.summary-value {
+    font-size: 25px;
+    font-weight: 900;
+}
+.summary-desc {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 10px 10px 20px 0;
+}
+.summary-footer {
+    padding: 4px;
+    font-size: 12px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+}

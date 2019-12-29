@@ -1,0 +1,47 @@
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">{{orderName}}</h1>
+        <button routerLink="/comandas/index"><fa-icon [icon]="faArrowLeft"></fa-icon></button>
+    </div>
+    <div class="listContainer">
+        <div class="whiteframe">
+            <ul class="itemList">
+                <li *ngFor="let i of itemsList"><div>{{i.name}}</div><div>${{i.price}}</div></li>
+            </ul>
+            <div class="total">
+                <div class="totalContent">
+                    <p>Total:</p>
+                    <p>${{totalAmount}} mxn</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="whiteframe infoVenta">
+    <p class="cobro">Cobró {{employee}}</p>
+    <div class="payment"><p>Forma de pago: {{ payment }}</p><button class="editButton" (click)="showEdit();"><fa-icon [icon]="faEdit" ></fa-icon></button></div>
+</div>
+<div class="alertContainer" *ngIf="show">
+    <div class="paddingContainer" *ngIf="card">
+        <h2>Selecciona la forma de pago</h2>
+        <button class="ezeButton fullWidth" (click)="updateSale('card')">Pago con tarjeta</button><button class="ezeButton fullWidth" (click)="cash();">Pago en efectivo</button>
+    </div>
+    <div class="paddingContainer" *ngIf="!card">
+        <form [formGroup]="paymentForm">
+            <h2>Ingresa el monto del cliente</h2>
+            <p>(Si se deja en blanco el monto de ingreso es el mismo que la comanda.)</p>
+            <div class="inputForms">
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="number" id="amount" class="form-control" placeholder="Ingreso" (keyup)="onChange($event)" formControlName="amount" />
+                    </div>
+                </div>
+                <div class="md-form">
+                    <input type="text" id="change" class="form-control" placeholder="Cambio"  value="" formControlName="change" />
+                </div>
+            </div>
+            <button class="ezeButton fullWidth" (click)="updateSale('cash')">Guardar</button>
+        </form>
+    </div>
+</div>
+<div class="backgroundDiv" *ngIf="show" (click)="hide();"></div>

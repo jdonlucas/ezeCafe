@@ -1,0 +1,39 @@
+<div class="container2">
+    <h1 class="titleSection">Comandas</h1>
+    <div class="whiteframe">
+        <div class="frameContent">
+            <ul class="orders">
+                <li *ngFor="let order of orders; let last = last" class="{{ last? 'last' : ''}}">
+                    <div class="gInfo">
+                        <div class="status {{order.status}}" >{{order.status}}</div>
+                        <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div class="date">{{order.createdAt | date:'shortTime'}}</div></div>
+                        <div class="total">${{order.subtotal}} mxn</div>
+                        <div class="payment {{ order.Sale.pago == 'efectivo' ? 'cash' : 'tarjeta'}}" *ngIf="order.Sale">{{order.Sale.pago}}</div>
+                    </div>
+                    <div class="editButtons">
+                        <button *ngIf="order.status == 'pendiente'" [routerLink]="['/comandas/index/edit',order.id]"><fa-icon [icon]="faEdit"></fa-icon></button>
+                        <button *ngIf="order.status == 'cerrada' || order.status == 'cancelada'" [routerLink]="['/comandas/index/inspect',order.id]"><fa-icon [icon]="faEye"></fa-icon></button>
+                        <button (click)="deleteOrder(order.id)" *ngIf="order.status != 'cerrada'"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                    </div>
+                </li>
+                <li class="last" *ngIf="!orders.length">Aún no hay comandas el día de hoy.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="addButton">
+    <button class="crearComanda" (click)="startOrder();"><fa-icon [icon]="faPlus"></fa-icon></button>
+</div>
+<div class="alertContainer" *ngIf="delete">
+    <div class="paddingContainer">
+        <h2>¿Seguro que quieres borrar la comanda?</h2>
+        <button class="ezeButton widthSmall" (click)="confirmDelete()"> Eliminar</button><button class="ezeButton widthSmall" (click)="confirmCancel()"> Cancelar comanda </button><button class="ezeButton widthSmall" (click)="hide()"> Cerrar </button>
+    </div>
+</div>
+<div class="alertContainer" *ngIf="cancel">
+    <div class="paddingContainer">
+        <h2>¿Seguro que quieres borrar la comanda?</h2>
+        <button class="ezeButton" (click)="confirmCancel()"> Eliminar</button><button class="ezeButton" (click)="hide()"> Cerrar </button>
+    </div>
+</div>
+<div class="backgroundDiv" *ngIf="delete || cancel" (click)="hide()"></div>

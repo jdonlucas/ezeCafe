@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-
+// change localhost : 3000 to db . ezecafe . com . mx to production
 export class AuthService {
 
   private _authData: any;
@@ -30,17 +30,18 @@ export class AuthService {
       });
   }
 
+  getUsers() {
+    return this._http.get('http://localhost:3000/api/users/list').toPromise();
+  }
   localLogin(Username: string, Password: string ) {
-    return this._http.post('http://localhost:3000/api/auth/localLogin', { // dev
-    //return this._http.post('http://db.ezecafe.com.mx/api/auth/localLogin', { // prod
+    return this._http.post('http://localhost:3000/api/auth/localLogin', { // prod
       Username,
       Password
     }).toPromise();
   }
 
   signup(Name: string, Lastname: string, Username: string, Password: string, UserRole: string) {
-      return this._http.post('http://localhost:3000/api/auth/signup', { // for development
-      //return this._http.post('http://db.ezecafe.com.mx/api/auth/signup', { // for production
+      return this._http.post('http://localhost:3000/api/auth/signup', { // for production
         UserData: {
           Name,
           Lastname,
@@ -120,8 +121,9 @@ export class AuthService {
         if (noAuth) { // si el usuario no esta autenticado le permite ver la vista del login
           isAuth = !isAuth;
         }
-        if (!isAuth && !noAuth) { // si es token expiró cierra la sesion del usuario
+        if (!isAuth && !noAuth) { // si el token expiró cierra la sesion del usuario
           this.logout();
+          authData = {}; // y vacia la info del usuario
         } else if (!isAuth && noAuth) { // si el usuario esta autenticado y quiere acceder a login lo manda al home
           this._router.navigate(['/' + userData.toLowerCase()]);
         }
@@ -144,6 +146,20 @@ export class AuthService {
         return isUser; // si la ruta es igual al rol del usuario regresa True
       })
     );
+  }
+
+  deleteUser(id: any) {
+    return this._http.post('http://localhost:3000/api/users/delete', {
+      userId: id
+    }).toPromise();
+  }
+  update(userData: any, userId: any) {
+    return this._http.post('http://localhost:3000/api/users/update', {
+      userData: userData,
+      params: {
+        id: userId
+      }
+    }).toPromise();
   }
     
 }

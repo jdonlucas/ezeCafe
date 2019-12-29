@@ -1,13 +1,15 @@
 /* Global styles */
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 :root {
     --black-color: rgb(0, 0, 0);
+    --main-black: rgb(31, 31, 30);
     --black-clear-color: rgb(56, 54, 54);
     --black-disabled-color: rgba(0, 0, 0, 0.692);
     --white-color: rgb(255, 255, 255);
     --white-pale-color: rgb(223, 221, 219);
     --font-titles: 23px;
     --font-title-type: Bernardo Moda, Fallback, sans-serif;
-    --font-type: Roboto, sans-serif;
+    --font-type: 'Nunito', sans-serif;
 }
 
 /*------------- General */
@@ -25,6 +27,7 @@ nav {
     color: var(--white-color);
     justify-content: space-between;
     align-items: center;
+    padding: 0;
 }
 nav h1 {
     font-family: var(--font-title-type)!important;
@@ -79,4 +82,100 @@ nav li a:hover {
 }
 .authButton button:disabled {
     background-color: var(--black-disabled-color);
+}
+.breadcrumb {
+    margin: 0;
+    background-color: #0d0d0c;
+    border-radius: 0;
+    z-index: 9999999;
+    position: absolute;
+    width: 100%;
+}
+.breadcrumb li {
+    color: ivory;
+    margin-left: 10px;
+}
+.breadcrumb li a {
+    color: ivory;
+}
+.breadcrumb li a:hover {
+    text-decoration: underline;
+}
+.cont {
+    width: 100%;
+}
+.card {
+    margin: 15px;
+}
+.container {
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.container2 {
+    margin: 50px;
+}
+.container3 {
+    display: flex;
+}
+.titleSection {
+    color: #999;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #eee;
+}
+.ezeButton {
+    background: rgb(0, 0, 0);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.ezeButton:disabled {
+    background: rgb(73, 73, 73);
+}
+.backgroundDiv {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9;
+}
+.alertContainer{
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: fit-content;
+    background: #fff;
+    border: 1px solid gray;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.64), 0px 2px 1px -1px rgba(0, 0, 0, 0.62);
+    text-align: center;
+}
+.paddingContainer {
+    padding: 20px;
+}
+.paddingContainer h2 {
+    padding-top: 0px;
+}
+.summary-footer a {
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}s
+.centerDiv {
+    transform: translateY(100%);
+}
+@media print {
+    app-root > * { display: none; }
+    app-root app-print { display: block; }
+    @page {
+        size: 2cm 7cm portrait;
+    }
 }

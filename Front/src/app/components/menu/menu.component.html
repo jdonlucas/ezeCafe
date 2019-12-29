@@ -1,17 +1,33 @@
-<nav>
-    <div class="title">
-        <h1>EZE CAFÉ</h1>
-    </div>
-    <div class="nav-options">
-        <ul>
-            <li>
-                <button class="logout" *ngIf="userData.id" (click)="logout()">Cerrar sesión</button>
-            </li>
-        </ul>
-    </div>
-</nav>
-<div class="breadcrumb" *ngIf="userData.id">
-    <li>Inicio</li>
-    <li *ngIf="userData.UserRole==4" ><a routerLink="/superadmin/users">Administración de usuarios</a></li>
-    <li *ngIf="userData.UserRole==4" >Inventario</li>
+<div class="sidenav" *ngIf="userData.id">
+    <nav>
+        <div id="left">
+            <ul>
+                <li>
+                    <button id="hamburguer" (click)="toggle();"><fa-icon [icon]="faBars"></fa-icon></button>
+                </li>
+                <li>
+                    <fa-icon [icon]="faCoffee"></fa-icon> EZE CAFÉ
+                </li>
+            </ul>
+        </div>
+        <div id="rigth">
+            <ul>
+                <li>
+                    <p>{{userData.Name}}</p>
+                </li>
+                <li>
+                    <button class="logout" (click)="logout()"><fa-icon [icon]="faSignOutAlt"></fa-icon></button>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
+<div class="leftMenu" *ngIf="userData.id && show" [@slideLeftInOut]>
+    <div id="toolsDiv"></div>
+    <ul>
+        <li><a routerLink="/" (click)="toggle();"><fa-icon [icon]="faInbox"></fa-icon> Inicio</a></li>
+        <li><a routerLink="/comandas/index" (click)="toggle();"><fa-icon [icon]="faPaperPlane"></fa-icon> Órdenes</a></li>
+        <li class="settings" *ngIf="userData.UserRole > 2"><a routerLink="/admin/settings" (click)="toggle();"><fa-icon [icon]="faCog"></fa-icon> Ajustes</a></li>
+    </ul>
+</div>
+<div class="blackout" *ngIf="userData.id && show" (click)="toggle();"></div>

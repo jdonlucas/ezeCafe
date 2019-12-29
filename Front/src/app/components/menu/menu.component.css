@@ -4,18 +4,83 @@
     border: none;
     padding: 5%;
     border-radius: 4px;
-    width: 110px;
+    width: 50px;
 }
-.logout:hover {
-    background-color: var(--black-clear-color);
+.sidenav {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: #05050500;
+    display: block;
+    z-index: 99999999;
 }
-.breadcrumb li {
-    color: black;
-    margin-left: 10px;
+.sidenav ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 9px;
 }
-.breadcrumb li a {
-    color: black;
+.sidenav li {
+    padding: 0;
 }
-.breadcrumb li a:hover {
-    text-decoration: underline;
+#hamburguer {
+    background: rgba(255, 255, 255, 0);
+    border: none;
+    border-radius: 100%;
+    color: seashell;
+    margin-right: 10px;
+    width: 38px;
+    height: 38px;
+    line-height: 37px;
+}
+#hamburguer:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+#hamburguer:focus {
+    outline: none;
+}
+.leftMenu {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084);
+    z-index: 3;
+}
+#toolsDiv {
+    position: relative;
+    height: 66px;
+}
+.leftMenu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+} 
+.leftMenu li {
+    padding: 10px;
+    font-size: 17px;
+    font-weight: 400;
+    color: #666;
+    padding-left: 30px;
+    padding-right: 55px;
+}
+.leftMenu li:hover {
+    background: #f6f6f6;
+}
+.leftMenu li.settings {
+    border-top: solid 1px #eee;
+    border-bottom: solid 1px #eee;
+}
+.leftMenu a {
+    color: #666;
+}
+.blackout {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }

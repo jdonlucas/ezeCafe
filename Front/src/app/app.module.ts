@@ -17,9 +17,13 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 //Components
 import { ComponentsModule } from './components/components.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Security
 import { AuthInterceptor } from './security/auth.interceptor';
+
+//Font-awesome
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -27,11 +31,13 @@ import { AuthInterceptor } from './security/auth.interceptor';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     ComponentsModule,
+    FontAwesomeModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

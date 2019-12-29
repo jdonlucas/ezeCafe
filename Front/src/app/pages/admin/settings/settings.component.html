@@ -1,0 +1,40 @@
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">Ajustes</h1>
+    </div>
+    <div class="summaryBoxes">
+        <div class="summaryBox summary-total">
+            <div class="summary-main">
+                <div class="summary-value"><fa-icon [icon]="faUsers"></fa-icon></div>
+                <div class="summary-desc">Administración de usuarios</div>
+            </div>
+            <div class="summary-footer">
+                <a *ngIf="userData.UserRole == 3" routerLink="/admin/users">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a>
+                <a *ngIf="userData.UserRole == 4" routerLink="/superadmin/users">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a>
+            </div>
+        </div>
+        <div class="summaryBox summary-pending">
+            <div class="summary-main">
+                <div class="summary-value"><fa-icon [icon]="faBox"></fa-icon></div>
+                <div class="summary-desc">Inventario</div>
+            </div>
+            <div class="summary-footer"><a routerLink="/admin/inventario">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a></div>
+        </div>
+        <div class="summaryBox summary-amount">
+            <div class="summary-main">
+                <div class="summary-value"><fa-icon [icon]="faUtensils"></fa-icon></div>
+                <div class="summary-desc">Menú</div>
+            </div>
+            <div class="summary-footer"><a routerLink="/admin/menu">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a></div>
+        </div>
+    </div>
+    <div class="summaryBoxes">
+        <div class="summaryBox summary-horn">
+            <div class="summary-main">
+                <div class="summary-value"><fa-icon [icon]="faBullhorn"></fa-icon></div>
+                <div class="summary-desc">Anuncios</div>
+            </div>
+            <div class="summary-footer"><a routerLink="/admin/menu">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a></div>
+        </div>
+    </div>
+</div>

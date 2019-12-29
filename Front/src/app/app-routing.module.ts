@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'superadmin', loadChildren : './pages/superadmin/superadmin.module#SuperadminModule', canActivate: [AuthGuardService] },
   { path: 'admin', loadChildren : './pages/admin/admin.module#AdminModule', canActivate: [AuthGuardService] },
   { path: 'caja', loadChildren : './pages/caja/caja.module#CajaModule', canActivate: [AuthGuardService] },
-  { path: 'mesero', loadChildren : './pages/mesero/mesero.module#MeseroModule', canActivate: [AuthGuardService] }
+  { path: 'comandas', loadChildren : './pages/mesero/mesero.module#MeseroModule', canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

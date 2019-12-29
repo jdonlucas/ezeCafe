@@ -1,0 +1,30 @@
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">Ajustes de menú</h1>
+    </div>
+    <div class="summaryBoxes">
+        <div class="summaryBox summary-total">
+            <div class="summary-main">
+                <div class="summary-value"><fa-icon [icon]="faHamburger"></fa-icon></div>
+                <div class="summary-desc">Alimentos</div>
+            </div>
+            <div class="summary-footer">
+                <a routerLink="/admin/menu/alimentos">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a>
+            </div>
+        </div>
+        <div class="summaryBox summary-pending">
+            <div class="summary-main">
+                <div class="summary-value"><fa-icon [icon]="faMugHot"></fa-icon></div>
+                <div class="summary-desc">Bebidas</div>
+            </div>
+            <div class="summary-footer"><a routerLink="/admin/menu/bebidas">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a></div>
+        </div>
+        <div class="summaryBox summary-amount">
+            <div class="summary-main">
+                <div class="summary-value"><fa-icon [icon]="faUserTag"></fa-icon></div>
+                <div class="summary-desc">Menú especial y empleados</div>
+            </div>
+            <div class="summary-footer"><a routerLink="/admin/menu/especial">Ver todo <fa-icon [icon]="faArrowCircleRight"></fa-icon></a></div>
+        </div>
+    </div>
+</div>

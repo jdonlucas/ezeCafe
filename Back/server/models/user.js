@@ -69,6 +69,14 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Role,{
       foreignKey: 'UserRole'
     });
+    User.hasMany(models.Order,{
+      as: 'orders',
+      foreignKey: 'UserId'
+    });
+    User.hasMany(models.bulletinBoard,{
+      as: 'ads',
+      foreignKey: 'UserId'
+    });
   };
 
   User.prototype.validatePassword = function (confirmPassword) {

@@ -9,15 +9,21 @@ var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
-var users  = require('./routes/users');
+var usersRouter  = require('./routes/users');
+var stockRouter = require('./routes/stock');
+var insumosRouter = require('./routes/insumos');
+var menuRouter = require('./routes/menu');
+var orderRouter = require('./routes/order');
+var salesRouter = require('./routes/sales');
+var adsRouter = require('./routes/bulletinBoard');
 var baseUrl = "/api";
 var dotenv = require('dotenv').config();
 
 var cors = require('cors');
 var app = express();
 
-//app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
-app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
+app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
+//app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
@@ -41,7 +47,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use(`${baseUrl}/auth`, authRouter);
-app.use(`${baseUrl}/users`, users);
+app.use(`${baseUrl}/users`, usersRouter);
+app.use(`${baseUrl}/stock`, stockRouter);
+app.use(`${baseUrl}/insumos`, insumosRouter);
+app.use(`${baseUrl}/menu`, menuRouter);
+app.use(`${baseUrl}/sales`, salesRouter);
+app.use(`${baseUrl}/order`, orderRouter);
+app.use(`${baseUrl}/ads`, adsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

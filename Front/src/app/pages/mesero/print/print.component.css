@@ -1,0 +1,34 @@
+.header, .header-space, .footer, .footer-space { height: 100px; }
+.header { 
+  position: relative; 
+  top: 0; 
+  text-align: center;
+  height: fit-content;
+}
+.footer { 
+  position: relative; 
+  bottom: 0; 
+  text-align: center;
+}
+@media screen {
+  :host {
+    display: none;
+  }
+}
+.logo {
+  height: 200px;
+  width: 100px;
+}
+.infoData {
+  margin-top: 15px;
+}
+.invoice {
+  margin: auto;
+  margin-bottom: 30px;
+}
+.address {
+  margin: 0;
+}
+.printContent {
+  width: fit-content;
+}

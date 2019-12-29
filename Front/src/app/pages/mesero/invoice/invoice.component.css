@@ -1,0 +1,29 @@
+.elements ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.elements li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed black;
+}
+.name {
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+.price {
+  margin-left: 10px;
+}
+.head {
+  border-bottom: 1px solid black!important;
+  margin-bottom: 5px;
+}
+.last {
+  border-bottom: 1px solid black!important;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+.total {
+  border-bottom: none!important;
+}
