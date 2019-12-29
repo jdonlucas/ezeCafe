@@ -1,18 +1,18 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('FoodOrders', {
+    return queryInterface.createTable('specialOrders', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      foodId: {
+      specialId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'MenuFoods',
+          model: 'MenuSpecials',
           key: 'id'
         },
         onDelete: 'cascade'
@@ -28,7 +28,7 @@ module.exports = {
       },
       quantity: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +41,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('FoodOrders');
+    return queryInterface.dropTable('specialOrders');
   }
 };

@@ -6,6 +6,8 @@ const InsumosController = require('./InsumosController');
 const MenuBeveragesController = require('./MenuBeveragesController');
 const MenuFoodController = require('./MenuFoodController');
 const OrderController = require('./OrderController');
+const SalesController = require('./SalesController');
+const NoticeController = require('./NoticeController');
 
 module.exports = {
   UserController,
@@ -15,5 +17,7 @@ module.exports = {
   InsumosController,
   MenuBeveragesController,
   MenuFoodController,
-  OrderController
+  OrderController,
+  SalesController,
+  NoticeController
 };

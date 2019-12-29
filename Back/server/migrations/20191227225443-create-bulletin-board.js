@@ -1,32 +1,36 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('MenuBeveragesSpecifics', {
+    return queryInterface.createTable('bulletinBoards', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      type: {
-        type: Sequelize.STRING
+      message: {
+        type: Sequelize.TEXT('medium')
       },
-      price: {
-        type: Sequelize.FLOAT
+      type: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: 'anuncio'
+      },
+      expiration: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 1
+      },
+      UserId: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      beverageId: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'MenuBeverages',
-          key: 'id',
-          as: 'beverage'
-        }
       },
       updatedAt: {
         allowNull: false,
@@ -35,6 +39,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('MenuBeveragesSpecifics');
+    return queryInterface.dropTable('bulletinBoards');
   }
 };

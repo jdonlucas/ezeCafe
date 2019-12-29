@@ -8,17 +8,27 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      id: {
-        type: Sequelize.UUID
-      },
       beveragesId: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'MenuBeveragesSpecifics',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       orderId: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'Orders',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       quantity: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

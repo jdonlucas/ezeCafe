@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const MenuBeveragesController = require('../server/controllers/MenuBeveragesController');
 const MenuFoodController = require('../server/controllers/MenuFoodController');
+const MenuSpecialController = require('../server/controllers/MenuSpecialController');
 
 //routes for food menu
 router.post('/newFood', MenuFoodController.create);
@@ -20,8 +21,11 @@ router.post('/showBeverage', MenuBeveragesController.show);
 router.post('/showBeverageSpecific', MenuBeveragesController.showSpecific);
 router.post('/deleteBeverage', MenuBeveragesController.delete);
 router.post('/deleteBeverageSpecific', MenuBeveragesController.deleteSpecific);
-
-
-
+//routes for specials and employees
+router.post('/newSpecial', MenuSpecialController.create);
+router.post('/updateSpecial', MenuSpecialController.update);
+router.get('/listAllSpecial', MenuSpecialController.index);
+router.post('/showSpecial', MenuSpecialController.show);
+router.post('/deleteSpecial', MenuSpecialController.delete);
 
 module.exports = router;

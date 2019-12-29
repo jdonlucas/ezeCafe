@@ -7,13 +7,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    subtotal: DataTypes.FLOAT
+    name: {
+      type: DataTypes.STRING
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'pendiente'
+    },
+    subtotal: {
+      allowNull: false,
+      type: DataTypes.FLOAT
+    }
   }, {});
   Order.associate = function(models) {
-    Order.hasOne(models.Sales,{
-      as: 'order',
-      foreignKey: 'OrderId'
-    });
+    Order.hasOne(models.Sales);
     Order.belongsTo(models.User,{
       foreignKey: 'UserId'
     });
@@ -21,13 +28,22 @@ module.exports = (sequelize, DataTypes) => {
       through: 'FoodOrder',
       as: 'food',
       foreignKey: 'orderId',
-      otherKey: 'foodId'
+      onDelete: 'cascade',
+      hooks: true
     });
     Order.belongsToMany(models.MenuBeveragesSpecific,{
       through: 'BeveragesOrder',
       as: 'beverages',
-      foreignKey: 'orderBeveragesId',
-      otherKey: 'beveragesId'
+      foreignKey: 'orderId',
+      onDelete: 'cascade',
+      hooks: true
+    });
+    Order.belongsToMany(models.MenuSpecial,{
+      through: 'specialOrder',
+      as: 'special',
+      foreignKey: 'orderId',
+      onDelete: 'cascade',
+      hooks: true
     })
   };
 

@@ -1,13 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const FoodOrder = sequelize.define('FoodOrder', {
+  const specialOrder = sequelize.define('specialOrder', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    foodId: {
+    specialId: {
       type: DataTypes.UUID,
       references: {
         model: 'MenuFood',
@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     quantity: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     }
   }, {});
-  FoodOrder.associate = function(models) {
+  specialOrder.associate = function(models) {
     // associations can be defined here
   };
-  return FoodOrder;
+  return specialOrder;
 };

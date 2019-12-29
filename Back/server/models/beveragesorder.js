@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    quantity: DataTypes.INTEGER
+    quantity: {
+      allowNull: false,
+      type: DataTypes.STRING
+    }
   }, {});
   BeveragesOrder.associate = function(models) {
     // associations can be defined here

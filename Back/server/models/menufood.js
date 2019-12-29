@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'FoodOrder',
       as: 'foodOrders',
       foreignKey: 'foodId',
-      otherKey: 'orderId'
+      hooks: true
     })
   };
   return MenuFood;

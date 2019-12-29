@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    size: DataTypes.STRING,
-    milk: DataTypes.STRING,
+    type: DataTypes.STRING,
     price: DataTypes.FLOAT
   }, {});
   MenuBeveragesSpecific.associate = function(models) {
@@ -16,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'beverageId', 
       as: 'beverage'
     });
+    MenuBeveragesSpecific.belongsToMany(models.Order,{
+      through: 'BeveragesOrder',
+      as: 'beveragesOrder',
+      foreignKey: 'beveragesId',
+      hooks: true
+    })
   };
   return MenuBeveragesSpecific;
 };
