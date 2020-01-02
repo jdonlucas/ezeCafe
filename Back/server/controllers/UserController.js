@@ -2,7 +2,9 @@ const User = require('../models').User;
 
 var UserController = {
     index(req, res) {
-        return User.findAll()
+        return User.findAll({
+            include: [{ model: Role }]
+        })
             .then(usersList => res.status(200).json({ usersList }))
             .catch(error => res.status(400).send(error));
     },
