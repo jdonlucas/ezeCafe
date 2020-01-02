@@ -339,7 +339,8 @@ export class MenuComponent implements OnInit {
     }
     this._salesService.createSale(saleData)
       .then(response => {
-        this._printService.printDocument('invoice',this.order.id);
+        //this._printService.printDocument('invoice',this.order.id);
+        this._router.navigate(['/comandas/index']);
       })
       .catch(err => this.errors = err);
   }
