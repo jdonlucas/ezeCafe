@@ -1,4 +1,5 @@
 const User = require('../models').User;
+const Role = require('../models').Role;
 
 var UserController = {
     index(req, res) {
