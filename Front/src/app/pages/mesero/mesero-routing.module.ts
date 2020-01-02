@@ -7,9 +7,9 @@ import { PrintComponent } from './print/print.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [UserGuard], data: { whichUser: 'Mesero' }},
-  { path: 'index', loadChildren : './comanda/comanda.module#ComandaModule', canActivate: [UserGuard], data: { whichUser: 'Mesero' }},
-  { path: 'print', outlet: 'print', component: PrintComponent, children: [{ path: 'invoice/:id', component: InvoiceComponent}], canActivate: [UserGuard], data: { whichUser: 'Mesero' }}
+  { path: '', component: HomeComponent, canActivate: [UserGuard], data: {whichUser: 'Mesero'}},
+  { path: 'index', loadChildren : './comanda/comanda.module#ComandaModule', canActivate: [UserGuard], data: {whichUser: 'Mesero'}},
+  { path: 'print', outlet: 'print', component: PrintComponent, children: [{ path: 'invoice/:id', component: InvoiceComponent}], canActivate: [UserGuard], data: {whichUser: 'Mesero'}}
 ];
 
 @NgModule({
