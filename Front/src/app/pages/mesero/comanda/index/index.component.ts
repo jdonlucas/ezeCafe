@@ -48,6 +48,7 @@ export class IndexComponent implements OnInit {
 
   fetchOrders() {
     let today = new Date();
+    this.orders = [];
     this._orderService.showOrders().then(response => {
         for(let i=0;i<response["orderHistory"].length;i++) {
           if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(response["orderHistory"][i].createdAt,'yyyy-MM-dd')) {

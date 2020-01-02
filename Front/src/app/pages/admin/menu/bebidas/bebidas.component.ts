@@ -154,6 +154,7 @@ export class BebidasComponent implements OnInit {
         this.showBeveragesSpecific(beverageId);
         this.addBeverageSpecific.reset();
         this.beverages();
+        this.addBeverage.reset();
       })
       .catch(err => {
         this.errors = err;

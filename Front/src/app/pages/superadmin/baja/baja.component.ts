@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 
 declare var $: any;
 
@@ -15,6 +16,7 @@ export class BajaComponent implements OnInit {
   public userData: any;
   public users: any;
   public errorCode: any;
+  faTrashAlt = faTrashAlt;
 
   constructor(
     private _store: Store<AppState>,

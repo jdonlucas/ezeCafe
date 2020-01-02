@@ -137,7 +137,7 @@ export class AuthService {
       map(auth => {
         const authData = auth.authData ? auth.authData : {};
         const userData = authData.user ? authData.user.Role.name : {}; // verifica si el usuario puede entrar a la ruta que quiere
-        const isUser = (userData == whichUser || userData == 'SuperAdmin' || userData == 'Admin') ? true : false;  
+        const isUser = (userData == whichUser || userData == 'SuperAdmin' || userData == 'Admin' || whichUser == 'Mesero') ? true : false;  
         if (!isUser) { // si la ruta es distinta al rol del usuario lo redirige a su home
           this._router.navigate(['/' + userData.toLowerCase()]);
         } else if ((userData == 'Admin') && (whichUser == 'SuperAdmin')) {
