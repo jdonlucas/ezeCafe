@@ -176,6 +176,6 @@ body app-root app-print { width: 58mm; height: 300mm }
 @media print {
     app-root > * { display: none; }
     app-root app-print { display: block; }
-    body app-root app-print { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 700; color: black;}
-    body app-root app-invoice { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 700; color: black;}
+    body app-root app-print { width: 69mm; height: 100mm; font-family: Monospace!important; font-weight: 700; color: black;}
+    body app-root app-invoice { width: 69mm; height: 100mm; font-family: Monospace!important; font-weight: 700; color: black;}
 }
