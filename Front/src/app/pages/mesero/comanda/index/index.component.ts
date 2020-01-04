@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { DatePipe } from '@angular/common';
+import { PrintService } from 'src/app/services/print.service';
 
 @Component({
   selector: 'app-index',
@@ -29,13 +31,15 @@ export class IndexComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faEdit = faEdit;
   faEye = faEye;
+  faPrint = faPrint;
 
   constructor(
     private _store: Store<AppState>,
     public _router: Router,
     public _orderService: OrderService,
     private _salesService: SalesService,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    public _printService: PrintService) {
     }
 
   ngOnInit() {
@@ -61,6 +65,9 @@ export class IndexComponent implements OnInit {
       }).catch(err => {
         this.errorCode = err.error;
       })
+  }
+  print(printOrderId: any) {
+    this._printService.printDocument('invoice',printOrderId);
   }
 
   startOrder() {

@@ -15,7 +15,9 @@
     display: none;
   }
 }
-@page { size: 58mm fit-content }
+@media print {
+  @page { size: 58mm 150mm }
+}
 .logo {
   height: 120px;
   width: 55px;

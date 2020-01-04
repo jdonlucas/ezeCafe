@@ -122,3 +122,12 @@
 .widthSmall {
     width: 33%;
 }
+.printButton {
+    background: transparent;
+    border: none;
+    height: fit-content;
+    margin-left: 15px;
+}
+.printButton:focus {
+    outline: none;
+}

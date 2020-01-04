@@ -35,8 +35,6 @@ export class InvoiceComponent implements OnInit {
     this.orderId = this.route.snapshot.params.id;
     this._orderService.showOrder(this.orderId).then(res => {
       this.employee = res[0].User.Name + " " + (res[0].User.lastname ? res[0].User.lastname : '');
-      this.payment = res[0].Sale.pago;
-      this.saleId = res[0].Sale.id;
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
       this.menuItem = res[0].special;

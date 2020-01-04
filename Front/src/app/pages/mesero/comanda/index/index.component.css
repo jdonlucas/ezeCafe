@@ -32,7 +32,7 @@
     overflow: auto;
 }
 .addButton {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
     margin: 20px;
@@ -130,6 +130,15 @@
     height: 100%;
 }
 .editButtons button:focus {
+    outline: none;
+}
+.printButton {
+    background: transparent;
+    border: none;
+    height: fit-content;
+    margin-left: 15px;
+}
+.printButton:focus {
     outline: none;
 }
 .inputForms {

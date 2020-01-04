@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { PrintService } from 'src/app/services/print.service';
 
 @Component({
   selector: 'app-print',
@@ -10,13 +11,21 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 })
 export class PrintComponent implements OnInit {
   
+  public loaded = false;
   faInstagram = faInstagram;
   faTwitter = faTwitter;
   faFacebook = faFacebook;
 
-  constructor() { }
+  constructor(
+    private printService: PrintService) { }
 
   ngOnInit() {
+    const images = document.querySelectorAll('img');
+    for (let i = 0; i < images.length; i++) {  
+      images[i].addEventListener('load', () => {
+        this.loaded = true;
+      })
+    }
   }
 
 }

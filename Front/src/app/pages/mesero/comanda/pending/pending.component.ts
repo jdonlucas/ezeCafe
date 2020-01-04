@@ -7,8 +7,10 @@ import { SalesService } from 'src/app/services/sales.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { DatePipe } from '@angular/common';
+import { PrintService } from 'src/app/services/print.service';
 
 @Component({
   selector: 'app-pending',
@@ -29,13 +31,15 @@ export class PendingComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faEdit = faEdit;
   faEye = faEye;
+  faPrint = faPrint;
 
   constructor(
     private _store: Store<AppState>,
     public _router: Router,
     public _orderService: OrderService,
     private _salesService: SalesService,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    public _printService: PrintService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -43,6 +47,9 @@ export class PendingComponent implements OnInit {
       this.userData = authData.user ? authData.user : {};
     });
     this.fetchOrders();
+  }
+  print(printOrderId: any) {
+    this._printService.printDocument('invoice',printOrderId);
   }
   fetchOrders() {
     let today = new Date();
