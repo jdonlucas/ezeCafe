@@ -13,25 +13,25 @@ export class OrderService {
   }
 
   newOrder(orderData: any) {
-    return this._http.post('http://localhost:3000/api/order/newOrder', { 
+    return this._http.post('http://db.ezecafe.com.mx/api/order/newOrder', { 
       orderData: orderData
     }).toPromise();
   }
   showOrder(id: any) {
-    return this._http.post('http://localhost:3000/api/order/showOrder',{
+    return this._http.post('http://db.ezecafe.com.mx/api/order/showOrder',{
       orderId: id
     }).toPromise();
   }
   showOrders() {
-    return this._http.get('http://localhost:3000/api/order/listAllOrders').toPromise();
+    return this._http.get('http://db.ezecafe.com.mx/api/order/listAllOrders').toPromise();
   }
   deleteOrder(orderId: any) {
-    return this._http.post('http://localhost:3000/api/order/deleteOrder', { 
+    return this._http.post('http://db.ezecafe.com.mx/api/order/deleteOrder', { 
         orderId: orderId
     }).toPromise();
   }
   updateOrder(orderId: any,orderData: any) {   
-    return this._http.post('http://localhost:3000/api/order/updateOrder', {
+    return this._http.post('http://db.ezecafe.com.mx/api/order/updateOrder', {
         orderData: orderData,
         params: {
             id: orderId
@@ -41,22 +41,22 @@ export class OrderService {
 
   //associations
   newFoodOrder(foodData: any) {
-    return this._http.post('http://localhost:3000/api/order/newFoodOrder', { 
+    return this._http.post('http://db.ezecafe.com.mx/api/order/newFoodOrder', { 
         foodData: foodData
     }).toPromise();
   }
   newBeverageOrder(beverageData: any) {
-    return this._http.post('http://localhost:3000/api/order/newBeverageOrder', { 
+    return this._http.post('http://db.ezecafe.com.mx/api/order/newBeverageOrder', { 
         beverageData: beverageData
     }).toPromise();
   }
   newSpecialOrder(specialData: any) {
-    return this._http.post('http://localhost:3000/api/order/newSpecialOrder', { 
+    return this._http.post('http://db.ezecafe.com.mx/api/order/newSpecialOrder', { 
       specialData: specialData
     }).toPromise();
   }
   updateFoodOrder(id: any,foodData: any) {
-    return this._http.post('http://localhost:3000/api/order/updateFoodOrder', {
+    return this._http.post('http://db.ezecafe.com.mx/api/order/updateFoodOrder', {
       foodData: foodData,
       params: {
         id: id
@@ -64,7 +64,7 @@ export class OrderService {
     }).toPromise();
   }
   updateBeverageOrder(id: any,beverageData: any) {
-    return this._http.post('http://localhost:3000/api/order/updateBeverageOrder', {
+    return this._http.post('http://db.ezecafe.com.mx/api/order/updateBeverageOrder', {
       beverageOrder: beverageData,
       params: {
         id: id
@@ -72,7 +72,7 @@ export class OrderService {
     }).toPromise();
   }
   updateSpecialOrder(id: any,orderSpecialData: any) {
-    return this._http.post('http://localhost:3000/api/order/updateSpecialOrder', {
+    return this._http.post('http://db.ezecafe.com.mx/api/order/updateSpecialOrder', {
       orderSpecialData: orderSpecialData,
       params: {
         id: id

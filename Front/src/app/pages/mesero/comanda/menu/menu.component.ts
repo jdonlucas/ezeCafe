@@ -164,7 +164,7 @@ export class MenuComponent implements OnInit {
         }
       }
     }
-    this.itemsList.push({name: name,price: price});
+    this.itemsList.push({id: b.id,name: name,price: price});
     this.hideSpecific();
     this.totalAmount = this.totalAmount + price;
   }
@@ -186,7 +186,7 @@ export class MenuComponent implements OnInit {
         }
       }
     }
-    this.itemsList.push({name: food.product,price: food.price});
+    this.itemsList.push({id: food.id,name: food.product,price: food.price});
     this.totalAmount = this.totalAmount + food.price;
   }
   addMenu(special) {
@@ -207,7 +207,7 @@ export class MenuComponent implements OnInit {
         }
       }
     }
-    this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price});
+    this.itemsList.push({id: special.id,name: special.product + " (" + special.type + ")",price: special.price});
     this.totalAmount = this.totalAmount + special.price;
   }
   removeItem(item: any) {
@@ -216,6 +216,33 @@ export class MenuComponent implements OnInit {
     if (index > -1) {
       this.itemsList.splice(index,1);
     }
+    this.beverageItems.forEach(x => {
+      if(x.id == item.id) {
+        if(x.quantity == 1) {
+          this.beverageItems.splice(this.beverageItems.indexOf(x),1);
+        } else {
+          x.quantity = x.quantity - 1;
+        }
+      }
+    });
+    this.foodItems.forEach(x => {
+      if(x.id == item.id) {
+        if(x.quantity == 1) {
+          this.foodItems.splice(this.foodItems.indexOf(x),1);
+        } else {
+          x.quantity = x.quantity - 1;
+        }
+      }
+    });
+    this.menuItems.forEach(x => {
+      if(x.id == item.id) {
+        if(x.quantity == 1) {
+          this.menuItems.splice(this.menuItems.indexOf(x),1);
+        } else {
+          x.quantity = x.quantity - 1;
+        }
+      }
+    })
   }
   toggleDiv(){
      this.showConfirm = !this.showConfirm;

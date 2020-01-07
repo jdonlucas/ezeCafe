@@ -172,10 +172,49 @@ nav li a:hover {
 .centerDiv {
     transform: translateY(100%);
 }
+.whiteframe-2v {
+    background: #fff;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.whiteframe-2v h2 {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    background: #351e38;
+    padding: 5px 10px;
+    margin: 0;
+}
+.whitelist {
+    display: block;
+    padding: 8px 0;
+}
+.whiteitem {
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+}
+.whiteicon {
+    align-self: flex-start;
+    font-size: 30px;
+    padding: 5px;
+    color: #bbb;
+}
+.whitetext {
+    margin-left: 10px;
+    flex: 1;
+    padding-top: 18px;
+}
+.whitetext h3 {
+    font-size: 15px !important;
+    line-height: 1.2em !important;
+    color: #777 !important;
+}
 body app-root app-print { width: 58mm; height: 300mm } 
 @media print {
     app-root > * { display: none; }
     app-root app-print { display: block; }
-    body app-root app-print { width: 69mm; height: 100mm; font-family: Monospace!important; font-weight: 700; color: black;}
-    body app-root app-invoice { width: 69mm; height: 100mm; font-family: Monospace!important; font-weight: 700; color: black;}
+    body app-root app-print { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
+    body app-root app-invoice { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
+    body app-root app-corte { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
 }

@@ -152,3 +152,7 @@
     width: -webkit-fill-available;
     text-align: right;
 }
+.eButton {
+    background: transparent;
+    border: none;
+}

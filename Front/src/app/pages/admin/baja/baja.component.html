@@ -1,15 +1,15 @@
 <div class="container h-100">
     <div class="row justify-content-center align-items-center h-100">
         <div class="cont">
-            <h2>Eliminar usuarios</h2>
+            <h2>Lista de usuarios</h2>
             <table class="table" style="width:100%">
-                <thead class="black white-text">
+                <thead>
                   <tr>
-                    <th></th>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellidos</th>
-                    <th class="text-center">Username</th>
+                    <th class="text-center">Nombre de usuario</th>
                     <th class="text-center">Rol</th>
+                    <th class="text-center">Eliminar</th>
                   </tr>
                 </thead>
                 <tr *ngFor="let user of users">
@@ -17,7 +17,8 @@
                     <td *ngIf="userData.id != user.id && user.UserRole < 3" align="center">{{ user.Name }}</td>
                     <td *ngIf="userData.id != user.id && user.UserRole < 3" align="center" id="quantity">{{ user.Lastname }}</td>
                     <td *ngIf="userData.id != user.id && user.UserRole < 3" align="center">{{ user.Username }}</td>
-                    <td *ngIf="userData.id != user.id" align="center">{{ user.Role.name }}</td>
+                    <td *ngIf="userData.id != user.id && user.UserRole < 3" align="center">{{ user.Role.name }}</td>
+                    <td *ngIf="userData.id != user.id && user.UserRole < 3"><button class="link-dark" (click)="deleteUser(user.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button></td>
                 </tr>
             </table>
         </div>

@@ -7,10 +7,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SalesComponent } from './sales/sales.component';
 import { InspectComponent } from './inspect/inspect.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CorteComponent } from './corte/corte.component';
+import { PrintComponent } from './print/print.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, SalesComponent, InspectComponent],
+  declarations: [HomeComponent, SalesComponent, InspectComponent, CorteComponent, PrintComponent],
   imports: [
     CommonModule,
     CajaRoutingModule,

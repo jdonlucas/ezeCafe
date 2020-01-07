@@ -1,21 +1,23 @@
 <div class="container h-100">
     <div class="row justify-content-center align-items-center h-100">
-        <div class="card my-auto">
+        <div class="card my-auto border-0">
             <div class="card-body">
                 <div class="row authLogin" [style.display]="create ? 'flex' : 'none'">
                     <h2>Alta de usuarios</h2>
                         <div class="col-md-10">
                         <form [formGroup]="signupForm">
-                            <div class="form-group">
-                                <div class="md-form">
-                                    <input type="text" id="name" class="form-control" placeholder="Nombre" [ngClass]="{ 'is-invalid': signupForm.get('name').touched && signupForm.get('name').invalid }"
-                                    formControlName="name" />
+                            <div class="name">
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="name" class="form-control" placeholder="Nombre" [ngClass]="{ 'is-invalid': signupForm.get('name').touched && signupForm.get('name').invalid }"
+                                        formControlName="name" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="md-form">
-                                    <input type="text" id="lastname" class="form-control" placeholder="Apellidos" [ngClass]="{ 'is-invalid': signupForm.get('lastname').touched && signupForm.get('lastname').invalid }"
-                                    formControlName="lastname" />
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="text" id="lastname" class="form-control" placeholder="Apellidos" [ngClass]="{ 'is-invalid': signupForm.get('lastname').touched && signupForm.get('lastname').invalid }"
+                                        formControlName="lastname" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -24,16 +26,18 @@
                                     formControlName="username" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="md-form">
-                                    <input type="password" id="password" class="form-control" placeholder="Contraseña"  [ngClass]="{ 'is-invalid': signupForm.get('password').touched && signupForm.get('password').invalid }"
-                                    formControlName="password" />
+                            <div class="name">
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="password" id="password" class="form-control" placeholder="Contraseña"  [ngClass]="{ 'is-invalid': signupForm.get('password').touched && signupForm.get('password').invalid }"
+                                        formControlName="password" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="md-form">
-                                    <input type="password" id="password2" class="form-control" placeholder="Comprobar contraseña"  [ngClass]="{ 'is-invalid': signupForm.get('password2').touched && signupForm.get('password2').invalid }"
-                                    formControlName="password2" />
+                                <div class="form-group">
+                                    <div class="md-form">
+                                        <input type="password" id="password2" class="form-control" placeholder="Comprobar contraseña"  [ngClass]="{ 'is-invalid': signupForm.get('password2').touched && signupForm.get('password2').invalid }"
+                                        formControlName="password2" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
