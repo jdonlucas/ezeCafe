@@ -25,3 +25,11 @@
 .alert-message {
     margin-top: 3px!important;
 }
+.name {
+    display: flex;
+    margin: 0;
+    justify-content: space-between;
+}
+.name .form-group {
+    margin: 0;
+}

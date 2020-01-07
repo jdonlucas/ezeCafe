@@ -29,3 +29,31 @@
     border: 2px solid black;
     border-radius: 9px;
 }
+.container {
+    top: 0;
+    left: 0;
+    transform: none;
+    position: relative;
+}
+.buttons {
+    justify-content: space-between;
+    width: 40%;
+    display: flex;
+    margin: auto;
+}
+.name {
+    display: flex;
+    margin: 0;
+    justify-content: space-between;
+}
+.name .form-group {
+    margin: 0;
+    height: 55px;
+}
+.name .md-form {
+    margin-right: 10px;
+}
+.fullWidth {
+    width: 100%;
+    padding: 10px;
+}

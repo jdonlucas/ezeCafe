@@ -1,8 +1,15 @@
 const User = require('../models').User;
+const Role = require('../models').Role;
 
 var UserController = {
     index(req, res) {
-        return User.findAll()
+        return User.findAll({
+            include: [
+                {
+                    model: Role
+                }
+            ]
+        })
             .then(usersList => res.status(200).json({ usersList }))
             .catch(error => res.status(400).send(error));
     },
@@ -20,7 +27,7 @@ var UserController = {
 
     update(req, res) {
         let userData = req.body.userData;
-        let query = { returning: true, where: { id: req.params.id } };
+        let query = { returning: true, where: { id: req.body.params.id } };
         User.update(userData, query)
           .then(userUpdated => {
             res.json({ newUserInfo: userUpdated });

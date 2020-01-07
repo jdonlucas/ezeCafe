@@ -19,6 +19,16 @@ export class PrintService {
             }
         ]);
     }
+    printCorte(documentName: string) {
+      this.isPrinting = true;
+      this.router.navigate(['caja',
+            { outlets: 
+                {
+                    print: ['imprime', documentName]
+                }
+            }
+        ]);
+    }
     onDataReady() {
       setTimeout(() => {
         window.print();
@@ -26,6 +36,17 @@ export class PrintService {
         this.router.navigate([{ outlets: { print: null }}]).then(() =>
           this.router.navigate(['/']).then(() =>
             this.router.navigate(['/comandas/index'])
+          )
+        );
+      });
+    }
+    onDataReadyCorte() {
+      setTimeout(() => {
+        window.print();
+        this.isPrinting = false;
+        this.router.navigate([{ outlets: { print: null }}]).then(() =>
+          this.router.navigate(['/']).then(() =>
+            this.router.navigate(['/caja/sales'])
           )
         );
       });

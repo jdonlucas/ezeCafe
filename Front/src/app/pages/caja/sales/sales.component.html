@@ -3,6 +3,9 @@
         <h1 class="titleSection">Ventas</h1>
         <h2>Efectivo: ${{ cash }} Tarjeta: ${{ card }}</h2>
     </div>
+    <div>
+        <button class="eButton" (click)="printCorte()"><fa-icon [icon]="faPrint"></fa-icon> Corte</button>
+    </div>
     <div class="whiteframe">
         <div class="frameContent">
             <ul class="orders">

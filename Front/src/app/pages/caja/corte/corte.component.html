@@ -1,0 +1,16 @@
+<div class="salesList">
+    <ul>
+        <li *ngFor="let sale of orders; let last = last" class="salesItems {{ last ? 'last' : ''}}">
+            <div class="in">
+                <div>{{ sale.id }}</div>
+                <div class="pago">-> {{ sale.Sale.pago }} <-</div>
+            </div>
+            <div class="amount">$ {{ sale.subtotal }}</div>
+        </li>
+    </ul>
+    <div class="total">
+        <div>Tarjeta: ${{ card }} MN</div>
+        <div>Efectivo: ${{ cash }} MN</div>
+        <div class="realTotal">Total: ${{ totalAmount }} MN</div>
+    </div>
+</div>

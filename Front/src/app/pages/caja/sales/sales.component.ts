@@ -8,7 +8,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { PrintService } from 'src/app/services/print.service';
 
 @Component({
   selector: 'app-sales',
@@ -31,13 +33,15 @@ export class SalesComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faEdit = faEdit;
   faEye = faEye;
+  faPrint = faPrint;
 
   constructor(
     private _store: Store<AppState>,
     public _router: Router,
     public _orderService: OrderService,
     private _salesService: SalesService,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    public _printService: PrintService) {
     }
 
   ngOnInit() {
@@ -105,5 +109,9 @@ export class SalesComponent implements OnInit {
         this.fetchOrders();
         this.orderId = '';
       }).catch(err => {});
+  }
+  
+  printCorte() {
+    this._printService.printCorte('corte');
   }
 }

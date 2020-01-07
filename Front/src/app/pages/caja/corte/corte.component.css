@@ -1,0 +1,30 @@
+.salesItems {
+    display: flex;
+}
+.salesList ul {
+    margin: 0;
+    padding: 0;
+}
+.salesList li {
+    border-bottom: 1px dashed black;
+}
+.pago {
+    margin-top: 5px;
+}
+.last {
+    border-bottom: none!important;
+}
+.total {
+    margin-top: 10px;
+    text-align: center;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+.in {
+    width: 60%;
+}
+.amount {
+    width: 40%;
+    text-align: right;
+}
+  
