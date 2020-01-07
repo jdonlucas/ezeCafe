@@ -53,7 +53,8 @@ export class PendingComponent implements OnInit {
   }
   fetchOrders() {
     let today = new Date();
-    this._orderService.showOrders().then(response => {
+    let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
+    this._orderService.showOrders(queryDate).then(response => {
         let ordersHis = response["orderHistory"];
         for(let i=0;i<ordersHis.length;i++){
           if(ordersHis[i].status == 'pendiente'){

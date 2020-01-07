@@ -4,7 +4,7 @@ const OrderController = require('../server/controllers/OrderController');
 
 //routes for General order
 router.post('/newOrder', OrderController.create);
-router.get('/listAllOrders', OrderController.index);
+router.post('/listAllOrders', OrderController.index);
 router.post('/showOrder', OrderController.show);
 router.post('/deleteOrder', OrderController.delete);
 router.post('/updateOrder', OrderController.update);

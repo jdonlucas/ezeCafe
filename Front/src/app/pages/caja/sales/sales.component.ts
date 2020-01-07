@@ -50,7 +50,8 @@ export class SalesComponent implements OnInit {
 
   fetchOrders() {
     let today = new Date();
-    this._orderService.showOrders().then(response => {
+    let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
+    this._orderService.showOrders(queryDate).then(response => {
         for(let i=0;i<response["orderHistory"].length;i++) {
           if(response["orderHistory"][i].status == 'cerrada'){
             if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(response["orderHistory"][i].createdAt,'yyyy-MM-dd')) {

@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     let today = new Date();
+    let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
     this._salesService.showAllSales().then(resp => {
       let totalSales = resp['salesHistory'];
       for(let i=0;i<totalSales.length;i++) {
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit {
         }
       }
     });
-    this._orderService.showOrders().then(resp => {
+    this._orderService.showOrders(queryDate).then(resp => {
       let orders = resp['orderHistory'];
       for(let i=0;i<orders.length;i++) {
         if(orders[i].status != 'cancelada') {
