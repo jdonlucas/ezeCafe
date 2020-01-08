@@ -7,6 +7,7 @@ import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { PrintService } from 'src/app/services/print.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router } from "@angular/router";
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -49,7 +50,8 @@ export class EditComponent implements OnInit {
     private _menuService: MenuService,
     private _orderService: OrderService,
     private _salesService: SalesService,
-    public _printService: PrintService) { }
+    public _printService: PrintService,
+    private _spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -340,7 +342,7 @@ export class EditComponent implements OnInit {
   public onChange(event: Event): void {
     this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
   }
-  saveSale(payMethod) {
+  async saveSale(payMethod) {
     let saleData: any;
     let ingreso: any;
     if (this.paymentForm.value.amount == ''){
@@ -363,12 +365,13 @@ export class EditComponent implements OnInit {
         OrderId: this.orderId
       } 
     }
-    this._salesService.createSale(saleData)
+    this._spinnerService.show();
+    await this._salesService.createSale(saleData)
       .then(response => {
-        //this._printService.printDocument('invoice',this.order.id);
         this._router.navigate(['/comandas/index']);
       })
       .catch(err => this.errors = err);
+    this._spinnerService.hide();
   }
 
 }

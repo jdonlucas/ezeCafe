@@ -7,7 +7,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    product: DataTypes.STRING
+    product: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'active'
+    }
   }, {});
   MenuBeverages.associate = function(models) {
     MenuBeverages.hasMany(models.MenuBeveragesSpecific,{

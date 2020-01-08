@@ -5,7 +5,7 @@ const SalesController = require('../server/controllers/SalesController');
 //routes for food menu
 router.post('/newSale', SalesController.create);
 router.post('/updateSale', SalesController.update);
-router.get('/listAllSales', SalesController.index);
+router.post('/listAllSales', SalesController.index);
 router.post('/showSale', SalesController.show);
 router.post('/deleteSale', SalesController.delete);
 //routes for beverages menu

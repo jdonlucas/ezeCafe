@@ -58,9 +58,7 @@ export class PendingComponent implements OnInit {
         let ordersHis = response["orderHistory"];
         for(let i=0;i<ordersHis.length;i++){
           if(ordersHis[i].status == 'pendiente'){
-            if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(ordersHis[i].createdAt,'yyyy-MM-dd')) {
-              this.orders.push(ordersHis[i]);
-            }
+            this.orders.push(ordersHis[i]);
           }
         }
         this.orders.sort((a,b) => 

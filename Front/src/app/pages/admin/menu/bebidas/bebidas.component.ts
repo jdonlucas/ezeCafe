@@ -10,6 +10,7 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 
 declare var $: any;
@@ -53,7 +54,8 @@ export class BebidasComponent implements OnInit {
 
   constructor(
     private _store: Store<AppState>,
-    private _menuService: MenuService
+    private _menuService: MenuService,
+    private _spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
@@ -169,7 +171,10 @@ export class BebidasComponent implements OnInit {
     this.seeSpecific = true;
   }
   deleteBeverage(beverageId: any) {
-    this._menuService.deleteBeverage(beverageId)
+    const disableBeverage = {
+      status: 'disabled'
+    }
+    this._menuService.updateBeverage(disableBeverage,beverageId)
       .then(response => {
         this.beverages();
       })
@@ -194,7 +199,10 @@ export class BebidasComponent implements OnInit {
     this.add = true;
   }
   deleteSpecificBeverage(id: any) {
-    this._menuService.deleteBeverageSpecific(id)
+    const disableSpecific = {
+      status: 'disabled'
+    }
+    this._menuService.updateBeverageSpecific(disableSpecific,id)
       .then(response => {
         console.log(response);
         this.showBeveragesSpecific(this.beverageParentId);
@@ -210,19 +218,31 @@ export class BebidasComponent implements OnInit {
     this.updateSpecific.controls['typeUpdate'].setValue(b.type);
     this.updateSpecific.controls['priceUpdate'].setValue(b.price);
   }
-  updateBeverageSpecific() {
+  async updateBeverageSpecific() {
     const newInfo = {
       type: this.updateSpecific.value.typeUpdate,
-      price: this.updateSpecific.value.priceUpdate
+      price: this.updateSpecific.value.priceUpdate,
+      beverageId: this.beverageParentId
     }
-    this._menuService.updateBeverageSpecific(newInfo,this.editId)
+    const disableSpecific = {
+      status: 'disabled'
+    }
+    this._spinnerService.show();
+    await this._menuService.updateBeverageSpecific(disableSpecific,this.editId)
       .then(response => {
-        this.showBeveragesSpecific(this.beverageParentId);
         this.updateSpecificBeverages = false;
       })
       .catch(err => {
         this.errors = err;
       })
+    await this._menuService.newSpecificBeverage(newInfo)
+        .then(response => {
+          this.showBeveragesSpecific(this.beverageParentId);
+        })
+        .catch(err => {
+          this.errors = err;
+        })
+        this._spinnerService.hide();
   }
   createNewBeverageSpecific() {
     const beverageData = {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormControlName } from "@angular/forms";
 import { Store } from '@ngrx/store';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -49,7 +50,8 @@ export class MenuComponent implements OnInit {
     private _menuService: MenuService,
     private _orderService: OrderService,
     private _salesService: SalesService,
-    public _printService: PrintService
+    public _printService: PrintService,
+    private _spinnerService: Ng4LoadingSpinnerService
     ) { }
 
   ngOnInit() {
@@ -247,7 +249,7 @@ export class MenuComponent implements OnInit {
   toggleDiv(){
      this.showConfirm = !this.showConfirm;
   }
-  saveOrder(){
+  async saveOrder(){
     let foodData, beverageData, menuData;
     const orderData = {
       name: this.orderForm.value.name,
@@ -255,7 +257,8 @@ export class MenuComponent implements OnInit {
       subtotal: this.totalAmount,
       UserId: this.userData.id
     };
-    this._orderService.newOrder(orderData).then(response => {
+    this._spinnerService.show();
+    await this._orderService.newOrder(orderData).then(response => {
       let order = response['newOrder'];
       for(let i=0;i<this.foodItems.length;i++){
         foodData = {
@@ -284,13 +287,14 @@ export class MenuComponent implements OnInit {
       this._router.navigate(['/comandas/index']);
     })
       .catch(err => this.errors = err);
+    this._spinnerService.hide();
   }
   confirmClose() {
     this.closeC = !this.closeC;
     this.confirm = true;
     this.alert = false;
   }
-  closeOrder(){
+  async closeOrder(){
     if(this.totalAmount != 0) {
       let foodData, beverageData, menuData;
       const orderData = {
@@ -299,7 +303,8 @@ export class MenuComponent implements OnInit {
         subtotal: this.totalAmount,
         UserId: this.userData.id
       };
-      this._orderService.newOrder(orderData).then(response => {
+      this._spinnerService.show();
+      await this._orderService.newOrder(orderData).then(response => {
         this.order = response['newOrder'];
         for(let i=0;i<this.foodItems.length;i++){
           foodData = {
@@ -329,6 +334,7 @@ export class MenuComponent implements OnInit {
         this.pago = true;
       })
         .catch(err => this.errors = err);
+      this._spinnerService.hide();
     } else {
       this.confirm = false;
       this.alert = true;
@@ -341,7 +347,7 @@ export class MenuComponent implements OnInit {
   public onChange(event: Event): void {
     this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
   }
-  saveSale(payMethod) {
+  async saveSale(payMethod) {
     let saleData: any;
     let ingreso: any;
     if (this.paymentForm.value.amount == ''){
@@ -364,11 +370,13 @@ export class MenuComponent implements OnInit {
         OrderId: this.order.id
       } 
     }
-    this._salesService.createSale(saleData)
+    this._spinnerService.show();
+    await this._salesService.createSale(saleData)
       .then(response => {
         this._router.navigate(['/comandas/index']);
       })
       .catch(err => this.errors = err);
+    this._spinnerService.hide();
   }
 
 }

@@ -7,6 +7,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-especial',
@@ -31,7 +32,8 @@ export class EspecialComponent implements OnInit {
 
   constructor(
     private _store: Store<AppState>,
-    private _menuService: MenuService) { }
+    private _menuService: MenuService,
+    private _spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -94,23 +96,34 @@ export class EspecialComponent implements OnInit {
     this.editMenu.controls['priceEdit'].setValue(price);
     this.editMenu.controls['typeEdit'].setValue(type);
   }
-  updateMenu() {
+  async updateMenu() {
     const newMenuData = {
       product: this.editMenu.value.productEdit,
       price: this.editMenu.value.priceEdit,
       type: this.editMenu.value.typeEdit
     }
-    this._menuService.updateSpecial(newMenuData,this.parentId)
+    const disableMenu = {
+      status: 'disabled'
+    }
+    this._spinnerService.show();
+    await this._menuService.updateSpecial(disableMenu,this.parentId)
       .then(response => {
-        this.showMenu();
         this.editMenu.reset();
         this.searchMenu.reset();
         this.add = true;
         this.editM = false;
       })
+    await this._menuService.addSpecial(newMenuData)
+      .then(response => {
+        this.showMenu();
+      })
+    this._spinnerService.hide();
   }
   deleteMenu(id: any) {
-    this._menuService.deleteSpecial(id)
+    const disableMenu = {
+      status: 'disabled'
+    }
+    this._menuService.updateBeverageSpecific(disableMenu,id)
       .then(response => {
         this.showMenu();
       })

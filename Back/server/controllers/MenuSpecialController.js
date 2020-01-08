@@ -2,7 +2,11 @@ const MenuSpecial = require('../models').MenuSpecial;
 
 var MenuSpecialController = {
     index(req, res) {
-        return MenuSpecial.findAll()
+        return MenuSpecial.findAll({
+            where: {
+                status: 'active'
+            }
+        })
             .then(specialList => res.status(200).json({ specialList }))
             .catch(error => res.status(400).send(error));
     },

@@ -58,13 +58,11 @@ export class SalesComponent implements OnInit {
     this._orderService.showOrders(queryDate).then(response => {
         for(let i=0;i<response["orderHistory"].length;i++) {
           if(response["orderHistory"][i].status == 'cerrada'){
-            if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(response["orderHistory"][i].createdAt,'yyyy-MM-dd')) {
-              this.orders.push(response["orderHistory"][i]);
-              if(response["orderHistory"][i].Sale.pago == 'tarjeta') {
-                this.card = this.card + response["orderHistory"][i].Sale.costo
-              } else if (response["orderHistory"][i].Sale.pago == 'efectivo') {
-                this.cash = this.cash + response["orderHistory"][i].Sale.costo
-              }
+            this.orders.push(response["orderHistory"][i]);
+            if(response["orderHistory"][i].Sale.pago == 'tarjeta') {
+              this.card = this.card + response["orderHistory"][i].Sale.costo
+            } else if (response["orderHistory"][i].Sale.pago == 'efectivo') {
+              this.cash = this.cash + response["orderHistory"][i].Sale.costo
             }
           }
           this.orders.sort((a,b) => 

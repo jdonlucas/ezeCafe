@@ -25,12 +25,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     let today = new Date();
     let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
-    this._salesService.showAllSales().then(resp => {
+    this._salesService.showAllSales(queryDate).then(resp => {
       let totalSales = resp['salesHistory'];
       for(let i=0;i<totalSales.length;i++) {
-        if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(totalSales[i].createdAt,'yyyy-MM-dd')) {
           this.total = this.total + totalSales[i].costo;
-        }
       }
     });
     this._orderService.showOrders(queryDate).then(resp => {

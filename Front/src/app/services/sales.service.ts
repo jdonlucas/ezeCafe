@@ -17,8 +17,10 @@ export class SalesService {
             salesData: salesData
         }).toPromise();
     }
-    showAllSales() {
-        return this._http.get('http://db.ezecafe.com.mx/api/sales/listAllSales').toPromise();
+    showAllSales(date: any) {
+        return this._http.post('http://db.ezecafe.com.mx/api/sales/listAllSales',{
+            date: date
+        }).toPromise();
     }
        
     updateSale(salesData: any,id: any) {

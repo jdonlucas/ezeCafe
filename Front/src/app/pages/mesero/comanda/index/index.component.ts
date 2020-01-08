@@ -56,9 +56,7 @@ export class IndexComponent implements OnInit {
     this.orders = [];
     this._orderService.showOrders(queryDate).then(response => {
         for(let i=0;i<response["orderHistory"].length;i++) {
-          if(this.datePipe.transform(today,'yyyy-MM-dd') == this.datePipe.transform(response["orderHistory"][i].createdAt,'yyyy-MM-dd')) {
-            this.orders.push(response["orderHistory"][i]);
-          }
+          this.orders.push(response["orderHistory"][i]);
         }
         this.orders.sort((a,b) => 
           b.createdAt.localeCompare(a.createdAt)

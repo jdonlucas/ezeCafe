@@ -2,7 +2,11 @@ const MenuFood = require('../models').MenuFood;
 
 var MenuFoodController = {
     index(req, res) {
-        return MenuFood.findAll()
+        return MenuFood.findAll({
+            where: {
+                status: 'active'
+            }
+        })
             .then(foodList => res.status(200).json({ foodList }))
             .catch(error => res.status(400).send(error));
     },

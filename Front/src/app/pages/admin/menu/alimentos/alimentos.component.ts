@@ -7,6 +7,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-alimentos',
@@ -31,7 +32,8 @@ export class AlimentosComponent implements OnInit {
 
   constructor(
     private _store: Store<AppState>,
-    private _menuService: MenuService) { }
+    private _menuService: MenuService,
+    private _spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -86,22 +88,33 @@ export class AlimentosComponent implements OnInit {
     this.editFood.controls['productEdit'].setValue(product);
     this.editFood.controls['priceEdit'].setValue(price);
   }
-  updateFood() {
+  async updateFood() {
     const newFoodData = {
       product: this.editFood.value.productEdit,
       price: this.editFood.value.priceEdit
     }
-    this._menuService.updateFood(newFoodData,this.parentId)
+    const disableFood = {
+      status: 'disabled'
+    }
+    this._spinnerService.show();
+    await this._menuService.updateFood(disableFood,this.parentId)
       .then(response => {
-        this.showFood();
         this.editFood.reset();
         this.searchFood.reset();
         this.add = true;
         this.editF = false;
       })
+    await this._menuService.addFood(newFoodData)
+    .then(response => {
+      this.showFood();
+    })
+    this._spinnerService.hide();
   }
   deleteFood(id: any) {
-    this._menuService.deleteFood(id)
+    const disableFood = {
+      status: 'disabled'
+    }
+    this._menuService.updateFood(disableFood,id)
       .then(response => {
         this.showFood();
       })
