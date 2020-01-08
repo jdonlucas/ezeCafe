@@ -23,7 +23,7 @@ var UserController = {
 
     update(req, res) {
         let userData = req.body.userData;
-        let query = { returning: true, where: { id: req.params.id } };
+        let query = { returning: true, where: { id: req.body.params.id } };
         User.update(userData, query)
           .then(userUpdated => {
             res.json({ newUserInfo: userUpdated });

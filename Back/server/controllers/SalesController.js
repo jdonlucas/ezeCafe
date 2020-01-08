@@ -1,9 +1,21 @@
+let moment = require('moment');
+moment.tz.setDefault('UTC');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const Sales = require('../models').Sales;
 const StatusCaja = require('../models').StatusCaja;
 
 var SalesController = {
     index(req, res) {
-        return Sales.findAll()
+	let date = moment(req.body.date, 'DD-MM-YYYY');
+        return Sales.findAll({
+                where: {
+                    createdAt: {
+                        [Op.gt]: date.toDate(),
+                        [Op.lt]: date.add(1,'days').toDate()
+                    }
+                }
+            })
             .then(salesHistory => res.status(200).json({ salesHistory }))
             .catch(error => res.status(400).send(error));
     },

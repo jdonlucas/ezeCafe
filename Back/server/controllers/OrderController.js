@@ -1,3 +1,7 @@
+let moment = require('moment');
+moment.tz.setDefault('UTC');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const Order = require('../models').Order;
 const FoodOrder = require('../models').FoodOrder;
 const BeverageOrder = require('../models').BeveragesOrder;
@@ -11,13 +15,20 @@ const Sales = require('../models').Sales;
 
 var OrderController = {
     index(req, res) {
-        return Order.findAll({ include: [
-            {
-                model: User
-            },
-            {
-                model: Sales
-            }
+        return Order.findAll({
+		where: {
+		    createdAt: {
+		   	[Op.gt]: date.toDate(),
+			[Op.lt]: date.add(1,'days').toDate()
+		    }
+		}, 
+		include: [
+            	    {
+                	model: User
+            	    },
+            	    {
+                	model: Sales
+            	    }
         ]})
             .then(orderHistory => res.status(200).json({ orderHistory }))
             .catch(error => res.status(400).send(error));
