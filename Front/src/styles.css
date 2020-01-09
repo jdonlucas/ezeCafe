@@ -13,7 +13,6 @@
 }
 
 /*------------- General */
-html, body { height: 100%; }
 html, body {
     padding: 0px;
     margin: 0;
@@ -218,4 +217,38 @@ body app-root app-print { width: 58mm; height: 300mm }
     body app-root app-print { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
     body app-root app-invoice { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
     body app-root app-corte { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
+}
+
+.mat-button-wrapper {
+    color: gray!important;
+}
+.mat-icon-button:focus {
+    outline: none;
+}
+#mat-input-0 {
+    color: gray;
+}
+.md-input-container label {
+    color: lightgray;
+  }
+.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: rgb(63, 61, 61) !important;
+ }
+
+.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: rgba(238, 238, 238, 0) !important;
+} 
+
+.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: transparent !important;;
+}
+.mat-form-field-infix {
+    width: 80px!important;
+    border-top: 0;
+}
+.mat-form-field-wrapper {
+    padding-bottom: 0!important;
 }

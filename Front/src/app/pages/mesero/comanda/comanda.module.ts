@@ -10,6 +10,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditComponent } from './edit/edit.component';
 import { InspectComponent } from './inspect/inspect.component';
 import { PendingComponent } from './pending/pending.component';
+import {MatInputModule} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [IndexComponent, MenuComponent, EditComponent, InspectComponent, PendingComponent],
@@ -17,7 +20,10 @@ import { PendingComponent } from './pending/pending.component';
     CommonModule,
     ComandaRoutingModule,
     FontAwesomeModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule
+  ],
 })
 export class ComandaModule { }

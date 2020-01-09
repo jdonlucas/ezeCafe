@@ -1,5 +1,14 @@
 <div class="container2">
-    <h1 class="titleSection">Comandas</h1>
+    <div class="top">
+        <h1 class="titleSection">Comandas</h1>
+        <div class="calendar" *ngIf="userData.UserRole == 4">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Selecciona la fecha" [formControl]="date" (dateChange)="fetchOrders()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="month" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
     <div class="whiteframe">
         <div class="frameContent">
             <ul class="orders">
