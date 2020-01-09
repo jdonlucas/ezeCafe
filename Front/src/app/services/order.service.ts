@@ -75,7 +75,7 @@ export class OrderService {
   }
   updateSpecialOrder(id: any,orderSpecialData: any) {
     return this._http.post('http://localhost:3000/api/order/updateSpecialOrder', {
-      orderSpecialData: orderSpecialData,
+      specialData: orderSpecialData,
       params: {
         id: id
       }

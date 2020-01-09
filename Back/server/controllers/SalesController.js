@@ -1,5 +1,5 @@
 let moment = require('moment');
-moment.tz.setDefault('UTC');
+moment.tz.setDefault('America/Mexico_City');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Sales = require('../models').Sales;

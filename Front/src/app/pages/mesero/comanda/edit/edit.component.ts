@@ -74,7 +74,7 @@ export class EditComponent implements OnInit {
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){
         for(let j=0;j<this.foodItem[i].FoodOrder.quantity;j++){
-          this.itemsList.push({name: this.foodItem[i].product, price: this.foodItem[i].price});
+          this.itemsList.push({name: this.foodItem[i].product, price: this.foodItem[i].price,id:this.foodItem[i].id});
           this.totalAmount = this.totalAmount + this.foodItem[i].price;
         }
       }
@@ -86,7 +86,7 @@ export class EditComponent implements OnInit {
       }
       for(let i=0;i<this.menuItem.length;i++){
         for(let j=0;j<this.menuItem[i].specialOrder.quantity;j++){
-          this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price});
+          this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price,id: this.menuItem[i].id});
           this.totalAmount = this.totalAmount + parseFloat(this.menuItem[i].price);
         }
       }
@@ -279,9 +279,6 @@ export class EditComponent implements OnInit {
   }
 
   removeItem(item: any) {
-    let quantity: any;
-    let order: any;
-    let which: any;
     let index = this.itemsList.indexOf(item);
     this.totalAmount = this.totalAmount - item.price;
     this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
@@ -290,35 +287,22 @@ export class EditComponent implements OnInit {
     }
     this.beveragesItem.forEach( x => {
       if(x.id == item.id) {
-        quantity = x.BeveragesOrder.quantity;
-        order = x.BeveragesOrder.id;
-        which = 'beverage';
+        let beverage = { quantity: parseFloat(x.BeveragesOrder.quantity) - 1};
+        this._orderService.updateBeverageOrder(x.BeveragesOrder.id,beverage)
       }
     });
     this.foodItem.forEach(x => {
       if(x.id == item.id) {
-        quantity = x.FoodOrder.quantity
-        order = x.FoodOrder.id;
-        which = 'food';
+        let foodData = { quantity: parseFloat(x.FoodOrder.quantity) - 1 };
+        this._orderService.updateFoodOrder(x.FoodOrder.id,foodData);
       } 
     });
     this.menuItem.forEach(x => {
       if(x.id == item.id) {
-        quantity = x.specialOrder.quantity
-        order = x.specialOrder.id;
-        which = 'special';
+        let special = { quantity: parseFloat(x.specialOrder.quantity) - 1};
+        this._orderService.updateSpecialOrder(x.specialOrder.id,special);
       } 
-    });
-    if(which == 'food') {
-      let foodData = { quantity: parseFloat(quantity) - 1 };
-      this._orderService.updateFoodOrder(order,foodData);
-    } else if(which == 'beverage') {
-      let beverage = { quantity: parseFloat(quantity) - 1};
-      this._orderService.updateBeverageOrder(order,beverage)
-    } else if(which == 'special') {
-      let special = { quantity: parseFloat(quantity) - 1};
-      this._orderService.updateSpecialOrder(order,special)
-    }
+    }); 
   }
   confirmClose() {
     this.closeC = !this.closeC;
