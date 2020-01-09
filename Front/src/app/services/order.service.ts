@@ -75,7 +75,7 @@ export class OrderService {
   }
   updateSpecialOrder(id: any,orderSpecialData: any) {
     return this._http.post('http://db.ezecafe.com.mx/api/order/updateSpecialOrder', {
-      orderSpecialData: orderSpecialData,
+      specialData: orderSpecialData,
       params: {
         id: id
       }
