@@ -13,18 +13,18 @@ export class SalesService {
   }
 
     createSale(salesData: any) {
-        return this._http.post('http://db.ezecafe.com.mx/api/sales/newSale', { 
+        return this._http.post('http://localhost:3000/api/sales/newSale', { 
             salesData: salesData
         }).toPromise();
     }
     showAllSales(date: any) {
-        return this._http.post('http://db.ezecafe.com.mx/api/sales/listAllSales',{
+        return this._http.post('http://localhost:3000/api/sales/listAllSales',{
             date: date
         }).toPromise();
     }
        
     updateSale(salesData: any,id: any) {
-        return this._http.post('http://db.ezecafe.com.mx/api/sales/updateSale', {
+        return this._http.post('http://localhost:3000/api/sales/updateSale', {
             salesData: salesData,
             params: {
                 id: id
@@ -32,17 +32,17 @@ export class SalesService {
         }).toPromise();
     }
     deleteSale(id: any) {
-        return this._http.post('http://db.ezecafe.com.mx/api/sales/deleteSale', {
+        return this._http.post('http://localhost:3000/api/sales/deleteSale', {
             saleId: id,
         }).toPromise();
     }
     createNewRegisterStatus(cajaData: any) {
-        return this._http.post('http://db.ezecafe.com.mx/api/sales/newStatus', {
+        return this._http.post('http://localhost:3000/api/sales/newStatus', {
             cajaData: cajaData
         }).toPromise();
     }
     updateRegisterStatus(cajaData: any, id: any) {
-        return this._http.post('http://db.ezecafe.com.mx/api/sales/updateStatus', {
+        return this._http.post('http://localhost:3000/api/sales/updateStatus', {
             cajaData: cajaData,
             params: {
                 id: id
@@ -50,6 +50,6 @@ export class SalesService {
         }).toPromise();
     }
     showregisterStatus() {
-        return this._http.get('http://db.ezecafe.com.mx/api/sales/listAllStatus').toPromise();
+        return this._http.get('http://localhost:3000/api/sales/listAllStatus').toPromise();
     }
 }
