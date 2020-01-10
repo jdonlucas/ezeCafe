@@ -156,3 +156,16 @@
     background: transparent;
     border: none;
 }
+.settings {
+    display: flex;
+    justify-content: space-between;
+}
+.mat-input-element {
+    color: black!important;
+}
+.mat-datepicker-toggle-default-icon {
+    padding-bottom: 0!important;
+}
+.mat-button-wrapper {
+    color: black!important;
+}

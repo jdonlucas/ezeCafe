@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -11,15 +12,25 @@ import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { DatePipe } from '@angular/common';
 import { PrintService } from 'src/app/services/print.service';
+import { MomentDateAdapter,MAT_MOMENT_DATE_FORMATS,MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-pending',
   templateUrl: './pending.component.html',
   styleUrls: ['./pending.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe,{
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+  },
+
+  {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},]
 })
 export class PendingComponent implements OnInit {
 
+  date = new FormControl(new Date());
+  startDate = new Date();
   public userData: any;
   public newOrder: any;
   public orderId: any;
@@ -39,7 +50,10 @@ export class PendingComponent implements OnInit {
     public _orderService: OrderService,
     private _salesService: SalesService,
     private datePipe: DatePipe,
-    public _printService: PrintService) { }
+    public _printService: PrintService,
+    private _adapter: DateAdapter<any>) {
+      this._adapter.setLocale('es'); 
+    }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -52,8 +66,7 @@ export class PendingComponent implements OnInit {
     this._printService.printDocument('invoice',printOrderId);
   }
   fetchOrders() {
-    let today = new Date();
-    let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
+    let queryDate = this.datePipe.transform(this.date.value,'dd-MM-yyyy');
     this._orderService.showOrders(queryDate).then(response => {
         let ordersHis = response["orderHistory"];
         for(let i=0;i<ordersHis.length;i++){

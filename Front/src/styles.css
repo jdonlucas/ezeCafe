@@ -222,11 +222,20 @@ body app-root app-print { width: 58mm; height: 300mm }
 .mat-button-wrapper {
     color: gray!important;
 }
+app-sales .mat-button-wrapper {
+    color: black!important;
+}
 .mat-icon-button:focus {
     outline: none;
 }
 #mat-input-0 {
     color: gray;
+}
+.mat-input-element {
+    color: gray!important;
+}
+.mat-datepicker-toggle-default-icon {
+    padding-bottom: 1px;
 }
 .md-input-container label {
     color: lightgray;

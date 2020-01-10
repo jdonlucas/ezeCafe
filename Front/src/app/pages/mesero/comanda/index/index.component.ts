@@ -64,7 +64,6 @@ export class IndexComponent implements OnInit {
   }
 
   fetchOrders() {
-    console.log(this.date.value)
     let queryDate = this.datePipe.transform(this.date.value,'dd-MM-yyyy');
     this.orders = [];
     this._orderService.showOrders(queryDate).then(response => {

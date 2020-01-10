@@ -3,8 +3,15 @@
         <h1 class="titleSection">Ventas</h1>
         <h2>Efectivo: ${{ cash }} Tarjeta: ${{ card }}</h2>
     </div>
-    <div>
+    <div class="settings">
         <button class="eButton" (click)="printCorte()"><fa-icon [icon]="faPrint"></fa-icon> Corte</button>
+        <div class="calendar" *ngIf="userData.UserRole == 4">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Selecciona la fecha" [formControl]="date" (dateChange)="fetchOrders()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="month" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+        </div>
     </div>
     <div class="whiteframe">
         <div class="frameContent">
