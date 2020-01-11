@@ -5,7 +5,13 @@
     </div>
     <div class="container3">
         <div class="infoComanda">
-            <p class="comandaTitle">{{orderName}}</p>
+            <form [formGroup]="orderForm">
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="text" id="name" class="form-control" placeholder="" formControlName="name" />
+                    </div>
+                </div>
+            </form>
             <div class="whiteframe">
                 <ul class="itemList">
                     <li *ngFor="let i of itemsList"><div><button (click)="removeItem(i);"><fa-icon [icon]="faTrash"></fa-icon></button>&emsp;{{i.name}}</div><div>${{i.price}}</div></li>
@@ -35,7 +41,7 @@
                     <button *ngFor="let item of menuList" type="button" class="butn {{item.type}}" (click)="addMenu(item)">{{item.product}} ({{item.type}})</button>
                 </div>
                 <div id="controlButtons">
-                    <button class="ezeButton" routerLink="/comandas/index">Regresar</button>
+                    <button class="ezeButton" (click)="changeName()">Regresar</button>
                     <button class="ezeButton" (click)="confirmClose()">Cerrar Comanda</button>
                 </div>
             </div>

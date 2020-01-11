@@ -21,6 +21,7 @@ export class EditComponent implements OnInit {
   public foodList: any;
   public beveragesList: any;
   public menuList: any;
+  public orderForm: FormGroup;
   public paymentForm: FormGroup;
   public foodItem = [];
   public beveragesItem = [];
@@ -67,6 +68,9 @@ export class EditComponent implements OnInit {
     this.fetchFood();
     this.fetchMenu();
     this.orderId = this.route.snapshot.params.id;
+    this.orderForm = new FormGroup ({
+      name: new FormControl('',[])
+    });
     this._orderService.showOrder(this.orderId).then(res => {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
@@ -74,22 +78,25 @@ export class EditComponent implements OnInit {
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){
         for(let j=0;j<this.foodItem[i].FoodOrder.quantity;j++){
-          this.itemsList.push({name: this.foodItem[i].product, price: this.foodItem[i].price,id:this.foodItem[i].id});
+          this.itemsList.push({name: this.foodItem[i].product, price: this.foodItem[i].price,id:this.foodItem[i].id, type: 'food'});
           this.totalAmount = this.totalAmount + this.foodItem[i].price;
         }
       }
       for(let i=0;i<this.beveragesItem.length;i++){
         for(let j=0;j<this.beveragesItem[i].BeveragesOrder.quantity;j++){
-          this.itemsList.push({name: this.beveragesItem[i].beverage.product + ' ' + this.beveragesItem[i].type, price: this.beveragesItem[i].price,id:this.beveragesItem[i].id});
+          this.itemsList.push({name: this.beveragesItem[i].beverage.product + ' ' + this.beveragesItem[i].type, price: this.beveragesItem[i].price,id:this.beveragesItem[i].id,
+          type: 'beverage'});
           this.totalAmount = this.totalAmount + this.beveragesItem[i].price;
         }
       }
       for(let i=0;i<this.menuItem.length;i++){
         for(let j=0;j<this.menuItem[i].specialOrder.quantity;j++){
-          this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price,id: this.menuItem[i].id});
+          this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price,id: this.menuItem[i].id,
+          type: 'special'});
           this.totalAmount = this.totalAmount + parseFloat(this.menuItem[i].price);
         }
       }
+      (<HTMLInputElement>document.getElementById('name')).placeholder = res[0].name ? res[0].name : res[0].id;
     }).catch(err => { this.errors = err; })
   }
 
@@ -163,6 +170,12 @@ export class EditComponent implements OnInit {
       document.getElementById('beveragesButton').classList.remove('selected')
     }
   }
+  changeName() {
+    if (this.orderForm.value.name != '') {
+      this._orderService.updateOrder(this.orderId,{name: this.orderForm.value.name});
+    }
+    this._router.navigate(['comandas/index'])
+  }
   toggleDiv(){
      this.showConfirm = !this.showConfirm;
   }
@@ -187,16 +200,15 @@ export class EditComponent implements OnInit {
     
   }
   addFood(food) {
-    let find: boolean;
+    let find = false;
     let quantity: any;
     let order: any;
     this.foodItem.forEach(x => {
       if(x.id == food.id) {
         find = true;
-        quantity = x.FoodOrder.quantity
-        order = x.FoodOrder.id
-      } else {
-        find = false;
+        quantity = parseFloat(x.FoodOrder.quantity) + 1;
+        x.FoodOrder.quantity = quantity;
+        order = x.FoodOrder.id;
       }
     })
     if(!find) {
@@ -205,9 +217,12 @@ export class EditComponent implements OnInit {
         orderId: this.orderId,
         quantity: 1
       };
-      this._orderService.newFoodOrder(foodData);
+      this._orderService.newFoodOrder(foodData).then((res) => {
+        food.FoodOrder = res['newFoodOrder'];
+        this.foodItem.push(food)
+      });
     } else {
-      let foodData = { quantity: parseFloat(quantity) + 1 };
+      let foodData = { quantity: quantity };
       this._orderService.updateFoodOrder(order,foodData);
     }
     this.itemsList.push({name: food.product,price: food.price});
@@ -215,16 +230,16 @@ export class EditComponent implements OnInit {
     this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
   }
   addMenu(special) {
-    let find: boolean;
+    let find = false;
     let quantity: any;
     let order: any;
     this.menuItem.forEach(x => {
       if(x.id == special.id) {
         find = true;
-        quantity = x.specialOrder.quantity
-        order = x.specialOrder.id
-      } else {
-        find = false;
+        quantity = parseFloat(x.specialOrder.quantity) + 1;
+        x.specialOrder.quantity = quantity;
+        order = x.specialOrder.id;
+
       }
     })
     if(!find){
@@ -233,26 +248,31 @@ export class EditComponent implements OnInit {
         orderId: this.orderId,
         quantity: 1
       };
-      this._orderService.newSpecialOrder(specialData);
+      this._orderService.newSpecialOrder(specialData).then((res) => {
+        special.specialOrder = res['newSpecialOrder'];
+        this.menuItem.push(special);
+      });
+      this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price});
+      this.totalAmount = this.totalAmount + special.price;
+      this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
     } else {
-      let specialData = { quantity: parseFloat(quantity) + 1 };
+      let specialData = { quantity: quantity };
       this._orderService.updateSpecialOrder(order,specialData);
+      this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price});
+      this.totalAmount = this.totalAmount + special.price;
+      this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
     }
-    this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price});
-    this.totalAmount = this.totalAmount + special.price;
-    this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
   }
   addBeverage(name,price,b) {
-    let find: boolean;
+    let find = false;
     let quantity: any;
     let order: any;
     this.beveragesItem.forEach(x => {
       if(x.id == b.id) {
         find = true;
-        quantity = x.BeveragesOrder.quantity
-        order = x.BeveragesOrder.id
-      } else {
-        find = false;
+        quantity = parseFloat(x.BeveragesOrder.quantity) + 1;
+        x.BeveragesOrder.quantity = quantity;
+        order = x.BeveragesOrder.id;
       }
     })
     if(!find) {
@@ -261,14 +281,16 @@ export class EditComponent implements OnInit {
         orderId: this.orderId,
         quantity: 1
       };
-      this._orderService.newBeverageOrder(beverageData).then(() => {
+      this._orderService.newBeverageOrder(beverageData).then((res) => {
+        b.BeveragesOrder = res['newBeverageOrder']
+        this.beveragesItem.push(b)
         this.itemsList.push({name: name,price: price});
         this.hideSpecific();
         this.totalAmount = this.totalAmount + price;
         this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
       });
     } else  {
-      let beverage = { quantity: parseFloat(quantity) + 1};
+      let beverage = { quantity: quantity};
       this._orderService.updateBeverageOrder(order,beverage).then(() => {
         this.itemsList.push({name: name,price: price});
         this.hideSpecific();
@@ -285,29 +307,44 @@ export class EditComponent implements OnInit {
     if (index > -1) {
       this.itemsList.splice(index,1);
     }
-    this.beveragesItem.forEach( x => {
-      if(x.id == item.id) {
-        let beverage = { quantity: parseFloat(x.BeveragesOrder.quantity) - 1};
-        this._orderService.updateBeverageOrder(x.BeveragesOrder.id,beverage)
-      }
-    });
-    this.foodItem.forEach(x => {
-      if(x.id == item.id) {
-        let foodData = { quantity: parseFloat(x.FoodOrder.quantity) - 1 };
-        this._orderService.updateFoodOrder(x.FoodOrder.id,foodData);
-      } 
-    });
-    this.menuItem.forEach(x => {
-      if(x.id == item.id) {
-        let special = { quantity: parseFloat(x.specialOrder.quantity) - 1};
-        this._orderService.updateSpecialOrder(x.specialOrder.id,special);
-      } 
-    }); 
+    if (item.type == 'beverage') {
+      this.beveragesItem.forEach( async x => {
+        if(x.id == item.id) {
+          let beverage = { quantity: parseFloat(x.BeveragesOrder.quantity) - 1};
+          this._spinnerService.show();
+          this._orderService.updateBeverageOrder(x.BeveragesOrder.id,beverage).then(() => {
+            x.BeveragesOrder.quantity = parseFloat(x.BeveragesOrder.quantity) - 1;
+          })
+          this._spinnerService.hide();
+        }
+      });
+    } else if (item.type == 'food') {
+      this.foodItem.forEach(async x => {
+        if(x.id == item.id) {
+          let foodData = { quantity: parseFloat(x.FoodOrder.quantity) - 1 };
+          this._orderService.updateFoodOrder(x.FoodOrder.id,foodData).then(() => {
+            x.FoodOrder.quantity = parseFloat(x.FoodOrder.quantity) - 1;
+          });
+        } 
+      });
+    } else if (item.type == 'special') {
+      this.menuItem.forEach(async x => {
+        if(x.id == item.id) {
+          let special = { quantity: parseFloat(x.specialOrder.quantity) - 1};
+          this._orderService.updateSpecialOrder(x.specialOrder.id,special).then(() => {
+            x.specialOrder.quantity = parseFloat(x.specialOrder.quantity) - 1;
+          });
+        } 
+      });
+    } 
   }
   confirmClose() {
     this.closeC = !this.closeC;
     this.confirm = true;
     this.alert = false;
+    if (this.orderForm.value.name != '') {
+      this._orderService.updateOrder(this.orderId,{name: this.orderForm.value.name});
+    }
   }
   closeOrder() {
     if(this.totalAmount != 0) {
