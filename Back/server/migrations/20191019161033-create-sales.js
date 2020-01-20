@@ -22,7 +22,8 @@ module.exports = {
         references: {
           model: 'Orders',
           key: 'id'
-        }
+        },
+        unique: true
       },
       createdAt: {
         allowNull: false,
