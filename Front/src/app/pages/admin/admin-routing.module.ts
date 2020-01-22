@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BajaComponent } from './baja/baja.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AnunciosComponent } from './anuncios/anuncios.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'menu', loadChildren : './menu/menu.module#MenuModule', canActivate: [UserGuard], data: { whichUser: 'Admin' }},
   { path: 'users', component: UsuariosComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
   { path: 'baja', component: BajaComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
-  { path: 'settings', component: SettingsComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }}
+  { path: 'settings', component: SettingsComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
+  { path: 'anuncios', component: AnunciosComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }}
 ];
 
 @NgModule({

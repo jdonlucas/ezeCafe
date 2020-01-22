@@ -14,12 +14,12 @@ export class BulletinService {
 
   addNotice(noticeData: any) {
     return this._http.post('http://localhost:3000/api/ads/newAd', {
-      foodData: noticeData
+      noticeData: noticeData
     }).toPromise();
   }
   updateNotice(noticeData: any, noticeId: any) {
       return this._http.post('http://localhost:3000/api/ads/updateAd',{
-        foodData: noticeData,
+        noticeData: noticeData,
         params: {
           id: noticeId
         }
@@ -31,7 +31,7 @@ export class BulletinService {
 
   deleteNotice(noticeId: any) {
       return this._http.post('http://localhost:3000/api/ads/deleteAd',{
-        foodId: noticeId
+        noticeId: noticeId
     }).toPromise()
   }
 }

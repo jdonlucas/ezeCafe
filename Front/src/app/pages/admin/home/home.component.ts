@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   public totalOrders = 0;
   public pendingOrders = 0;
   faArrowCircleRight = faArrowCircleRight;
+  faExclamationCircle = faExclamationCircle;
 
   constructor(
     private _orderService: OrderService,

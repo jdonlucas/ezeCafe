@@ -1,0 +1,103 @@
+.selection {
+    width: 100%;
+    display: flex;
+    margin-bottom: 30px;
+}
+.custom-select {
+    padding: 0.375rem 1.75rem 0.375rem 0rem;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+}
+.custom-select:focus {
+    outline: none;
+    box-shadow: none;
+}
+.type {
+    width: 50%;
+    margin: 5px;
+}
+.left {
+    margin-left: 0!important;
+}
+.right {
+    margin-right: 0!important;
+}
+.message {
+    width: 60%;
+    padding: 30px;
+}
+.ezeButton {
+    padding: 10px;
+}
+.whiteframe {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 10px;
+    background: #fff;
+    overflow: auto;
+    max-height: 600px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.editButtons button{
+    background: transparent;
+    border: none;
+    height: 100%;
+}
+.editButtons button:focus {
+    outline: none;
+}  
+.frameContent {
+    overflow: auto;
+}
+.orders {
+    padding: 0;
+    margin: 0;
+}
+.orders li {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.subtitle {
+    color: #999;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+.status {
+    width: 100px;
+    margin: 0 10px;
+    border-radius: 2px;
+    font-weight: 700;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 44px;
+}
+.gInfo {
+    display: flex;
+}
+.date {
+    font-size: 11px;
+    color: #777;
+}
+.last {
+    border-bottom: none!important;
+}
+.info {
+    margin-left: 10px;
+    line-height: 30px;
+}
+.tools {
+    display: flex;
+    width: 100%;
+}
+.transparentButton {
+    background: transparent;
+}
