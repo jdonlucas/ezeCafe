@@ -4,6 +4,7 @@ import { BulletinService } from 'src/app/services/bulletin.service';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,11 +12,21 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faPenAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { DatePipe } from '@angular/common';
+import { MomentDateAdapter,MAT_MOMENT_DATE_FORMATS,MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-anuncios',
   templateUrl: './anuncios.component.html',
-  styleUrls: ['./anuncios.component.css']
+  styleUrls: ['./anuncios.component.css'],
+  providers: [DatePipe, {
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+  },
+
+  {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},]
 })
 export class AnunciosComponent implements OnInit {
 
@@ -23,6 +34,7 @@ export class AnunciosComponent implements OnInit {
   public anuncios = [];
   public errors: any;
   public userData: any;
+  public noticeId = null;
   faTrashAlt = faTrashAlt;
   faEdit = faEdit;
   faEye = faEye;
@@ -35,7 +47,12 @@ export class AnunciosComponent implements OnInit {
   constructor(
     private _store: Store<AppState>,
     private _authService: AuthService,
-    private _bulletinService: BulletinService) { }
+    private _bulletinService: BulletinService,
+    private _spinnerService: Ng4LoadingSpinnerService,
+    private datePipe: DatePipe,
+    private _adapter: DateAdapter<any>) { 
+      this._adapter.setLocale('es');
+    }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
@@ -55,27 +72,35 @@ export class AnunciosComponent implements OnInit {
       .then(resp => {
         this.anuncios = [];
         this.anuncios = resp['noticeList']
+
+        this.anuncios.sort((a,b) => 
+          a.expiration.localeCompare(b.expiration)
+        );
       })
   }
 
-  saveAnnouncement() {
+  async saveAnnouncement() {
+    let date = new Date();
+    date = new Date(date.setDate(date.getDate() + parseInt(this.createAnnouncement.value.expiration)))
     const noticeData = {
       message: this.createAnnouncement.value.message,
       type: this.createAnnouncement.value.type,
-      expiration: this.createAnnouncement.value.expiration,
+      expiration: date,
       UserId: this.userData.id
     }
     this.createAnnouncement.reset()
     this.createAnnouncement.controls['type'].setValue('')
     this.createAnnouncement.controls['expiration'].setValue('')
-    this._bulletinService.addNotice(noticeData)
+    this._spinnerService.show();
+    await this._bulletinService.addNotice(noticeData)
       .then(resp => {
-        console.log(resp);
         this.show = false;
+        this.fetchAnuncios()
       })
       .catch(err => {
         this.errors = err;
       })
+    this._spinnerService.hide();
   }
 
   deleteNotice(id) {
@@ -83,6 +108,55 @@ export class AnunciosComponent implements OnInit {
       .then(() => {
         this.fetchAnuncios()
       })
+  }
+  updateNotice(id) {
+    let date = new Date();
+    this._bulletinService.showAd(id)
+      .then(resp => {
+        this.noticeId = resp['newNotice'][0].id;
+        let mes = resp['newNotice'][0].message;
+        let type = resp['newNotice'][0].type;
+        let exp = resp['newNotice'][0].expiration;
+        let days = new Date(exp).getDate() - date.getDate();
+        let expiration: any;
+        console.log(days)
+        if(days < 0) {
+          expiration = 30;
+        } else if (days > 3) {
+          expiration = 7;
+        } else if (days == 3) {
+          expiration = 3;
+        } else if (days == 2) {
+          expiration = 2;
+        } else if (days == 1) {
+          expiration = 1;
+        }
+        this.createAnnouncement.controls['message'].setValue(mes);
+        this.createAnnouncement.controls['type'].setValue(type);
+        this.createAnnouncement.controls['expiration'].setValue(expiration);
+        this.show = true;
+      })
+  }
+
+  async update() {
+    let date = new Date();
+    date = new Date(date.setDate(date.getDate() + parseInt(this.createAnnouncement.value.expiration)))
+    const noticeData = {
+      message: this.createAnnouncement.value.message,
+      type: this.createAnnouncement.value.type,
+      expiration: date
+    }
+    this._spinnerService.show();
+    await this._bulletinService.updateNotice(noticeData,this.noticeId)
+      .then(() => {
+        this.show = false;
+        this.createAnnouncement.reset()
+        this.createAnnouncement.controls['type'].setValue('')
+        this.createAnnouncement.controls['expiration'].setValue('')
+        this.fetchAnuncios()
+        this.noticeId = null;
+      })
+    this._spinnerService.hide();
   }
 
 }

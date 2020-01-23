@@ -31,17 +31,17 @@ export class AuthService {
   }
 
   getUsers() {
-    return this._http.get('http://localhost:3000/api/users/list').toPromise();
+    return this._http.get('http://db.ezecafe.com.mx/api/users/list').toPromise();
   }
   localLogin(Username: string, Password: string ) {
-    return this._http.post('http://localhost:3000/api/auth/localLogin', { // prod
+    return this._http.post('http://db.ezecafe.com.mx/api/auth/localLogin', { // prod
       Username,
       Password
     }).toPromise();
   }
 
   signup(Name: string, Lastname: string, Username: string, Password: string, UserRole: string) {
-      return this._http.post('http://localhost:3000/api/auth/signup', { // for production
+      return this._http.post('http://db.ezecafe.com.mx/api/auth/signup', { // for production
         UserData: {
           Name,
           Lastname,
@@ -149,12 +149,12 @@ export class AuthService {
   }
 
   deleteUser(id: any) {
-    return this._http.post('http://localhost:3000/api/users/delete', {
+    return this._http.post('http://db.ezecafe.com.mx/api/users/delete', {
       userId: id
     }).toPromise();
   }
   update(userData: any, userId: any) {
-    return this._http.post('http://localhost:3000/api/users/update', {
+    return this._http.post('http://db.ezecafe.com.mx/api/users/update', {
       userData: userData,
       params: {
         id: userId

@@ -97,7 +97,12 @@
 .tools {
     display: flex;
     width: 100%;
+    justify-content: space-between;
 }
 .transparentButton {
     background: transparent;
+    border: none;
+}
+.transparentButton:focus {
+    outline: none;
 }

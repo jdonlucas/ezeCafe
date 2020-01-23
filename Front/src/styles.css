@@ -188,11 +188,14 @@ nav li a:hover {
 .whitelist {
     display: block;
     padding: 8px 0;
+    max-height: 234px;
+    overflow: auto;
 }
 .whiteitem {
     margin-left: 10px;
     margin-right: 10px;
     display: flex;
+    border-bottom: 1px solid #eee;
 }
 .whiteicon {
     align-self: flex-start;
@@ -203,12 +206,23 @@ nav li a:hover {
 .whitetext {
     margin-left: 10px;
     flex: 1;
-    padding-top: 18px;
+    padding-top: 7px;
 }
 .whitetext h3 {
     font-size: 15px !important;
     line-height: 1.2em !important;
     color: #777 !important;
+}
+.whitetext h4 {
+    font-size: 12px !important;
+    line-height: 1.2em !important;
+    color: #777 !important;
+}
+.noAd {
+    padding-top: 18px!important;
+}
+.last {
+    border-bottom: none!important;
 }
 body app-root app-print { width: 58mm; height: 300mm } 
 @media print {
