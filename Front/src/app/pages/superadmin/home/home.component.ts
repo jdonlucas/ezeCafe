@@ -60,7 +60,6 @@ export class HomeComponent implements OnInit {
       .then(resp => {
         this.anuncios = [];
         this.anuncios = resp['noticeList']
-        console.log(this.anuncios)
         this.anuncios.sort((a,b) => 
           a.expiration.localeCompare(b.expiration)
         );

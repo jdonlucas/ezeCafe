@@ -119,7 +119,6 @@ export class AnunciosComponent implements OnInit {
         let exp = resp['newNotice'][0].expiration;
         let days = new Date(exp).getDate() - date.getDate();
         let expiration: any;
-        console.log(days)
         if(days < 0) {
           expiration = 30;
         } else if (days > 3) {

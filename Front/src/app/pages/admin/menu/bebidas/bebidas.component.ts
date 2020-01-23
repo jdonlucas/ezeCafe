@@ -204,7 +204,6 @@ export class BebidasComponent implements OnInit {
     }
     this._menuService.updateBeverageSpecific(disableSpecific,id)
       .then(response => {
-        console.log(response);
         this.showBeveragesSpecific(this.beverageParentId);
       })
   }
