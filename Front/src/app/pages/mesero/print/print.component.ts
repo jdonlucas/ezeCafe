@@ -12,6 +12,7 @@ import { PrintService } from 'src/app/services/print.service';
 export class PrintComponent implements OnInit {
   
   public loaded = false;
+  public today = new Date()
   faInstagram = faInstagram;
   faTwitter = faTwitter;
   faFacebook = faFacebook;
