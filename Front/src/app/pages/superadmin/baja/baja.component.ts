@@ -51,7 +51,10 @@ export class BajaComponent implements OnInit {
   }
 
   deleteUser(id: any) {
-    this._authService.deleteUser(id)
+    const userData = {
+      Active: false
+    }
+    this._authService.update(userData,id)
       .then(response => {
         $('#alertM p').html('Se eliminó el usuario.');
         this.fetchUsers();

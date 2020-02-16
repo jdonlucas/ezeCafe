@@ -36,9 +36,14 @@ export class LoginComponent implements OnInit {
 
   async login() {
     let { username, password } = this.loginForm.value;
+    this.loginError.status = false;
     this._spinnerService.show();
     await this._authService.localLogin(username, password).then(response => {
-      this._authService.login(response["token"].toString());
+      let isActive = this._authService.login(response["token"].toString());
+      if (!isActive) {
+        this.loginError.status = true;
+        this.loginError.code = 897;
+      }
     }).catch(err => {
       this.loginError.status = true;
       const errorCodes = err.error;
