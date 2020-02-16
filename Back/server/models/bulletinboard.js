@@ -15,8 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     expiration: {
       allowNull: false,
-      type: DataTypes.INTEGER,
-      defaultValue: 1
+      type: DataTypes.DATE
     }
   }, {});
   bulletinBoard.associate = function(models) {

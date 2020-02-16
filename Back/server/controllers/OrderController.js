@@ -1,5 +1,5 @@
 let moment = require('moment');
-moment.tz.setDefault('UTC');
+moment.tz.setDefault('America/Mexico_City');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Order = require('../models').Order;
@@ -15,6 +15,7 @@ const Sales = require('../models').Sales;
 
 var OrderController = {
     index(req, res) {
+        let date = moment(req.body.date, 'DD-MM-YYYY');
         return Order.findAll({
 		where: {
 		    createdAt: {

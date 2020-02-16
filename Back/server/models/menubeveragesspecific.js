@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     type: DataTypes.STRING,
-    price: DataTypes.FLOAT
+    price: DataTypes.FLOAT,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'active'
+    }
   }, {});
   MenuBeveragesSpecific.associate = function(models) {
     MenuBeveragesSpecific.belongsTo(models.MenuBeverages,{

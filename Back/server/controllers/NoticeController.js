@@ -1,20 +1,37 @@
 const bulletinBoard = require('../models').bulletinBoard;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+const User = require('../models').User;
 
 var NoticeController = {
     index(req, res) {
-        return bulletinBoard.findAll()
+    	let date = new Date()
+        return bulletinBoard.findAll({
+            where: {
+                expiration: {
+                    [Op.gt]: date,
+                }
+            },
+            include: [
+                {
+                    model: User
+                }
+            ]
+        })
             .then(noticeList => res.status(200).json({ noticeList }))
             .catch(error => res.status(400).send(error));
     },
 
     show(req, res) {
-        const noticeId = req.query.noticeId;
+        const noticeId = req.body.noticeId;
         return bulletinBoard.findAll({
             where: {
                 id: noticeId,
             }
         })
-            .then(order => res.status(200).json({ notice }))
+            .then(notice => {
+                res.json({ newNotice: notice });
+              })
             .catch(error => res.status(400).send(error));
     },
 

@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type:DataTypes.STRING,
       defaultValue: 'empleado'
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'active'
     }
   }, {});
   MenuSpecial.associate = function(models) {

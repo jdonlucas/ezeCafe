@@ -1,5 +1,5 @@
 let moment = require('moment');
-moment.tz.setDefault('UTC');
+moment.tz.setDefault('America/Mexico_City');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Sales = require('../models').Sales;
@@ -38,9 +38,20 @@ var SalesController = {
 
     create(req, res,) {
         let salesData = req.body.salesData;
-        Sales.create(salesData).then(saleCreated => {
-            res.json({ newSale: saleCreated });
-        }).catch(err => res.status(500).send(err));
+        Sales.findAll({
+            where: {
+                OrderId: salesData.OrderId
+            }
+        })
+        .then(sale => {
+            if(sale.length) {
+                return res.status(500).send({ 'error': 'venta con mismo id'})
+            } else {
+                Sales.create(salesData).then(saleCreated => {
+                    res.json({ newSale: saleCreated });
+                }).catch(err => res.status(500).send(err));
+            }
+        })
     },
     createStatusCaja(req, res,) {
         let cajaData = req.body.cajaData;

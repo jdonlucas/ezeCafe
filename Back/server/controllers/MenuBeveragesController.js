@@ -3,7 +3,11 @@ const MenuBeveragesSpecific = require('../models').MenuBeveragesSpecific;
 
 var MenuBeveragesController = {
     index(req, res) {
-        return MenuBeverages.findAll()
+        return MenuBeverages.findAll({
+            where: {
+                status: 'active'
+            }
+        })
             .then(menuBeverages => res.status(200).json({ menuBeverages }))
             .catch(error => res.status(400).send(error));
     },
@@ -11,7 +15,8 @@ var MenuBeveragesController = {
         const beverageSpecific = req.body.beverageSpecificId;
         return MenuBeveragesSpecific.findAll({
             where: {
-                beverageId: beverageSpecific
+                beverageId: beverageSpecific,
+		status: 'active'
             },
             include: [
                 {
