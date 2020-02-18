@@ -35,7 +35,7 @@
     "jwt-decode": "^2.2.0",
     "mdbootstrap": "^4.11.0",
     "moment": "^2.24.0",
-    "ng4-loading-spinner": "^1.2.3",
+    "ngx-spinner": "^8.1.0",
     "rxjs": "~6.5.4",
     "serialize-javascript": "^2.1.2",
     "tree-kill": "^1.2.2",
@@ -43,7 +43,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.900.2",
+    "@angular-devkit/build-angular": "^0.803.24",
     "@angular/cli": "~8.3.22",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",

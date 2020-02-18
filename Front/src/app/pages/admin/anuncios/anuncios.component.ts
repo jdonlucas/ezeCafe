@@ -4,7 +4,7 @@ import { BulletinService } from 'src/app/services/bulletin.service';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { AuthService } from 'src/app/services/auth.service';
@@ -48,7 +48,7 @@ export class AnunciosComponent implements OnInit {
     private _store: Store<AppState>,
     private _authService: AuthService,
     private _bulletinService: BulletinService,
-    private _spinnerService: Ng4LoadingSpinnerService,
+    private _spinnerService: NgxSpinnerService,
     private datePipe: DatePipe,
     private _adapter: DateAdapter<any>) { 
       this._adapter.setLocale('es');

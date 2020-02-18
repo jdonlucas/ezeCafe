@@ -14,7 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'; // Angular CLI environemnt
 
 //Spinner
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 //Components
 import { ComponentsModule } from './components/components.module';
@@ -54,7 +54,7 @@ registerLocaleData(localeEsMX, 'es-Mx');
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    Ng4LoadingSpinnerModule.forRoot()
+    NgxSpinnerModule
   ],
   providers: [
     {
