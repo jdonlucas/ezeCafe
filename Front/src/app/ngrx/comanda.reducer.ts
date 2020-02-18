@@ -8,7 +8,7 @@ const initState: State = {
     comandaData: null
 };
 
-export function comandaReducer(state = initState, action: fromComanda.Action): State {
+export function comandaReducer(state = initState, action: fromComanda.action): State {
     switch (action.type) {
         case fromComanda.SET_COMANDA_DATA:
             return { 

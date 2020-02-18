@@ -10,8 +10,8 @@ import { AnunciosComponent } from './anuncios/anuncios.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
-  { path: 'inventario', loadChildren : './inventario/inventario.module#InventarioModule', canActivate: [UserGuard], data: { whichUser: 'Admin' }},
-  { path: 'menu', loadChildren : './menu/menu.module#MenuModule', canActivate: [UserGuard], data: { whichUser: 'Admin' }},
+  { path: 'inventario', loadChildren : () => import('./inventario/inventario.module').then(m => m.InventarioModule), canActivate: [UserGuard], data: { whichUser: 'Admin' }},
+  { path: 'menu', loadChildren : () => import('./menu/menu.module').then(m => m.MenuModule), canActivate: [UserGuard], data: { whichUser: 'Admin' }},
   { path: 'users', component: UsuariosComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
   { path: 'baja', component: BajaComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
   { path: 'settings', component: SettingsComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},

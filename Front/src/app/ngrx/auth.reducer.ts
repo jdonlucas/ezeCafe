@@ -8,7 +8,7 @@ const initState: State = {
     authData: null
 };
 
-export function authReducer(state = initState, action: fromAuth.Action): State {
+export function authReducer(state = initState, action: fromAuth.action): State {
     switch (action.type) {
         case fromAuth.SET_AUTH_DATA:
             return { 

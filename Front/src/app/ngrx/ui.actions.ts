@@ -12,4 +12,4 @@ export class DesctivateLoadingAction implements Action {
     readonly type = DESACTIVATE_LOADING;
 }
 
-export type Action = ActivateLoadingAction | DesctivateLoadingAction;
+export type action = ActivateLoadingAction | DesctivateLoadingAction;
