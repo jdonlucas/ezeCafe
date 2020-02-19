@@ -27,6 +27,7 @@
     <ul>
         <li><a routerLink="/" (click)="toggle();"><fa-icon [icon]="faInbox"></fa-icon> Inicio</a></li>
         <li><a routerLink="/comandas/index" (click)="toggle();"><fa-icon [icon]="faPaperPlane"></fa-icon> Órdenes</a></li>
+        <li *ngIf="userData.UserRole > 3"><a routerLink="/estadistica" (click)="toggle();"><fa-icon [icon]="faChartLine"></fa-icon> Estadísticas</a></li>
         <li class="settings" *ngIf="userData.UserRole > 2"><a routerLink="/admin/settings" (click)="toggle();"><fa-icon [icon]="faCog"></fa-icon> Ajustes</a></li>
     </ul>
 </div>

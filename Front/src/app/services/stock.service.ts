@@ -12,10 +12,10 @@ export class StockService {
 
   // services for insumos
   showInsumos(){
-    return this._http.get('https://db.ezecafe.com.mx/api/insumos/list').toPromise();
+    return this._http.get('http://localhost:3000/api/insumos/list').toPromise();
   }
   modifyInsumos(updateInsumo: any, insumoId: any){
-    return this._http.post('https://db.ezecafe.com.mx/api/insumos/update', {
+    return this._http.post('http://localhost:3000/api/insumos/update', {
         insumosData: updateInsumo, 
         params: {
             id: insumoId
@@ -23,26 +23,26 @@ export class StockService {
     }).toPromise();
   }
   addInsumo(insumoAddData: any) {
-    return this._http.post('https://db.ezecafe.com.mx/api/insumos/new', {
+    return this._http.post('http://localhost:3000/api/insumos/new', {
         insumosData: insumoAddData 
     }).toPromise()
   }
   showOneInsumo(insumoId: any) {
-    return this._http.post('https://db.ezecafe.com.mx/api/insumos/one', {
+    return this._http.post('http://localhost:3000/api/insumos/one', {
         insumosId: insumoId 
     }).toPromise()
   }
   deleteIsumo(insumoId: any) {
-    return this._http.post('https://db.ezecafe.com.mx/api/insumos/delete', {
+    return this._http.post('http://localhost:3000/api/insumos/delete', {
         insumosId: insumoId 
     }).toPromise()
   }
   //services for desposables
   showDesposable(){
-    return this._http.get('https://db.ezecafe.com.mx/api/stock/list').toPromise();
+    return this._http.get('http://localhost:3000/api/stock/list').toPromise();
   }
   modifyDesposable(desposableData: any, desposableId: any){
-    return this._http.post('https://db.ezecafe.com.mx/api/stock/update', {
+    return this._http.post('http://localhost:3000/api/stock/update', {
         stockData: desposableData, 
         params: {
             id: desposableId
@@ -50,17 +50,17 @@ export class StockService {
     }).toPromise();
   }
   addDesposable(desposableData: any) {
-    return this._http.post('https://db.ezecafe.com.mx/api/stock/new', {
+    return this._http.post('http://localhost:3000/api/stock/new', {
         stockData: desposableData 
     }).toPromise()
   }
   showOneDesposable(desposableId: any) {
-    return this._http.post('https://db.ezecafe.com.mx/api/stock/one', {
+    return this._http.post('http://localhost:3000/api/stock/one', {
         stockId: desposableId 
     }).toPromise()
   }
   deleteDesposable(desposableId) {
-    return this._http.post('https://db.ezecafe.com.mx/api/stock/delete', {
+    return this._http.post('http://localhost:3000/api/stock/delete', {
         stockId: desposableId 
     }).toPromise()
   }

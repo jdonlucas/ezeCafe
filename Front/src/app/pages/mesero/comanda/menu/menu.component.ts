@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormControlName } from "@angular/forms";
 import { Store } from '@ngrx/store';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AppState } from 'src/app/app.reducer';
 import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
     private _orderService: OrderService,
     private _salesService: SalesService,
     public _printService: PrintService,
-    private _spinnerService: Ng4LoadingSpinnerService
+    private _spinnerService: NgxSpinnerService
     ) { }
 
   ngOnInit() {

@@ -7,7 +7,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-alimentos',
@@ -33,7 +33,7 @@ export class AlimentosComponent implements OnInit {
   constructor(
     private _store: Store<AppState>,
     private _menuService: MenuService,
-    private _spinnerService: Ng4LoadingSpinnerService) { }
+    private _spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {

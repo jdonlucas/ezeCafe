@@ -9,7 +9,7 @@ import { InspectComponent } from './inspect/inspect.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CorteComponent } from './corte/corte.component';
 import { PrintComponent } from './print/print.component';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 

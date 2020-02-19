@@ -10,7 +10,7 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 declare var $: any;
@@ -55,7 +55,7 @@ export class BebidasComponent implements OnInit {
   constructor(
     private _store: Store<AppState>,
     private _menuService: MenuService,
-    private _spinnerService: Ng4LoadingSpinnerService
+    private _spinnerService: NgxSpinnerService
   ) { }
 
   ngOnInit() {

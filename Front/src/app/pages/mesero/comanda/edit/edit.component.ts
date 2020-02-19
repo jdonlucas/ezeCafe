@@ -7,7 +7,7 @@ import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { PrintService } from 'src/app/services/print.service';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from "@angular/router";
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -52,7 +52,7 @@ export class EditComponent implements OnInit {
     private _orderService: OrderService,
     private _salesService: SalesService,
     public _printService: PrintService,
-    private _spinnerService: Ng4LoadingSpinnerService) { }
+    private _spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
