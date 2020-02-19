@@ -6,6 +6,7 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
 import { ChartsComponent } from './charts/charts.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [ChartsComponent],
@@ -13,7 +14,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     StatisticsRoutingModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ChartsModule
   ]
 })
 export class StatisticsModule { }

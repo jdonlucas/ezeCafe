@@ -31,6 +31,9 @@ import localePt from '@angular/common/locales/pt';
 import localeEn from '@angular/common/locales/en';
 import localeEsMX from '@angular/common/locales/es-MX';
 
+//charts js
+import { ChartsModule } from 'ng2-charts';
+
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
 registerLocaleData(localePy, 'es');
 registerLocaleData(localePt, 'pt');
@@ -49,6 +52,7 @@ registerLocaleData(localeEsMX, 'es-Mx');
     ReactiveFormsModule,
     ComponentsModule,
     FontAwesomeModule,
+    ChartsModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

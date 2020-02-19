@@ -16,6 +16,7 @@ var menuRouter = require('./routes/menu');
 var orderRouter = require('./routes/order');
 var salesRouter = require('./routes/sales');
 var adsRouter = require('./routes/bulletinBoard');
+var statisticsRouter = require('./routes/statistics');
 var baseUrl = "/api";
 var dotenv = require('dotenv').config();
 
@@ -54,6 +55,7 @@ app.use(`${baseUrl}/menu`, menuRouter);
 app.use(`${baseUrl}/sales`, salesRouter);
 app.use(`${baseUrl}/order`, orderRouter);
 app.use(`${baseUrl}/ads`, adsRouter);
+app.use(`${baseUrl}/statistics`, statisticsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
