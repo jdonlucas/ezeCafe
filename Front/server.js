@@ -21,7 +21,7 @@ app.use(allowCrossDomain);
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
-app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'}));
+app.use(cors({credentials: true, origin: 'https://negocio.ezecafe.com.mx'}));
 //app.use(cors({credentials: true, origin: 'http://localhost:8000'}));
 
 app.use(express.static('./dist/ezeCafe'));
