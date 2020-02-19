@@ -20,6 +20,7 @@ var StatisticsController = {
                 let totalDay = 0.0;
                 let startDate = moment(salesHistory[0].createdAt).format('D');
                 let totalMonth = [];
+                salesHistory.sort((a,b) => a.createdAt.localCompare(b.createdAt))
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).format('D') != startDate) {
                         totalMonth.push({ day: startDate, total: totalDay })
