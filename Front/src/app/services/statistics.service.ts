@@ -12,9 +12,9 @@ export class StatisticsService {
   ) {
   }
 
-    getMonth(salesData: any) {
+    getMonth(date: any) {
         return this._http.post('http://localhost:3000/api/statistics/monthSales', { 
-            salesData: salesData
+          date: date
         }).toPromise();
     }
 }
