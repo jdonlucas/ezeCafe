@@ -3,13 +3,11 @@ moment.tz.setDefault('America/Mexico_City');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Sales = require('../models').Sales;
-const StatusCaja = require('../models').StatusCaja;
 
 var StatisticsController = {
     showMonth(req,res) {
         let date = moment(req.body.date, 'DD-MM-YYYY');
         date.startOf('month').format('DD-MM-YYYY');
-        
         return Sales.findAll({
                 where: {
                     createdAt: {
@@ -19,9 +17,19 @@ var StatisticsController = {
                 }
             })
             .then(salesHistory => {
+                let totalDay = 0.0;
+                let startDate = moment(salesHistory[0].createdAt).format('D');
+                let totalMonth = [];
                 for(let i=0;i<salesHistory.length;i++) {
-                    salesHistory[i].costo
+                    if (moment(salesHistory[i].createdAt).format('D') != startDate) {
+                        totalMonth.push({ day: startDate, total: totalDay })
+                        totalDay = 0.0;
+                        startDate = moment(salesHistory[i].createdAt).format('D');
+                    }
+                    totalDay += salesHistory[i].costo;
                 }
+                totalMonth.push({ day: startDate, total: totalDay })
+                res.status(200).json( totalMonth )
             })
             .catch(error => res.status(400).send(error));
         

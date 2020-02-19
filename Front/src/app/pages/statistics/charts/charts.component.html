@@ -1,9 +1,34 @@
-<div class="chart-wrapper">
+<div class="chart-wrapper monthChart">
+    <form [formGroup]="dateForm">
+        <div class="selects">
+            <div class="showMonth form-group">
+                <select class="browser-default custom-select" id="year" formControlName="year" (change)="onChangeDate()">
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="form-group showMonth">
+                <select class="browser-default custom-select" id="month" formControlName="month" (change)="onChangeDate()">
+                    <option value="01-01">Enero</option>
+                    <option value="01-02">Febrero</option>
+                    <option value="01-03">Marzo</option>
+                    <option value="01-04">Abril</option>
+                    <option value="01-05">Mayo</option>
+                    <option value="01-06">Junio</option>
+                    <option value="01-07">Julio</option>
+                    <option value="01-08">Agosto</option>
+                    <option value="01-09">Septiembre</option>
+                    <option value="01-10">Octubre</option>
+                    <option value="01-11">Noviembre</option>
+                    <option value="01-12">Diciembre</option>
+                </select>
+            </div>
+        </div>
+    </form>
     <canvas baseChart 
         [datasets]="lineChartData" 
         [labels]="lineChartLabels" 
         [options]="lineChartOptions"
-        [colors]="lineChartColors" 
+        [colors]="chartColors" 
         [legend]="lineChartLegend" 
         [chartType]="lineChartType" 
         [plugins]="lineChartPlugins">
