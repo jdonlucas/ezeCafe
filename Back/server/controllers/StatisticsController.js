@@ -14,13 +14,13 @@ var StatisticsController = {
                         [Op.gt]: date.toDate(),
                         [Op.lt]: date.add(1,'M').toDate()
                     }
-                }
+                },
+                order: [ ['createdAt', 'ASC'] ]
             })
             .then(salesHistory => {
                 let totalDay = 0.0;
                 let startDate = moment(salesHistory[0].createdAt).format('D');
                 let totalMonth = [];
-                salesHistory.sort((a,b) => moment(a.createdAt).format('DD-MM-YYYY').localCompare(moment(b.createdAt).format('DD-MM-YYYY')));
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).format('D') != startDate) {
                         totalMonth.push({ day: startDate, total: totalDay })
