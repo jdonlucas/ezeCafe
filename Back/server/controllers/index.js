@@ -8,6 +8,7 @@ const MenuFoodController = require('./MenuFoodController');
 const OrderController = require('./OrderController');
 const SalesController = require('./SalesController');
 const NoticeController = require('./NoticeController');
+const StatisticsController = require('./StatisticsController');
 
 module.exports = {
   UserController,
@@ -19,5 +20,6 @@ module.exports = {
   MenuFoodController,
   OrderController,
   SalesController,
-  NoticeController
+  NoticeController,
+  StatisticsController
 };
