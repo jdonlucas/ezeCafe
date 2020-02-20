@@ -50,9 +50,11 @@ export class ChartsComponent implements OnInit {
   ngOnInit() {
     let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
     let year = this.datePipe.transform(new Date(),'yyyy');
-    let month = this.datePipe.transform(new Date(),'MM');
-    month = '01-' + month;
-    let nWeek = this.weekNumber(moment(new Date()));
+    let monthWeekNumber = this.datePipe.transform(new Date(),'MM');
+    let month = '01-' + monthWeekNumber;
+    let lastMonth = moment(new Date()).subtract(1, 'M').endOf('month').week()
+    let monthWeek = moment(new Date()).week();
+    let nWeek = monthWeek - lastMonth + 1;
     this.dateForm = new FormGroup ({
       year: new FormControl(year, [
       ]),
@@ -62,7 +64,7 @@ export class ChartsComponent implements OnInit {
     this.dateFormWeek = new FormGroup ({
       yearWeek: new FormControl(year, [
       ]),
-      monthWeek: new FormControl(month, [
+      monthWeek: new FormControl(monthWeekNumber, [
       ]),
       week: new FormControl(nWeek, [
       ]),
@@ -79,16 +81,6 @@ export class ChartsComponent implements OnInit {
         this.ventas.push(infoVenta[i].total)
       }
     });
-  }
-
-  weekNumber(input) {
-    let week: any;
-    if (input.clone().format('DD-MM-YYYY') == input.clone().startOf('month').format('DD-MM-YYYY') ) {
-      week = 1;
-    } else {
-      week = Math.ceil(input.clone().date() / 7);
-    }
-    return week;
   }
 
   chartData () {
@@ -117,7 +109,11 @@ export class ChartsComponent implements OnInit {
   }
 
   onChangeWeekDate() {
-    let date = this.dateForm.value.month + '-' + this.dateForm.value.year;
+    let date =  moment(this.dateFormWeek.value.yearWeek + '-' + this.dateFormWeek.value.monthWeek + '-01' )
+                .endOf('M').subtract(1, 'M').week();
+    let weekYear = this.dateFormWeek.value.week - 1 + date;
+    let start = moment().startOf('week').week(weekYear).format('DD-MM-YYYY');
+    let end = moment().endOf('week').week(weekYear).format('DD-MM-YYYY');
     this.days = [];
     this.ventas = [];
     this._statisticsService.getMonth(date).then(resp => {
