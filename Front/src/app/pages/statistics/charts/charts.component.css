@@ -18,3 +18,8 @@
 .radioButton {
     margin: 10px;
 }
+.showWeek {
+    width: fit-content;
+    margin: auto;
+    margin-bottom: 20px;
+}
