@@ -36,6 +36,37 @@ var StatisticsController = {
         
 
     },
+    showWeek(req,res) {
+        let start = moment(req.body.start, 'DD-MM-YYYY');
+        let end = moment(req.body.end, 'DD-MM-YYYY');
+        return Sales.findAll({
+                where: {
+                    createdAt: {
+                        [Op.gte]: start.toDate(),
+                        [Op.lte]: end.toDate()
+                    }
+                },
+                order: [ ['createdAt', 'ASC'] ]
+            })
+            .then(salesHistory => {
+                let totalDay = 0.0;
+                let startDate = moment(salesHistory[0].createdAt).format('D');
+                let totalWeek = [];
+                for(let i=0;i<salesHistory.length;i++) {
+                    if (moment(salesHistory[i].createdAt).format('D') != startDate) {
+                        totalWeek.push({ day: startDate, total: totalDay })
+                        totalDay = 0.0;
+                        startDate = moment(salesHistory[i].createdAt).format('D');
+                    }
+                    totalDay += salesHistory[i].costo;
+                }
+                totalWeek.push({ day: startDate, total: totalDay })
+                res.status(200).json( totalWeek )
+            })
+            .catch(error => res.status(400).send(error));
+        
+
+    },
 
 };
 

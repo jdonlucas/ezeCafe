@@ -55,7 +55,7 @@ app.use(`${baseUrl}/insumos`, insumosRouter);
 app.use(`${baseUrl}/menu`, menuRouter);
 app.use(`${baseUrl}/sales`, salesRouter);
 app.use(`${baseUrl}/order`, orderRouter);
-app.use(`${baseUrl}/ads`, adsRouter);
+app.use(`${baseUrl}/notice`, adsRouter);
 app.use(`${baseUrl}/statistics`, statisticsRouter);
 
 // catch 404 and forward to error handler
