@@ -56,7 +56,7 @@ export class ChartsComponent implements OnInit {
       let infoVenta:  any;
       infoVenta = resp;
       infoVenta.sort((a,b) => 
-      a.day.localeCompare(b.day)
+      parseInt(a.day) - parseInt(b.day)
     );
       for (let i=0;i<infoVenta.length;i++) {
         this.days.push(infoVenta[i].day)
@@ -80,7 +80,7 @@ export class ChartsComponent implements OnInit {
       let infoVenta:  any;
       infoVenta = resp;
       infoVenta.sort((a,b) => 
-      a.day.localeCompare(b.day)
+      parseInt(a.day) - parseInt(b.day)
     );
       for (let i=0;i<infoVenta.length;i++) {
         this.days.push(infoVenta[i].day)
