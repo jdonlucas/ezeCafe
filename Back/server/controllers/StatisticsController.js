@@ -51,16 +51,18 @@ var StatisticsController = {
             .then(salesHistory => {
                 let totalDay = 0.0;
                 let startDate = moment(salesHistory[0].createdAt).format('D');
+                let dateName = moment(salesHistory[0].createdAt).locale('es').format('dddd');
                 let totalWeek = [];
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).format('D') != startDate) {
-                        totalWeek.push({ day: startDate, total: totalDay })
+                        totalWeek.push({ day: dateName + ' ' + startDate , total: totalDay })
                         totalDay = 0.0;
                         startDate = moment(salesHistory[i].createdAt).format('D');
+                        dateName = moment(salesHistory[i].createdAt).locale('es').format('dddd');
                     }
                     totalDay += salesHistory[i].costo;
                 }
-                totalWeek.push({ day: startDate, total: totalDay })
+                totalWeek.push({ day: dateName + ' ' + startDate, total: totalDay })
                 res.status(200).json( totalWeek )
             })
             .catch(error => res.status(400).send(error));

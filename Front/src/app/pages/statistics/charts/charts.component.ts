@@ -109,8 +109,13 @@ export class ChartsComponent implements OnInit {
   }
 
   onChangeWeekDate() {
-    let date =  moment(this.dateFormWeek.value.yearWeek + '-' + this.dateFormWeek.value.monthWeek + '-01' )
-                .endOf('M').subtract(1, 'M').week();
+    let date:any;
+    if (this.dateFormWeek.value.monthWeek != '01') {
+      date =  moment(this.dateFormWeek.value.yearWeek + '-' + this.dateFormWeek.value.monthWeek + '-01' )
+                  .endOf('M').subtract(1, 'M').week();
+    } else {
+      date = 0;
+    }
     let weekYear = this.dateFormWeek.value.week - 1 + date;
     let start = moment().startOf('week').week(weekYear).format('DD-MM-YYYY');
     let end = moment().endOf('week').week(weekYear).format('DD-MM-YYYY');
@@ -119,9 +124,6 @@ export class ChartsComponent implements OnInit {
     this._statisticsService.getWeek(start,end).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
-      infoVenta.sort((a,b) => 
-      a.day.localeCompare(b.day)
-    );
       for (let i=0;i<infoVenta.length;i++) {
         this.days.push(infoVenta[i].day)
         this.ventas.push(infoVenta[i].total)
