@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StatisticsRoutingModule } from './statistics-routing.module';
 import { ChartsComponent } from './charts/charts.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { ChartsModule } from 'ng2-charts';
 
@@ -15,7 +16,8 @@ import { ChartsModule } from 'ng2-charts';
     StatisticsRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    ChartsModule
+    ChartsModule,
+    MatRadioModule
   ]
 })
 export class StatisticsModule { }
