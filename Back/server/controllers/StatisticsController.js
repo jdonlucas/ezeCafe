@@ -43,7 +43,7 @@ var StatisticsController = {
                 where: {
                     createdAt: {
                         [Op.gte]: start.toDate(),
-                        [Op.lte]: end.toDate()
+                        [Op.lte]: end.add(1,'days').toDate()
                     }
                 },
                 order: [ ['createdAt', 'ASC'] ]
