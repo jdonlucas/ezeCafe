@@ -22,7 +22,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(cors({credentials: true, origin: 'https://negocio.ezecafe.com.mx'}));
-//app.use(cors({credentials: true, origin: 'http://localhost:8000'}));
+//app.use(cors({credentials: true, origin: 'http://localhost:7000'}));
 
 app.use(express.static('./dist/ezeCafe'));
 
@@ -30,7 +30,7 @@ app.all('/*', function(req, res, next) {
   res.sendFile('./dist/ezeCafe/index.html', { root: __dirname });
 });
 
-app.set('port', process.env.PORT || 8000);
+app.set('port', process.env.PORT || 7000);
 
 app.listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));

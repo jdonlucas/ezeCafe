@@ -4,7 +4,7 @@ const StatisticsController = require('../server/controllers/StatisticsController
 
 //routes for total Sales
 router.post('/monthSales', StatisticsController.showMonth);
-//router.post('/weekSales', StatisticsController.showWeek);
+router.post('/weekSales', StatisticsController.showWeek);
 //router.post('/daySales', StatisticsController.showDay);
 //router.post('/yearSales', StatisticsController.showYear);
 

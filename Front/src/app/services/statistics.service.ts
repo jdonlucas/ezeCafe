@@ -17,4 +17,10 @@ export class StatisticsService {
           date: date
         }).toPromise();
     }
+    getWeek(start, end) {
+        return this._http.post('http://localhost:3000/api/statistics/weekSales', { 
+          start: start,
+          end: end
+        }).toPromise();
+    }
 }

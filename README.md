@@ -103,7 +103,7 @@ Es necesario revisar varios puntos:
 
 # Back
 
-- Verificar que las rutas en los cors apunten a negocio.ezecafe.com.mx y no a localhost:8000
+- Verificar que las rutas en los cors apunten a negocio.ezecafe.com.mx y no a localhost:7000
 - Correr el servidor con forever y no con npm:
 ```
 $ forever start ./bin/www

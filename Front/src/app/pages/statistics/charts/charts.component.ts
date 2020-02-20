@@ -116,7 +116,7 @@ export class ChartsComponent implements OnInit {
     let end = moment().endOf('week').week(weekYear).format('DD-MM-YYYY');
     this.days = [];
     this.ventas = [];
-    this._statisticsService.getMonth(date).then(resp => {
+    this._statisticsService.getWeek(start,end).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
       infoVenta.sort((a,b) => 

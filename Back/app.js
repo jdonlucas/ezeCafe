@@ -23,7 +23,7 @@ var dotenv = require('dotenv').config();
 var cors = require('cors');
 var app = express();
 
-app.use(cors({credentials: true, origin: 'http://localhost:8000'})); // for development
+app.use(cors({credentials: true, origin: 'http://localhost:7000'})); // for development
 //app.use(cors({credentials: true, origin: 'http://negocio.ezecafe.com.mx'})); // for production
 app.use(session({
   secret: process.env.SECRET_KEY,
@@ -54,7 +54,7 @@ app.use(`${baseUrl}/insumos`, insumosRouter);
 app.use(`${baseUrl}/menu`, menuRouter);
 app.use(`${baseUrl}/sales`, salesRouter);
 app.use(`${baseUrl}/order`, orderRouter);
-app.use(`${baseUrl}/ads`, adsRouter);
+app.use(`${baseUrl}/notice`, adsRouter);
 app.use(`${baseUrl}/statistics`, statisticsRouter);
 
 // catch 404 and forward to error handler
