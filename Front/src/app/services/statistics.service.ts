@@ -13,12 +13,12 @@ export class StatisticsService {
   }
 
     getMonth(date: any) {
-        return this._http.post('https://db.ezecafe.com.mx/api/statistics/monthSales', { 
+        return this._http.post('http://localhost:3000/api/statistics/monthSales', { 
           date: date
         }).toPromise();
     }
     getWeek(start, end) {
-        return this._http.post('https://db.ezecafe.com.mx/api/statistics/weekSales', { 
+        return this._http.post('http://localhost:3000/api/statistics/weekSales', { 
           start: start,
           end: end
         }).toPromise();

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Color, Label } from 'ng2-charts';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { DatePipe } from '@angular/common';
 import { MatRadioChange } from '@angular/material/radio';
+import { of } from 'rxjs';
 import  * as moment from 'moment';
 
 @Component({
@@ -22,6 +23,9 @@ export class ChartsComponent implements OnInit {
   public day = false;
   public week = false;
   public year = false;
+
+  public numberWeek = [];
+
   days = [];
   ventas = [];
   public chartColors: Array<any> = [
@@ -44,29 +48,33 @@ export class ChartsComponent implements OnInit {
 
   constructor(
     private _statisticsService: StatisticsService,
-    private datePipe: DatePipe
-    ) { }
+    private datePipe: DatePipe,
+    private formBuilder: FormBuilder
+    ) { 
+        let year = this.datePipe.transform(new Date(),'yyyy');
+        let monthWeekNumber = this.datePipe.transform(new Date(),'MM');
+        this.dateFormWeek = this.formBuilder.group({
+          yearWeek : [year],
+          monthWeek: [monthWeekNumber],
+          week: ['']
+        });
+
+        of(this.getWeekDateMonth()).subscribe(weeks => {
+          this.numberWeek = weeks;
+          this.dateFormWeek.controls.week.patchValue(this.numberWeek[0].id);
+        });
+    }
 
   ngOnInit() {
     let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
     let year = this.datePipe.transform(new Date(),'yyyy');
     let monthWeekNumber = this.datePipe.transform(new Date(),'MM');
     let month = '01-' + monthWeekNumber;
-    let lastMonth = moment(new Date()).subtract(1, 'M').endOf('month').week()
-    let monthWeek = moment(new Date()).week();
-    let nWeek = monthWeek - lastMonth + 1;
+
     this.dateForm = new FormGroup ({
       year: new FormControl(year, [
       ]),
       month: new FormControl(month, [
-      ]),
-    })
-    this.dateFormWeek = new FormGroup ({
-      yearWeek: new FormControl(year, [
-      ]),
-      monthWeek: new FormControl(monthWeekNumber, [
-      ]),
-      week: new FormControl(nWeek, [
       ]),
     })
 
@@ -112,11 +120,14 @@ export class ChartsComponent implements OnInit {
     let date:any;
     if (this.dateFormWeek.value.monthWeek != '01') {
       date =  moment(this.dateFormWeek.value.yearWeek + '-' + this.dateFormWeek.value.monthWeek + '-01' )
-                  .endOf('M').subtract(1, 'M').week();
+                .subtract(1, 'M').endOf('M').week();
     } else {
       date = 0;
     }
     let weekYear = this.dateFormWeek.value.week - 1 + date;
+    if (this.dateFormWeek.value.monthWeek == '01') {
+      weekYear = weekYear + 1;
+    }
     let start = moment().startOf('week').week(weekYear).format('DD-MM-YYYY');
     let end = moment().endOf('week').week(weekYear).format('DD-MM-YYYY');
     this.days = [];
@@ -128,10 +139,37 @@ export class ChartsComponent implements OnInit {
         this.days.push(infoVenta[i].day)
         this.ventas.push(infoVenta[i].total)
       }
-    });
+    }).catch(err => { console.log("no hay datos")});
     this.chartData();
   } 
 
+  getWeekDateMonth() {
+    let date =  moment(this.dateFormWeek.value.yearWeek + '-' + this.dateFormWeek.value.monthWeek + '-01' )
+              .endOf('M').week();
+    let lastMonth = moment(this.dateFormWeek.value.yearWeek + '-' + this.dateFormWeek.value.monthWeek + '-01').subtract(1, 'M').endOf('month').week()
+    let realWeek = date - lastMonth + 1;
+    if (this.dateFormWeek.value.monthWeek == '01') {
+      realWeek = date;
+    }
+    let weeks = [];
+    for (let k=1;k<=realWeek;k++) {
+      weeks.push({ id: k, name: k })
+    }
+
+    return weeks;
+    
+  }
+  
+  getWeeks () {
+
+    of(this.getWeekDateMonth()).subscribe(weeks => {
+      this.numberWeek = weeks;
+      this.dateFormWeek.controls.week.patchValue(this.numberWeek[0].id);
+    });
+
+    this.onChangeWeekDate();
+
+  }
   lineChartData: ChartDataSets[] = [
     { data: this.ventas, label: 'Ventas diarias por mes' },
   ];
