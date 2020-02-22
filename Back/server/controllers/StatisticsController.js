@@ -98,7 +98,10 @@ var StatisticsController = {
                 let totalHour = [];
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).format('HH') != startDate) {
-                        totalHour.push({ hour: startDate, total: totalDay })
+                        if( (parseInt(moment(salesHistory[i].createdAt).format('H')) - 1) != parseInt(startDate) ) {
+                            totalHour.push({ hour: (parseInt(moment(salesHistory[i].createdAt).format('H')) - 1) + ':00', total: 0 })
+                        }
+                        totalHour.push({ hour: startDate + ':00', total: totalDay })
                         totalDay = 0.0;
                         startDate = moment(salesHistory[i].createdAt).format('HH');
                     }
