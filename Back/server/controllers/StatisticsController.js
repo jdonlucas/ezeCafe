@@ -98,7 +98,7 @@ var StatisticsController = {
                 let totalHour = [];
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).format('HH') != startDate) {
-                        totalHour.push({ day: startDate, total: totalDay })
+                        totalHour.push({ hour: startDate, total: totalDay })
                         totalDay = 0.0;
                         startDate = moment(salesHistory[i].createdAt).format('HH');
                     }
@@ -131,7 +131,7 @@ var StatisticsController = {
                 let totalHour = [];
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).locale('es').format('MMMM') != startDate) {
-                        totalHour.push({ day: startDate, total: totalDay })
+                        totalHour.push({ month: startDate, total: totalDay })
                         totalDay = 0.0;
                         startDate = moment(salesHistory[i].createdAt).locale('es').format('MMMM');
                     }
