@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     pago: DataTypes.STRING,
     ingreso: DataTypes.FLOAT,
-    costo: DataTypes.FLOAT
+    costo: DataTypes.FLOAT,
+    OrderId: {
+      type: DataTypes.UUID,
+      unique: true
+    }
   }, {});
   Sales.associate = function(models) {
     Sales.belongsTo(models.Order,{

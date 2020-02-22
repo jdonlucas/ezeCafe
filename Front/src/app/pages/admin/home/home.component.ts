@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { BulletinService } from 'src/app/services/bulletin.service';
+import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +20,17 @@ export class HomeComponent implements OnInit {
   public total = 0.0;
   public totalOrders = 0;
   public pendingOrders = 0;
+  public anuncios = [];
   faArrowCircleRight = faArrowCircleRight;
+  faExclamationCircle = faExclamationCircle;
+  faBullhorn = faBullhorn;
+  faBell = faBell;
+  faNewspaper = faNewspaper;
 
   constructor(
     private _orderService: OrderService,
     private _salesService: SalesService,
+    private _bulletinService: BulletinService,
     private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -42,6 +53,18 @@ export class HomeComponent implements OnInit {
         }
       }
     });
+    this.fetchNotice();
+  }
+  fetchNotice() {
+    this._bulletinService.showNotices()
+      .then(resp => {
+        this.anuncios = [];
+        this.anuncios = resp['noticeList']
+
+        this.anuncios.sort((a,b) => 
+          a.expiration.localeCompare(b.expiration)
+        );
+      })
   }
 
 }

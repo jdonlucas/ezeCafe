@@ -8,7 +8,7 @@ import { PrintComponent } from './print/print.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [UserGuard], data: {whichUser: 'Mesero'}},
-  { path: 'index', loadChildren : './comanda/comanda.module#ComandaModule', canActivate: [UserGuard], data: {whichUser: 'Mesero'}},
+  { path: 'index', loadChildren : () => import('./comanda/comanda.module').then(m => m.ComandaModule), canActivate: [UserGuard], data: {whichUser: 'Mesero'}},
   { path: 'print', outlet: 'print', component: PrintComponent, children: [{ path: 'invoice/:id', component: InvoiceComponent}], canActivate: [UserGuard], data: {whichUser: 'Mesero'}}
 ];
 

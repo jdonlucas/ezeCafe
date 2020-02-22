@@ -13,11 +13,11 @@
                   </tr>
                 </thead>
                 <tr *ngFor="let user of users | slice: -10;">
-                    <td *ngIf="userData.id != user.id" align="center">{{ user.Name }}</td>
-                    <td *ngIf="userData.id != user.id" align="center" id="quantity">{{ user.Lastname }}</td>
-                    <td *ngIf="userData.id != user.id" align="center">{{ user.Username }}</td>
-                    <td *ngIf="userData.id != user.id" align="center">{{ user.Role.name }}</td>
-                    <td class="buttons" *ngIf="userData.id != user.id">
+                    <td *ngIf="userData.id != user.id && user.Active" align="center">{{ user.Name }}</td>
+                    <td *ngIf="userData.id != user.id && user.Active" align="center" id="quantity">{{ user.Lastname }}</td>
+                    <td *ngIf="userData.id != user.id && user.Active" align="center">{{ user.Username }}</td>
+                    <td *ngIf="userData.id != user.id && user.Active" align="center">{{ user.Role.name }}</td>
+                    <td class="buttons" *ngIf="userData.id != user.id && user.Active">
                         <button class="link-dark" (click)="edit(user)"><fa-icon [icon]="faEdit"></fa-icon></button>
                         <button class="link-dark" (click)="deleteUser(user.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
                     </td>

@@ -68,6 +68,7 @@ export class AuthService {
           this._router.navigate(['/mesero']);
         }
       }
+      return userData.user.Active
   }
 
   logout() {
@@ -115,8 +116,9 @@ export class AuthService {
         let today = new Date();
         let authData = auth.authData ? auth.authData : {};
         const userData = authData.user ? authData.user.Role.name : {};
+        const isActive = authData.user ? authData.user.Active : false;
         let expDate = authData.exp ? new Date(authData.exp) : new Date();
-        let isAuth = authData.token && today < expDate;
+        let isAuth = authData.token && today < expDate && isActive;
 
         if (noAuth) { // si el usuario no esta autenticado le permite ver la vista del login
           isAuth = !isAuth;

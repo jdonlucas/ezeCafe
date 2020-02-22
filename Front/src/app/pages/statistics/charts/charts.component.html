@@ -1,0 +1,74 @@
+<div class="chart-wrapper monthChart">
+    <mat-radio-group aria-label="Selecciona una opción">
+        <mat-radio-button value="day" class="radioButton" (change)="radioChange($event)">Día</mat-radio-button>
+        <mat-radio-button value="week" class="radioButton" (change)="radioChange($event)">Semana</mat-radio-button>
+        <mat-radio-button value="month" class="radioButton" (change)="radioChange($event)" checked>Mes</mat-radio-button>
+        <mat-radio-button value="year" class="radioButton" (change)="radioChange($event)">Año</mat-radio-button>
+    </mat-radio-group>
+    <form [formGroup]="dateForm" *ngIf="month">
+        <div class="selects">
+            <div class="showMonth form-group">
+                <select class="browser-default custom-select" id="year" formControlName="year" (change)="onChangeDate()">
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="form-group showMonth">
+                <select class="browser-default custom-select" id="month" formControlName="month" (change)="onChangeDate()">
+                    <option value="01-01">Enero</option>
+                    <option value="01-02">Febrero</option>
+                    <option value="01-03">Marzo</option>
+                    <option value="01-04">Abril</option>
+                    <option value="01-05">Mayo</option>
+                    <option value="01-06">Junio</option>
+                    <option value="01-07">Julio</option>
+                    <option value="01-08">Agosto</option>
+                    <option value="01-09">Septiembre</option>
+                    <option value="01-10">Octubre</option>
+                    <option value="01-11">Noviembre</option>
+                    <option value="01-12">Diciembre</option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <form [formGroup]="dateFormWeek" *ngIf="week">
+        <div class="selects">
+            <div class="showWeek form-group">
+                <select class="browser-default custom-select" id="yearWeek" formControlName="yearWeek" (change)="onChangeWeekDate()">
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="form-group showWeek">
+                <select class="browser-default custom-select" id="monthWeek" formControlName="monthWeek" (change)="getWeeks()">
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+            <div class="form-group showWeek">
+                <select class="browser-default custom-select" id="week" formControlName="week" (change)="onChangeWeekDate()">
+                    <option *ngFor="let week of numberWeek; let i = index" [value]="week.id">
+                        {{ week.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <canvas baseChart 
+        [datasets]="lineChartData" 
+        [labels]="lineChartLabels" 
+        [options]="lineChartOptions"
+        [colors]="chartColors" 
+        [legend]="lineChartLegend" 
+        [chartType]="lineChartType" 
+        [plugins]="lineChartPlugins">
+    </canvas>
+</div>

@@ -10,4 +10,4 @@ export class SetComandaDataAction implements Action {
     }
 }
 
-export type Action = SetComandaDataAction;
+export type action = SetComandaDataAction;

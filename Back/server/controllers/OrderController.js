@@ -16,7 +16,6 @@ const Sales = require('../models').Sales;
 var OrderController = {
     index(req, res) {
         let date = moment(req.body.date, 'DD-MM-YYYY');
-        console.log(date.format());
         return Order.findAll({ 
             where: {
                 createdAt: {

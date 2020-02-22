@@ -188,11 +188,14 @@ nav li a:hover {
 .whitelist {
     display: block;
     padding: 8px 0;
+    max-height: 234px;
+    overflow: auto;
 }
 .whiteitem {
     margin-left: 10px;
     margin-right: 10px;
     display: flex;
+    border-bottom: 1px solid #eee;
 }
 .whiteicon {
     align-self: flex-start;
@@ -203,12 +206,23 @@ nav li a:hover {
 .whitetext {
     margin-left: 10px;
     flex: 1;
-    padding-top: 18px;
+    padding-top: 7px;
 }
 .whitetext h3 {
     font-size: 15px !important;
     line-height: 1.2em !important;
     color: #777 !important;
+}
+.whitetext h4 {
+    font-size: 12px !important;
+    line-height: 1.2em !important;
+    color: #777 !important;
+}
+.noAd {
+    padding-top: 18px!important;
+}
+.last {
+    border-bottom: none!important;
 }
 body app-root app-print { width: 58mm; height: 300mm } 
 @media print {
@@ -218,7 +232,7 @@ body app-root app-print { width: 58mm; height: 300mm }
     body app-root app-invoice { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
     body app-root app-corte { width: 58mm; height: 100mm; font-family: Monospace!important; font-weight: 900; font-size: 12px; color: black;}
 }
-
+/* MD Angular */
 .mat-button-wrapper {
     color: gray!important;
 }
@@ -260,4 +274,13 @@ app-sales .mat-button-wrapper {
 }
 .mat-form-field-wrapper {
     padding-bottom: 0!important;
+}
+.mat-radio-outer-circle {
+    border-color: lightgray;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: rgb(34, 34, 34);
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: rgb(34, 34, 34);
 }

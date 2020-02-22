@@ -8,10 +8,11 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BajaComponent } from './baja/baja.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AnunciosComponent } from './anuncios/anuncios.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, UsuariosComponent, BajaComponent, SettingsComponent],
+  declarations: [HomeComponent, UsuariosComponent, BajaComponent, SettingsComponent, AnunciosComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

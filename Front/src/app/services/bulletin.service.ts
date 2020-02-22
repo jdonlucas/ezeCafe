@@ -11,27 +11,32 @@ export class BulletinService {
       private _http: HttpClient,
   ) {
   }
+  showAd(noticeId: any) {
+    return this._http.post('http://localhost:3000/api/notice/showAd', {
+      noticeId: noticeId
+    }).toPromise()
+  }
 
   addNotice(noticeData: any) {
-    return this._http.post('http://localhost:3000/api/ads/newAd', {
-      foodData: noticeData
+    return this._http.post('http://localhost:3000/api/notice/newAd', {
+      noticeData: noticeData
     }).toPromise();
   }
   updateNotice(noticeData: any, noticeId: any) {
-      return this._http.post('http://localhost:3000/api/ads/updateAd',{
-        foodData: noticeData,
+      return this._http.post('http://localhost:3000/api/notice/updateAd',{
+        noticeData: noticeData,
         params: {
           id: noticeId
         }
     }).toPromise()
   }
   showNotices() {
-      return this._http.get('http://localhost:3000/api/ads/listAllAd').toPromise()
+      return this._http.get('http://localhost:3000/api/notice/listAllAd').toPromise()
   }
 
   deleteNotice(noticeId: any) {
-      return this._http.post('http://localhost:3000/api/ads/deleteAd',{
-        foodId: noticeId
+      return this._http.post('http://localhost:3000/api/notice/deleteAd',{
+        noticeId: noticeId
     }).toPromise()
   }
 }

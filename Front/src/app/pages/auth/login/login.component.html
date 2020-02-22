@@ -23,6 +23,7 @@
                             </div>
                             <div *ngIf="loginError.status" class="alert-message">
                                 <div *ngIf="loginError.code == 452">La contraseña y/o el usuario son incorrectos.</div>
+                                <div *ngIf="loginError.code == 897">El usuario fue dado de baja.</div>
                             </div>
                         </form>
                     </div>

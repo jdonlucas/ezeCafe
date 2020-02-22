@@ -1,0 +1,66 @@
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">Panel de anuncios</h1>
+    </div>
+    <div class="tools">
+        <h2 class="subtitle">Anuncios activos</h2>
+        <button class="transparentButton" (click)="show = true"><fa-icon [icon]="faPenAlt"></fa-icon> Crear anuncio</button>
+    </div>
+    <div class="whiteframe">
+        <div class="frameContent">
+            <ul class="orders">
+                <li *ngFor="let notice of anuncios; let last = last" class="{{ last? 'last' : ''}}">
+                    <div class="gInfo">
+                        <div class="whiteicon">
+                            <fa-icon [icon]="faExclamationCircle" *ngIf="notice.type == 'urgente'"></fa-icon>
+                            <fa-icon [icon]="faBullhorn" *ngIf="notice.type == 'aviso'"></fa-icon>
+                            <fa-icon [icon]="faBell" *ngIf="notice.type == 'recordatorio'"></fa-icon>
+                        </div>
+                        <div class="info">
+                            <div>{{notice.message}}</div>
+                            <div class="date">Expiración: {{notice.expiration | date:'mediumDate'}}</div>
+                        </div>
+                    </div>
+                    <div class="editButtons">
+                        <button (click)="updateNotice(notice.id)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                        <button (click)="deleteNotice(notice.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                    </div>
+                </li>
+                <li class="last" *ngIf="!anuncios.length">No hay avisos activos.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="alertContainer message" *ngIf="show">
+    <form [formGroup]="createAnnouncement">
+        <div class="form-group">
+            <div class="md-form">
+                <textarea type="text" id="message" class="md-textarea form-control" placeholder="Introduce el mensaje" [ngClass]="{ 'is-invalid': createAnnouncement.get('message').touched && createAnnouncement.get('message').invalid }"
+                formControlName="message"></textarea>
+            </div>
+        </div>
+        <div class="selection">
+            <div class="form-group type left">
+                <select class="browser-default custom-select" [ngClass]="{ 'is-invalid': createAnnouncement.get('type').touched && createAnnouncement.get('type').invalid }" formControlName="type">
+                    <option value="" disabled selected>Tipo de anuncio</option>
+                    <option value="urgente">Urgente</option>
+                    <option value="aviso">Aviso</option>
+                    <option value="recordatorio">Recordatorio</option>
+                </select>
+            </div>
+            <div class="form-group type right">
+                <select class="browser-default custom-select" [ngClass]="{ 'is-invalid': createAnnouncement.get('expiration').touched && createAnnouncement.get('expiration').invalid }" formControlName="expiration">
+                    <option value="" disabled selected>Duración del anuncio</option>
+                    <option value="1">1 día</option>
+                    <option value="2">2 días</option>
+                    <option value="3">3 días</option>
+                    <option value="7">1 semana</option>
+                    <option value="30">1 mes</option>
+                </select>
+            </div>
+        </div>
+        <button *ngIf="!noticeId" class="ezeButton" type="submit" [disabled]="!createAnnouncement.valid" (click)="saveAnnouncement()">Generar aviso</button>
+        <button *ngIf="noticeId" class="ezeButton" type="submit" [disabled]="!createAnnouncement.valid" (click)="update()">Actualizar anuncio</button>
+    </form>
+</div>
+<div class="backgroundDiv" *ngIf="show" (click)="show = false"></div>

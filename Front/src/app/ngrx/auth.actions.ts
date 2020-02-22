@@ -10,4 +10,4 @@ export class SetAuthDataAction implements Action {
     }
 }
 
-export type Action = SetAuthDataAction;
+export type action = SetAuthDataAction;
