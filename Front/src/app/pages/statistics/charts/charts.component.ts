@@ -192,13 +192,32 @@ export class ChartsComponent implements OnInit {
 
   onChangeDayDate() {
     let day = this.datePipe.transform(this.date.value,'dd-MM-yyyy');
+    this.days = [];
+    this.ventas = [];
     this._statisticsService.getDay(day).then(resp => {
-      console.log(resp)
+      let infoVenta:  any;
+      infoVenta = resp;
+      for (let i=0;i<infoVenta.length;i++) {
+        this.days.push(infoVenta[i].hour)
+        this.ventas.push(infoVenta[i].total)
+      }
     }).catch(err => { console.log(err) })
+    this.chartData();
   }
 
   onChangeYearDate() {
-    console.log('adsfd')
+    let year = this.yearForm.value.yearsData;
+    this.days = [];
+    this.ventas = [];
+    this._statisticsService.getYear(year).then(resp => {
+      let infoVenta:  any;
+      infoVenta = resp;
+      for (let i=0;i<infoVenta.length;i++) {
+        this.days.push(infoVenta[i].month)
+        this.ventas.push(infoVenta[i].total)
+      }
+    })
+    this.chartData();
   }
   
   getWeeks () {
@@ -248,4 +267,5 @@ export class ChartsComponent implements OnInit {
       this.year = true;
     }
   }
+
 }
