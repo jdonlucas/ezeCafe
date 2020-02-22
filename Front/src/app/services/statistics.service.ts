@@ -23,4 +23,12 @@ export class StatisticsService {
           end: end
         }).toPromise();
     }
+    years() {
+      return this._http.get('http://localhost:3000/api/statistics/getYears').toPromise();
+    }
+    getDay(day: any) {
+      return this._http.post('http://localhost:3000/api/statistics/daySales', {
+        date: day
+      }).toPromise()
+    }
 }

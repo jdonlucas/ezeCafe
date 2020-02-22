@@ -5,6 +5,8 @@ import { Color, Label } from 'ng2-charts';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { DatePipe } from '@angular/common';
 import { MatRadioChange } from '@angular/material/radio';
+import { MomentDateAdapter,MAT_MOMENT_DATE_FORMATS,MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { of } from 'rxjs';
 import  * as moment from 'moment';
 
@@ -12,18 +14,27 @@ import  * as moment from 'moment';
   selector: 'app-charts',
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe,{
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+  },
+
+  {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},]
 })
 export class ChartsComponent implements OnInit {
 
+  date = new FormControl(new Date());
+  startDayDate = new Date();
   public total = 0.0;
   public dateForm: FormGroup;
   public dateFormWeek: FormGroup;
+  public yearForm: FormGroup;
   public month = true;
   public day = false;
   public week = false;
   public year = false;
-
+  public yearsData = [];
   public numberWeek = [];
 
   days = [];
@@ -49,8 +60,11 @@ export class ChartsComponent implements OnInit {
   constructor(
     private _statisticsService: StatisticsService,
     private datePipe: DatePipe,
+    private _adapter: DateAdapter<any>,
     private formBuilder: FormBuilder
     ) { 
+        let allYears = [];
+        this._adapter.setLocale('es');
         let year = this.datePipe.transform(new Date(),'yyyy');
         let monthWeekNumber = this.datePipe.transform(new Date(),'MM');
         this.dateFormWeek = this.formBuilder.group({
@@ -59,10 +73,26 @@ export class ChartsComponent implements OnInit {
           week: ['']
         });
 
+        this.yearForm = this.formBuilder.group({
+          yearSelect: ['']
+        })
+        
+        this._statisticsService.years().then(resp => {
+          let response: any;
+          response = resp;
+          response.forEach(year => {
+            allYears.push({ id: year, name: year });
+          });
+          this.yearsData = allYears;
+          this.yearForm.controls.yearSelect.patchValue(this.yearsData[0].id);
+        })
+
         of(this.getWeekDateMonth()).subscribe(weeks => {
           this.numberWeek = weeks;
           this.dateFormWeek.controls.week.patchValue(this.numberWeek[0].id);
         });
+
+        
     }
 
   ngOnInit() {
@@ -112,7 +142,7 @@ export class ChartsComponent implements OnInit {
         this.days.push(infoVenta[i].day)
         this.ventas.push(infoVenta[i].total)
       }
-    });
+    }).catch(err => { console.log('no hay datos') });
     this.chartData();
   }
 
@@ -159,6 +189,17 @@ export class ChartsComponent implements OnInit {
     return weeks;
     
   }
+
+  onChangeDayDate() {
+    let day = this.datePipe.transform(this.date.value,'dd-MM-yyyy');
+    this._statisticsService.getDay(day).then(resp => {
+      console.log(resp)
+    }).catch(err => { console.log(err) })
+  }
+
+  onChangeYearDate() {
+    console.log('adsfd')
+  }
   
   getWeeks () {
 
@@ -199,6 +240,12 @@ export class ChartsComponent implements OnInit {
     } else if ( event.value == 'week' ) {
       this.onChangeWeekDate();
       this.week = true;
+    } else if ( event.value == 'day' ) {
+      this.onChangeDayDate();
+      this.day = true;
+    } else if ( event.value == 'year' ) {
+      this.onChangeYearDate();
+      this.year = true;
     }
   }
 }

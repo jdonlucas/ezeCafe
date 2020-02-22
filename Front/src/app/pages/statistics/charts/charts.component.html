@@ -62,6 +62,22 @@
             </div>
         </div>
     </form>
+    <div *ngIf="day">
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Selecciona la fecha" [formControl]="date" (dateChange)="onChangeDayDate()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker startView="month" [startAt]="startDayDate"></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <form [formGroup]="yearForm" *ngIf="year">
+        <div class="form-group showWeek">
+            <select class="browser-default custom-select" id="yearSelect" formControlName="yearSelect" (change)="onChangeYearDate()">
+                <option *ngFor="let year of yearsData; let i = index" [value]="year.id">
+                    {{ year.name }}
+                </option>
+            </select>
+        </div>
+    </form>
     <canvas baseChart 
         [datasets]="lineChartData" 
         [labels]="lineChartLabels" 

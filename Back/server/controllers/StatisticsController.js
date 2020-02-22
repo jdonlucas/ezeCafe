@@ -69,6 +69,48 @@ var StatisticsController = {
         
 
     },
+    getYears(req,res) {
+        return Sales.findAll({attributes: ['createdAt']}).then(sales => {
+            let years = [];
+            for(let i=0;i<sales.length;i++) {
+                if( ! years.includes(parseInt(moment(sales[i]).format('YYYY'))) ) {
+                    years.push(parseInt(moment(sales[i]).format('YYYY')));
+                }
+            }
+            res.status(200).json( years )
+        })
+        .catch(error => res.status(400).send(error));
+    },
+    showDay(req,res) {
+        let date = moment(req.body.date, 'DD-MM-YYYY');
+        return Sales.findAll({
+                where: {
+                    createdAt: {
+                        [Op.gt]: date.subtract(2,'days').toDate(),
+                        [Op.lt]: date.add(2,'days').toDate()
+                    }
+                },
+                order: [ ['createdAt', 'ASC'] ]
+            })
+            .then(salesHistory => {
+                let totalDay = 0.0;
+                let startDate = moment(salesHistory[0].createdAt).format('LT');
+                let totalHour = [];
+                for(let i=0;i<salesHistory.length;i++) {
+                    if (moment(salesHistory[i].createdAt).format('LT') != startDate) {
+                        totalHour.push({ day: startDate, total: totalDay })
+                        totalDay = 0.0;
+                        startDate = moment(salesHistory[i].createdAt).format('LT');
+                    }
+                    totalDay += salesHistory[i].costo;
+                }
+                totalHour.push({ day: startDate, total: totalDay })
+                res.status(200).json( totalHour )
+            })
+            .catch(error => res.status(400).send(error));
+        
+
+    },
 
 };
 
