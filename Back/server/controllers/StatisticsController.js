@@ -87,7 +87,7 @@ var StatisticsController = {
                 where: {
                     createdAt: {
                         [Op.gt]: date.toDate(),
-                        [Op.lt]: date.add(2,'days').toDate()
+                        [Op.lt]: date.add(1,'d').toDate()
                     }
                 },
                 order: [ ['createdAt', 'ASC'] ]
