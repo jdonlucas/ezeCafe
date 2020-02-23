@@ -86,8 +86,8 @@ var StatisticsController = {
         return Sales.findAll({
                 where: {
                     createdAt: {
-                        [Op.gt]: date.subtract(1,'days').toDate(),
-                        [Op.lt]: date.add(1,'days').toDate()
+                        [Op.gt]: date.toDate(),
+                        [Op.lt]: date.add(1,'d').toDate()
                     }
                 },
                 order: [ ['createdAt', 'ASC'] ]
@@ -98,7 +98,15 @@ var StatisticsController = {
                 let totalHour = [];
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).format('HH') != startDate) {
-                        totalHour.push({ hour: startDate, total: totalDay })
+                        totalHour.push({ hour: startDate + ':00', total: totalDay })
+                        if( (parseInt(moment(salesHistory[i].createdAt).format('H')) - 1) != parseInt(startDate) ) {
+                            let future = parseInt(moment(salesHistory[i].createdAt).format('H'));
+                            let past = parseInt(startDate);
+                            let diff = future - past;
+                            for (let j=diff-1;j>0;j--) {
+                                totalHour.push({ hour: (parseInt(moment(salesHistory[i].createdAt).format('H')) - j) + ':00', total: 0 })
+                            }
+                        }
                         totalDay = 0.0;
                         startDate = moment(salesHistory[i].createdAt).format('HH');
                     }
@@ -108,8 +116,6 @@ var StatisticsController = {
                 res.status(200).json( totalHour )
             })
             .catch(error => res.status(400).send(error));
-        
-
     },
     showYear(req,res) {
         let date = moment(req.body.date).format('YYYY');

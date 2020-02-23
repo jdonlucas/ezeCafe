@@ -89,7 +89,13 @@ export class ChartsComponent implements OnInit {
 
         of(this.getWeekDateMonth()).subscribe(weeks => {
           this.numberWeek = weeks;
-          this.dateFormWeek.controls.week.patchValue(this.numberWeek[0].id);
+          let date =  moment(new Date).week();
+          let lastMonth = moment(new Date()).subtract(1, 'M').endOf('month').week();
+          let realWeek = date - lastMonth;
+          if (this.dateFormWeek.value.monthWeek == '01') {
+            realWeek = date - 1;
+          }
+          this.dateFormWeek.controls.week.patchValue(this.numberWeek[realWeek].id);
         });
 
         
