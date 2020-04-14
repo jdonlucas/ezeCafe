@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faArrowAltCircleLeft } from '@fortawesome/free-regular-svg-icons';
 
 declare var $: any;
 
@@ -17,6 +18,7 @@ export class BajaComponent implements OnInit {
   public users: any;
   public errorCode: any;
   faTrashAlt = faTrashAlt;
+  faArrowAltCircleLeft =faArrowAltCircleLeft;
 
   constructor(
     private _store: Store<AppState>,

@@ -84,7 +84,7 @@
 }
 .foodItem li {
     display: flex;
-    border-bottom: 1px solid rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(209, 209, 209, 0.12);
     justify-content: space-between;
     padding: 10px;
 }
@@ -92,8 +92,9 @@
     position: relative;
     margin-top: 10px;
     padding: 0 10px;
-    background: #fff;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    background: #252C33;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px 0px rgba(255, 255, 255, 0.2), 0px 1px 1px 0px rgba(255, 255, 255, 0.14), 0px 2px 1px -1px rgba(255, 255, 255, 0.12);
     height: 90%;
 }
 .whiteframe ul {
@@ -106,10 +107,10 @@
 .total {
     padding: 2px 6px;
     border-radius: 4px;
-    background: #00c0ef;
+    background: #00efc7;
     font-size: 13px;
     font-weight: 600;
-    color: #fff;
+    color: rgb(94, 94, 94);
     height: fit-content;
     line-height: 20px;
     margin-left: 20px;
@@ -120,6 +121,7 @@
 .editButton {
     background: transparent;
     border: none;
+    color: ivory;
 }
 .eButtons {
     display: flex;

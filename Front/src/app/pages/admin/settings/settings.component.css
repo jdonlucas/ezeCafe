@@ -9,16 +9,16 @@
     border-radius: 2px;
 }
 .summary-total {
-    background: #ed6663;
+    background: #8d9ae6;
 }
 .summary-pending {
-    background: #b52b65;
+    background: #f55a9b;
 }
 .summary-amount {
-    background: #621055;
+    background: #f35bda;
 }
 .summary-horn {
-    background: #ffa372;
+    background: #3ab4a4;
 }
 .summary-main {
     margin: 10px;

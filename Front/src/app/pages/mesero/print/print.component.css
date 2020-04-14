@@ -1,3 +1,6 @@
+body {
+  background: white;
+}
 .header, .header-space, .footer, .footer-space { height: 100px; }
 .header { 
   position: relative; 

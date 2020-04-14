@@ -13,26 +13,26 @@ export class StatisticsService {
   }
 
     getMonth(date: any) {
-        return this._http.post('https://db.ezecafe.com.mx/api/statistics/monthSales', { 
+        return this._http.post('http://localhost:7000/api/statistics/monthSales', { 
           date: date
         }).toPromise();
     }
     getWeek(start, end) {
-        return this._http.post('https://db.ezecafe.com.mx/api/statistics/weekSales', { 
+        return this._http.post('http://localhost:7000/api/statistics/weekSales', { 
           start: start,
           end: end
         }).toPromise();
     }
     years() {
-      return this._http.get('https://db.ezecafe.com.mx/api/statistics/getYears').toPromise();
+      return this._http.get('http://localhost:7000/api/statistics/getYears').toPromise();
     }
     getDay(day: any) {
-      return this._http.post('https://db.ezecafe.com.mx/api/statistics/daySales', {
+      return this._http.post('http://localhost:7000/api/statistics/daySales', {
         date: day
       }).toPromise()
     }
     getYear(year: any) {
-      return this._http.post('https://db.ezecafe.com.mx/api/statistics/yearSales', {
+      return this._http.post('http://localhost:7000/api/statistics/yearSales', {
         date: year
       }).toPromise()
     }

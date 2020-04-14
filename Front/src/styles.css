@@ -18,6 +18,8 @@ html, body {
     margin: 0;
     font-size: 15px;
     font-family: var(--font-type)!important;
+    background: #252C33;
+    color: rgb(216, 216, 216)
 }
 /*------------- Header */
 nav {
@@ -128,10 +130,11 @@ nav li a:hover {
     border-bottom: solid 1px #eee;
 }
 .ezeButton {
-    background: rgb(0, 0, 0);
+    background: rgb(13, 13, 19);
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    border: 0.5px solid rgb(31, 38, 53);
 }
 .ezeButton:disabled {
     background: rgb(73, 73, 73);
@@ -152,11 +155,11 @@ nav li a:hover {
     left: 50%;
     transform: translate(-50%,-50%);
     width: fit-content;
-    background: #fff;
+    background: #252C33;
     border: 1px solid gray;
     margin: 20px;
     border-radius: 8px;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.64), 0px 2px 1px -1px rgba(0, 0, 0, 0.62);
+    box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.2), 0px 1px 1px 0px rgba(255, 255, 255, 0.64), 0px 0px 1px -1px rgba(255, 255, 255, 0.62);
     text-align: center;
 }
 .paddingContainer {
@@ -173,15 +176,18 @@ nav li a:hover {
     transform: translateY(100%);
 }
 .whiteframe-2v {
-    background: #fff;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    background: #252C33;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px 0px rgba(255, 255, 255, 0.2), 0px 1px 1px 0px rgba(255, 255, 255, 0.14), 0px 2px 1px -1px rgba(255, 255, 255, 0.12);
 }
 .whiteframe-2v h2 {
     color: #fff;
     font-size: 13px;
     font-weight: 400;
     text-transform: uppercase;
-    background: #351e38;
+    background: #1b6875;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     padding: 5px 10px;
     margin: 0;
 }
@@ -236,9 +242,6 @@ body app-root app-print { width: 58mm; height: 300mm }
 .mat-button-wrapper {
     color: gray!important;
 }
-app-sales .mat-button-wrapper {
-    color: black!important;
-}
 .mat-icon-button:focus {
     outline: none;
 }
@@ -283,4 +286,101 @@ app-sales .mat-button-wrapper {
 }
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
     background-color: rgb(34, 34, 34);
+}
+
+.summaryBoxes {
+    display: flex;
+    color: #fff;
+    margin: 30px 0;
+    justify-content: space-between;
+}
+.summaryBox {
+    width: 200px;
+    border-radius: 2px;
+}
+.summary-total {
+    background: #4bc0c0;
+}
+.summary-pending {
+    background: rgb(45, 167, 204);
+}
+.summary-amount {
+    background: rgb(255, 79, 116);
+}
+.summary-main {
+    margin: 10px;
+}
+.summary-value {
+    font-size: 25px;
+    font-weight: 900;
+}
+.summary-desc {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 10px 10px 20px 0;
+}
+.summary-footer {
+    padding: 4px;
+    font-size: 12px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+}
+.summary-footer a {
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}
+input:-internal-autofill-selected {
+    -webkit-appearance: menulist-button;
+    -webkit-box-shadow: 0 0 0 30px #252C33 inset !important;
+    -webkit-box-border: 1px solid #252C33;
+    background-color: #252C33 !important;
+    background-image: none !important;
+    color: ivory !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #252C33 inset !important;
+    background-color: #252C33 !important;
+    -webkit-text-fill-color: ivory !important;
+    caret-color: ivory;
+}
+.form-control {
+    color: rgb(98, 102, 107);
+}
+.form-control:focus {
+    color: #8c9094;
+}
+.custom-select {
+    padding: 0.375rem 1.75rem 0.375rem 0rem;
+    border: none;
+    border-bottom: 1px solid #ced4da; 
+    border-radius: 0;
+    background: #252C33 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+    color: #666f78;
+}
+.card-body {
+    background: #252C33;
+}
+.card-body a {
+    color: khaki;
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #7f848a;
+}
+.table td {
+    border-top: none;
+}
+.back {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+}
+.back a {
+    color: ivory;
 }

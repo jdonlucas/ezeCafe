@@ -1,3 +1,4 @@
+<button class="back"><a routerLink="/admin/users"><fa-icon [icon]="faArrowAltCircleLeft"></fa-icon> Regresar</a></button>
 <div class="container h-100">
     <div class="row justify-content-center align-items-center h-100">
         <div class="cont">
@@ -13,12 +14,11 @@
                   </tr>
                 </thead>
                 <tr *ngFor="let user of users">
-                    <td *ngIf="userData.id != user.id && user.UserRole < 3 && user.Active"><button class="link-dark" (click)="deleteUser(user.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button></td>
                     <td *ngIf="userData.id != user.id && user.UserRole < 3 && user.Active" align="center">{{ user.Name }}</td>
                     <td *ngIf="userData.id != user.id && user.UserRole < 3 && user.Active" align="center" id="quantity">{{ user.Lastname }}</td>
                     <td *ngIf="userData.id != user.id && user.UserRole < 3 && user.Active" align="center">{{ user.Username }}</td>
                     <td *ngIf="userData.id != user.id && user.UserRole < 3 && user.Active" align="center">{{ user.Role.name }}</td>
-                    <td *ngIf="userData.id != user.id && user.UserRole < 3 && user.Active"><button class="link-dark" (click)="deleteUser(user.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button></td>
+                    <td *ngIf="userData.id != user.id && user.UserRole < 3 && user.Active" align="center"><button class="link-dark" (click)="deleteUser(user.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button></td>
                 </tr>
             </table>
         </div>

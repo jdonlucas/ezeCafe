@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faArrowAltCircleLeft } from '@fortawesome/free-regular-svg-icons';
 import { FormGroup, FormControl } from '@angular/forms';
 
 declare var $: any;
@@ -23,6 +24,7 @@ export class BajaComponent implements OnInit {
   public editForm: FormGroup;
   faTrashAlt = faTrashAlt;
   faEdit = faEdit;
+  faArrowAltCircleLeft = faArrowAltCircleLeft;
 
   constructor(
     private _store: Store<AppState>,
