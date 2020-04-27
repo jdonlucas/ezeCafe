@@ -36,4 +36,10 @@ export class StatisticsService {
         date: year
       }).toPromise()
     }
+    getFood(option: any, date: any) {
+      return this._http.post('http://localhost:7000/api/statistics/getFoods', {
+        date:  date,
+        option: option
+      }).toPromise()
+    }
 }

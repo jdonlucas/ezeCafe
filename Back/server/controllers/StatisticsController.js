@@ -3,6 +3,11 @@ moment.tz.setDefault('America/Mexico_City');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Sales = require('../models').Sales;
+const Food = require('../models').MenuFood;
+const Drink = require('../models').MenuBeverages;
+const DrinkSpecific = require('../models').MenuBeveragesSpecific;
+const FoodOrder = require('../models').FoodOrder;
+const DrinkOrder = require('../models').BeveragesOrder;
 
 var StatisticsController = {
     showMonth(req,res) {
@@ -121,7 +126,6 @@ var StatisticsController = {
         let date = moment(req.body.date).format('YYYY');
         let less = parseInt(date) - 1;
         let more = parseInt(date) + 1;
-        console.log(date, less, more)
         return Sales.findAll({
                 where: {
                     createdAt: {
@@ -150,6 +154,42 @@ var StatisticsController = {
         
 
     },
+    getFood(req,res){
+        let option = req.body.option;
+        console.log(option)
+        Food.findAll({
+            attributes: ['id','product','price']
+        }).then(response => { 
+            let foods = response 
+            if (option == 'month') {
+                let date = moment(req.body.date, 'DD-MM-YYYY');
+                date.startOf('month').format('DD-MM-YYYY');
+                return FoodOrder.findAll({
+                    where: {
+                        createdAt: {
+                            [Op.gt]: date.toDate(),
+                            [Op.lt]: date.add(1,'M').toDate()
+                        }
+                    },
+                    order: [ ['createdAt', 'ASC'] ]
+                })
+                .then(salesHistory => {
+                    let foodSales = [];
+                    let item;
+                    for(let i=0;i<foods.length;i++) {
+                        item = salesHistory.filter(x => {
+                            return x.foodId == foods[i].id
+                        })
+                        let price = item.length * foods[i].price;
+                        foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
+                    }     
+                    res.status(200).json(foodSales)             
+                })
+                .catch(err => res.status(400).send(err))
+            }
+
+        })
+    }
 
 };
 

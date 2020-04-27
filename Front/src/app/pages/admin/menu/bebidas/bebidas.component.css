@@ -199,3 +199,7 @@
 .crearComanda:focus {
     outline: none;
 }
+#deleteGeneralBeverages {
+    margin: 10px;
+    height: 100%;
+}

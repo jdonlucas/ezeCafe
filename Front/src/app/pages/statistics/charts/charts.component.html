@@ -1,9 +1,9 @@
 <div class="chart-wrapper monthChart">
     <mat-radio-group aria-label="Selecciona una opción">
-        <mat-radio-button value="day" class="radioButton" (change)="radioChange($event)">Día</mat-radio-button>
-        <mat-radio-button value="week" class="radioButton" (change)="radioChange($event)">Semana</mat-radio-button>
-        <mat-radio-button value="month" class="radioButton" (change)="radioChange($event)" checked>Mes</mat-radio-button>
-        <mat-radio-button value="year" class="radioButton" (change)="radioChange($event)">Año</mat-radio-button>
+        <mat-radio-button name="date" value="day" class="radioButton" (change)="radioChange($event)">Día</mat-radio-button>
+        <mat-radio-button name="date" value="week" class="radioButton" (change)="radioChange($event)">Semana</mat-radio-button>
+        <mat-radio-button name="date" value="month" class="radioButton" (change)="radioChange($event)" checked>Mes</mat-radio-button>
+        <mat-radio-button name="date" value="year" class="radioButton" (change)="radioChange($event)">Año</mat-radio-button>
     </mat-radio-group>
     <form [formGroup]="dateForm" *ngIf="month">
         <div class="selects">
@@ -87,4 +87,75 @@
         [chartType]="lineChartType" 
         [plugins]="lineChartPlugins">
     </canvas>
+</div>
+<div id="weekSales" class="infoCard">
+    <div class="titleCard">
+        <span>Venta semanal</span>
+    </div>
+    <div class="subInfo">
+        <div class="infoSale">
+            <span>${{totalWeek}} mxn</span>
+        </div>
+    </div>
+</div>
+<div id="yearSales" class="infoCard">
+    <div class="titleCard">
+        <span>Venta anual</span>
+    </div>
+    <div class="subInfo">
+        <div class="infoSale">
+            <span>${{totalYear}} mxn</span>
+        </div>
+    </div>
+</div>
+<div class="chart-wrapper productsChart">
+    <div class="options">
+        <form [formGroup]="productForm">
+            <div class="selects">
+                <div class="form-group products">
+                    <select class="browser-default custom-select" id="product" formControlName="product">
+                        <option value="drink">Bebidas</option>
+                        <option value="food">Alimentos</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <mat-radio-group class="selectProduct" aria-label="Selecciona una opción">
+            <mat-radio-button name="product" value="plot" class="radioButton" (change)="radioChangeProduct($event)" checked>Gráfica</mat-radio-button>
+            <mat-radio-button name="product" value="chart" class="radioButton" (change)="radioChangeProduct($event)">Tabla</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <canvas baseChart *ngIf="chart"
+        [datasets]="lineChartData" 
+        [labels]="lineChartLabels" 
+        [options]="lineChartOptions"
+        [colors]="chartColors" 
+        [legend]="lineChartLegend" 
+        [chartType]="lineChartType" 
+        [plugins]="lineChartPlugins">
+    </canvas>
+    <table class="table" style="width:100%" *ngIf=!chart>
+        <thead>
+          <tr>
+            <th class="text-center">Producto</th>
+            <th class="text-center">Vendidos</th>
+            <th class="text-center">Venta total</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let product of productsList">
+            <td align="center">{{ product.Name }}</td>
+            <td align="center">{{ product.quantity }}</td>
+            <td align="center">{{ product.sale }}</td>
+        </tr>
+    </table>
+</div>
+<div id="mostSale" class="infoCard">
+    <div class="titleCard">
+        <span>Más vendido</span>
+    </div>
+    <div class="subInfo">
+        <div class="infoSale">
+            <span>Capuccino</span>
+        </div>
+    </div>
 </div>

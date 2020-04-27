@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartDataSets, ChartOptions } from 'chart.js';
+import { ChartDataSets, ChartOptions, controllers } from 'chart.js';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Color, Label } from 'ng2-charts';
 import { StatisticsService } from 'src/app/services/statistics.service';
@@ -30,31 +30,40 @@ export class ChartsComponent implements OnInit {
   public dateForm: FormGroup;
   public dateFormWeek: FormGroup;
   public yearForm: FormGroup;
+  public productForm: FormGroup;
   public month = true;
   public day = false;
   public week = false;
   public year = false;
   public yearsData = [];
   public numberWeek = [];
+  public productsList = [];
+  public totalWeek = 0.0;
+  public totalYear = 0.0;
+  public chart = true;
 
   days = [];
   ventas = [];
   public chartColors: Array<any> = [
     { // first color
-      backgroundColor: 'rgba(225,10,24,0.2)',
-      borderColor: 'rgba(225,10,24,0.2)',
-      pointBackgroundColor: 'rgba(225,10,24,0.2)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+      backgroundColor: 'rgba(195, 40, 96, 0.1)',
+      borderColor: 'rgba(195, 40, 96, 1)',
+      pointBackgroundColor: 'rgba(195, 40, 96, 1)',
+      pointBorderColor: '#202b33',
+      pointHoverBackgroundColor: '#202b33',
+      pointHoverBorderColor: 'rgba(225,225,225,0.9)',
+      pointHoverRadius: 7,
+      pointRadius: 6,
     },
     { // second color
       backgroundColor: 'rgba(225,10,24,0.2)',
       borderColor: 'rgba(225,10,24,0.2)',
       pointBackgroundColor: 'rgba(225,10,24,0.2)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+      pointBorderColor: '#202b33',
+      pointHoverBackgroundColor: '#202b33',
+      pointHoverBorderColor: 'rgba(225,10,24,0.2)',
+      pointHoverRadius: 7,
+      pointRadius: 6,
     }];
 
   constructor(
@@ -107,6 +116,11 @@ export class ChartsComponent implements OnInit {
     let monthWeekNumber = this.datePipe.transform(new Date(),'MM');
     let month = '01-' + monthWeekNumber;
 
+    this.productForm = new FormGroup ({
+      product: new FormControl('drink', [
+      ])
+    })
+
     this.dateForm = new FormGroup ({
       year: new FormControl(year, [
       ]),
@@ -118,18 +132,32 @@ export class ChartsComponent implements OnInit {
       let infoVenta:  any;
       infoVenta = resp;
       infoVenta.sort((a,b) => 
-      parseInt(a.day) - parseInt(b.day)
-    );
+        parseInt(a.day) - parseInt(b.day)
+      );
       for (let i=0;i<infoVenta.length;i++) {
         this.days.push(infoVenta[i].day)
         this.ventas.push(infoVenta[i].total)
       }
     });
+
+    this.changeTotalWeek(queryDate);
+
+    this.totalYear = 0.0;
+    this._statisticsService.getYear(this.yearForm.value.yearsData).then(resp => {
+      let infoVenta:  any;
+      infoVenta = resp;
+      for (let i=0;i<infoVenta.length;i++) {
+        this.totalYear += infoVenta[i].total;
+      }
+    })
+
+    this._statisticsService.getFood('month',queryDate).then(resp => {console.log(resp)})
   }
 
   chartData () {
     this.lineChartData  = [
-      { data: this.ventas, label: 'Ventas diarias por mes' },
+      { data: this.ventas,
+       },
     ];
     this.lineChartLabels = this.days;
   }
@@ -138,6 +166,7 @@ export class ChartsComponent implements OnInit {
     let date = this.dateForm.value.month + '-' + this.dateForm.value.year;
     this.days = [];
     this.ventas = [];
+    this.changeTotalWeek(date);
     this._statisticsService.getMonth(date).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -168,10 +197,12 @@ export class ChartsComponent implements OnInit {
     let end = moment().endOf('week').week(weekYear).format('DD-MM-YYYY');
     this.days = [];
     this.ventas = [];
+    this.totalWeek = 0.0;
     this._statisticsService.getWeek(start,end).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
       for (let i=0;i<infoVenta.length;i++) {
+        this.totalWeek += infoVenta[i].total;
         this.days.push(infoVenta[i].day)
         this.ventas.push(infoVenta[i].total)
       }
@@ -215,10 +246,12 @@ export class ChartsComponent implements OnInit {
     let year = this.yearForm.value.yearsData;
     this.days = [];
     this.ventas = [];
+    this.totalYear = 0.0;
     this._statisticsService.getYear(year).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
       for (let i=0;i<infoVenta.length;i++) {
+        this.totalYear += infoVenta[i].total;
         this.days.push(infoVenta[i].month)
         this.ventas.push(infoVenta[i].total)
       }
@@ -226,6 +259,21 @@ export class ChartsComponent implements OnInit {
     this.chartData();
   }
   
+  changeTotalWeek(dateOf) {
+    let date =  moment(dateOf, 'DD-MM-YYYY','es').week();
+    let weekYear = date;
+    let start = moment().startOf('week').week(weekYear).format('DD-MM-YYYY');
+    let end = moment().endOf('week').week(weekYear).format('DD-MM-YYYY');
+    this.totalWeek = 0.0;
+    this._statisticsService.getWeek(start,end).then(resp => {
+      let infoVenta:  any;
+      infoVenta = resp;
+      for (let i=0;i<infoVenta.length;i++) {
+        this.totalWeek += infoVenta[i].total;
+      }
+    }).catch(err => { console.log("no hay datos")});
+  }
+
   getWeeks () {
 
     of(this.getWeekDateMonth()).subscribe(weeks => {
@@ -237,13 +285,43 @@ export class ChartsComponent implements OnInit {
 
   }
   lineChartData: ChartDataSets[] = [
-    { data: this.ventas, label: 'Ventas diarias por mes' },
+    { data: this.ventas,
+   },
   ];
 
   lineChartLabels: Label[] = this.days;
 
   lineChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontColor: "rgba(255,255,255,0.7)",
+          fontSize: 14,
+          padding: 7,
+        },
+        gridLines: {
+          color: "rgba(255,255,255,0.1)",
+          lineWidth: 1,
+          zeroLineColor: 'rgba(255,255,255,0)',
+          drawBorder: false
+        },
+      }],
+      yAxes: [{
+        ticks: {
+          fontColor: "rgba(255,255,255,0.7)",
+          fontSize: 14,
+          padding: 7,
+        },
+        gridLines: {
+            color: 'rgba(255,255,255,0.1)', //give the needful color
+            lineWidth: 1,
+            zeroLineColor: 'rgba(255,255,255,0)',
+            drawBorder: false
+        },
+      }],
+    }
   };
 
   lineChartColors: Color[] = [
@@ -253,7 +331,7 @@ export class ChartsComponent implements OnInit {
     },
   ];
 
-  lineChartLegend = true;
+  lineChartLegend = false;
   lineChartPlugins = [];
   lineChartType = 'line';
   
@@ -271,6 +349,14 @@ export class ChartsComponent implements OnInit {
     } else if ( event.value == 'year' ) {
       this.onChangeYearDate();
       this.year = true;
+    }
+  }
+  
+  radioChangeProduct(event: MatRadioChange) {
+    if( event.value == 'plot') {
+      this.chart = true;
+    } else {
+      this.chart = false;
     }
   }
 

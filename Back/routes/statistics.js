@@ -8,5 +8,6 @@ router.post('/weekSales', StatisticsController.showWeek);
 router.get('/getYears', StatisticsController.getYears);
 router.post('/daySales', StatisticsController.showDay);
 router.post('/yearSales', StatisticsController.showYear);
+router.post('/getFoods', StatisticsController.getFood);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 /* Global styles */
 @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 :root {
-    --black-color: rgb(0, 0, 0);
+    --black-color: rgb(19, 18, 25);
     --main-black: rgb(31, 31, 30);
     --black-clear-color: rgb(56, 54, 54);
     --black-disabled-color: rgba(0, 0, 0, 0.692);
@@ -282,10 +282,10 @@ body app-root app-print { width: 58mm; height: 300mm }
     border-color: lightgray;
 }
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: rgb(34, 34, 34);
+    border-color: #86DEB7;
 }
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: rgb(34, 34, 34);
+    background-color: #86DEB7;
 }
 
 .summaryBoxes {
@@ -383,4 +383,23 @@ input:-webkit-autofill:active  {
 }
 .back a {
     color: ivory;
+}
+.whiteframe ul::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: none;
+	border-radius: 0;
+	background-color: #252C33;
+}
+
+.whiteframe ul::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #252C33;
+}
+
+.whiteframe ul::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: none;
+	background-color: #555;
 }

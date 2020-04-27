@@ -1,10 +1,21 @@
 .monthChart {
-    width: 50%;
-    height: 50%;
+    width: calc(80% - 60px);
+    height: 30%;
     position: absolute;
-    right: 50%;
-    top: 50%;
-    transform: translate(50%,-50%);
+    left: 30px;
+    top: 80px;
+}
+.productsChart {
+    width: calc(80% - 60px);
+    height: 30%;
+    position: absolute;
+    right: 30px;
+    top: calc(100% - 30% - 70px);
+    text-align: right;
+}
+.options {
+    display: flex;
+    justify-content: space-between;
 }
 .selects {
     text-align: center;
@@ -22,4 +33,42 @@
     width: fit-content;
     margin: auto;
     margin-bottom: 20px;
+}
+#weekSales {
+    position: absolute;
+    right: 20px;
+    top: calc(20% - 25px);
+}
+#yearSales {
+    position: absolute;
+    right: 20px;
+    top: calc(20% + 120px);
+}
+#mostSale {
+    position: absolute;
+    left: 20px;
+    top: calc(100% - 30%);
+}
+.infoCard {
+    width: 240px;
+    height: 120px;
+    border-radius: 4px;
+    background: #1d2329;
+    box-shadow: 0px 1px 3px 0px rgba(173, 173, 173, 0.205), 0px 1px 1px 0px rgba(190, 190, 190, 0.116), 0px 2px 1px -1px rgba(194, 194, 194, 0.123);
+}
+.titleCard {
+    margin-left: 20px;
+    padding-top: 5px;
+}
+.titleCard span {
+    font-size: 30px;
+    color: #86DEB7;
+}
+.infoSale {
+    padding-top: 10px;
+    text-align: center;
+}
+.infoSale span {
+    color: #cacacab4;
+    font-size: 20px;
 }
