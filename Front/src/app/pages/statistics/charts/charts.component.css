@@ -72,3 +72,63 @@
     color: #cacacab4;
     font-size: 20px;
 }
+select:focus {
+    outline: none;
+    border-color: #ced4da;;
+    box-shadow: none;
+}
+.table th {
+    width: 33.33%;
+}
+.table td {
+    width: 33.33%;
+}
+.productsTable {
+    height: calc(100% - 70px);
+    overflow-y: scroll;
+}
+@media (max-width: 768px) {
+    .monthChart {
+        width: calc(100% - 60px);
+    }
+    #weekSales {
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(30% + 260px);
+    }
+    #yearSales {
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(30% + 410px);
+    }
+    .productsChart {
+        width: calc(100% - 60px);
+        top: calc(30% + 590px);
+    }
+    #mostSale {
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(30% + 30% + 650px);
+        margin-bottom: 30px;
+    }
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #252C33; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(66, 66, 66); 
+    border-radius: 9px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(88, 88, 88); 
+  }

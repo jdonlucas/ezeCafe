@@ -41,9 +41,14 @@ export class ChartsComponent implements OnInit {
   public totalWeek = 0.0;
   public totalYear = 0.0;
   public chart = true;
+  typeDate = "";
+  dateForProduct = ""
+  public productMax = {'product': 'any'};
 
   days = [];
   ventas = [];
+  products = [];
+  salesProducts = [];
   public chartColors: Array<any> = [
     { // first color
       backgroundColor: 'rgba(195, 40, 96, 0.1)',
@@ -151,7 +156,14 @@ export class ChartsComponent implements OnInit {
       }
     })
 
-    this._statisticsService.getFood('month',queryDate).then(resp => {console.log(resp)})
+    this.typeDate = 'month'; this.dateForProduct = queryDate;
+    this._statisticsService.getDrink('month',queryDate).then((resp: any) => {
+      this.productsList = resp;
+      this.productMax = resp.reduce(function(prev, current) { return (prev.quantity > current.quantity) ? prev : current })
+      this.products = resp.map( x => { return x.product } );
+      this.salesProducts = resp.map( x => { return x.quantity });
+      this.productschartData()
+    })
   }
 
   chartData () {
@@ -161,13 +173,20 @@ export class ChartsComponent implements OnInit {
     ];
     this.lineChartLabels = this.days;
   }
+  productschartData () {
+    this.productChartData  = [
+      { data: this.salesProducts,
+       },
+    ];
+    this.productChartLabels = this.products;
+  }
 
   onChangeDate() {
     let date = this.dateForm.value.month + '-' + this.dateForm.value.year;
     this.days = [];
     this.ventas = [];
     this.changeTotalWeek(date);
-    this._statisticsService.getFood('month',date).then(resp => {console.log(resp)})
+    this.setProduct('month',date);
     this._statisticsService.getMonth(date).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -200,7 +219,7 @@ export class ChartsComponent implements OnInit {
     this.ventas = [];
     this.totalWeek = 0.0;
     let packDate = {'start': start, 'end': end}
-    this._statisticsService.getFood('week',packDate).then(resp => {console.log(resp)})
+    this.setProduct('week',packDate);
     this._statisticsService.getWeek(start,end).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -234,7 +253,7 @@ export class ChartsComponent implements OnInit {
     let day = this.datePipe.transform(this.date.value,'dd-MM-yyyy');
     this.days = [];
     this.ventas = [];
-    this._statisticsService.getFood('day',day).then(resp => {console.log(resp)})
+    this.setProduct('day',day);
     this._statisticsService.getDay(day).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -251,7 +270,7 @@ export class ChartsComponent implements OnInit {
     this.days = [];
     this.ventas = [];
     this.totalYear = 0.0;
-    this._statisticsService.getFood('year',year).then(resp => {console.log(resp)})
+    this.setProduct('year',year);
     this._statisticsService.getYear(year).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -294,7 +313,13 @@ export class ChartsComponent implements OnInit {
    },
   ];
 
+  productChartData: ChartDataSets[] = [
+    { data: this.salesProducts,
+   },
+  ];
+
   lineChartLabels: Label[] = this.days;
+  productChartLabels: Label[] = this.products;
 
   lineChartOptions = {
     responsive: true,
@@ -362,6 +387,48 @@ export class ChartsComponent implements OnInit {
       this.chart = true;
     } else {
       this.chart = false;
+    }
+  }
+
+  setProduct(typeOfDate: any,date: any) {
+    this.productsList = []; this.products = []; this.salesProducts = [];
+    if (this.productForm.value.product == 'food') {
+      console.log(this.productForm.value.product)
+      this._statisticsService.getFood(typeOfDate,date).then((resp: any) => {
+        this.productsList = resp;
+        this.productMax = resp.reduce(function(prev, current) { return (prev.quantity > current.quantity) ? prev : current })
+        this.products = resp.map( x => { return x.product } );
+        this.salesProducts = resp.map( x => { return x.quantity });
+        this.productschartData()
+      })
+    } else {
+      this._statisticsService.getDrink(typeOfDate,date).then((resp: any) => {
+        this.productsList = resp;
+        this.productMax = resp.reduce(function(prev, current) { return (prev.quantity > current.quantity) ? prev : current })
+        this.products = resp.map( x => { return x.product } );
+        this.salesProducts = resp.map( x => { return x.quantity });
+        this.productschartData()
+      })
+    }
+    this.typeDate = typeOfDate; this.dateForProduct = date;
+  }
+  changeProductSelect() {
+    if (this.productForm.value.product == 'food') {
+      this._statisticsService.getFood(this.typeDate,this.dateForProduct).then((resp: any) => {
+        this.productsList = resp;
+        this.productMax = resp.reduce(function(prev, current) { return (prev.quantity > current.quantity) ? prev : current })
+        this.products = resp.map( x => { return x.product } );
+        this.salesProducts = resp.map( x => { return x.quantity });
+        this.productschartData()
+      })
+    } else {
+      this._statisticsService.getDrink(this.typeDate,this.dateForProduct).then((resp: any) => {
+        this.productsList = resp;
+        this.productMax = resp.reduce(function(prev, current) { return (prev.quantity > current.quantity) ? prev : current })
+        this.products = resp.map( x => { return x.product } );
+        this.salesProducts = resp.map( x => { return x.quantity });
+        this.productschartData()
+      })
     }
   }
 

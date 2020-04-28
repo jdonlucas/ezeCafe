@@ -113,7 +113,7 @@
         <form [formGroup]="productForm">
             <div class="selects">
                 <div class="form-group products">
-                    <select class="browser-default custom-select" id="product" formControlName="product">
+                    <select class="browser-default custom-select" id="product" formControlName="product" (change)="changeProductSelect()">
                         <option value="drink">Bebidas</option>
                         <option value="food">Alimentos</option>
                     </select>
@@ -126,15 +126,15 @@
         </mat-radio-group>
     </div>
     <canvas baseChart *ngIf="chart"
-        [datasets]="lineChartData" 
-        [labels]="lineChartLabels" 
+        [datasets]="productChartData" 
+        [labels]="productChartLabels" 
         [options]="lineChartOptions"
         [colors]="chartColors" 
         [legend]="lineChartLegend" 
         [chartType]="lineChartType" 
         [plugins]="lineChartPlugins">
     </canvas>
-    <table class="table" style="width:100%" *ngIf=!chart>
+    <table class="table" *ngIf=!chart>
         <thead>
           <tr>
             <th class="text-center">Producto</th>
@@ -142,12 +142,18 @@
             <th class="text-center">Venta total</th>
           </tr>
         </thead>
-        <tr *ngFor="let product of productsList">
-            <td align="center">{{ product.Name }}</td>
-            <td align="center">{{ product.quantity }}</td>
-            <td align="center">{{ product.sale }}</td>
-        </tr>
     </table>
+    <div class="productsTable" *ngIf=!chart>
+        <table class="table">
+            <tbody>
+                <tr *ngFor="let product of productsList">
+                    <td align="center">{{ product.product }}</td>
+                    <td align="center">{{ product.quantity }}</td>
+                    <td align="center">{{ product.sale }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div id="mostSale" class="infoCard">
     <div class="titleCard">
@@ -155,7 +161,7 @@
     </div>
     <div class="subInfo">
         <div class="infoSale">
-            <span>Capuccino</span>
+            <span>{{ productMax.product }}</span>
         </div>
     </div>
 </div>
