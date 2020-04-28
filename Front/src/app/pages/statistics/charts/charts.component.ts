@@ -167,6 +167,7 @@ export class ChartsComponent implements OnInit {
     this.days = [];
     this.ventas = [];
     this.changeTotalWeek(date);
+    this._statisticsService.getFood('month',date).then(resp => {console.log(resp)})
     this._statisticsService.getMonth(date).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -198,6 +199,8 @@ export class ChartsComponent implements OnInit {
     this.days = [];
     this.ventas = [];
     this.totalWeek = 0.0;
+    let packDate = {'start': start, 'end': end}
+    this._statisticsService.getFood('week',packDate).then(resp => {console.log(resp)})
     this._statisticsService.getWeek(start,end).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -231,6 +234,7 @@ export class ChartsComponent implements OnInit {
     let day = this.datePipe.transform(this.date.value,'dd-MM-yyyy');
     this.days = [];
     this.ventas = [];
+    this._statisticsService.getFood('day',day).then(resp => {console.log(resp)})
     this._statisticsService.getDay(day).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;
@@ -247,6 +251,7 @@ export class ChartsComponent implements OnInit {
     this.days = [];
     this.ventas = [];
     this.totalYear = 0.0;
+    this._statisticsService.getFood('year',year).then(resp => {console.log(resp)})
     this._statisticsService.getYear(year).then(resp => {
       let infoVenta:  any;
       infoVenta = resp;

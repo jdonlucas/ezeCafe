@@ -156,7 +156,6 @@ var StatisticsController = {
     },
     getFood(req,res){
         let option = req.body.option;
-        console.log(option)
         Food.findAll({
             attributes: ['id','product','price']
         }).then(response => { 
@@ -186,6 +185,81 @@ var StatisticsController = {
                     res.status(200).json(foodSales)             
                 })
                 .catch(err => res.status(400).send(err))
+            } else if (option == 'year') {
+                let date = moment(req.body.date).format('YYYY');
+                let less = parseInt(date) - 1;
+                let more = parseInt(date) + 1;
+                return FoodOrder.findAll({
+                        where: {
+                            createdAt: {
+                                [Op.gt]: new Date('12-31-' + less),
+                                [Op.lt]: new Date('01-01-' + more)
+                            }
+                        },
+                        order: [ ['createdAt', 'ASC'] ]
+                    })
+                    .then(salesHistory => {
+                        let foodSales = [];
+                        let item;
+                        for(let i=0;i<foods.length;i++) {
+                            item = salesHistory.filter(x => {
+                                return x.foodId == foods[i].id
+                            })
+                            let price = item.length * foods[i].price;
+                            foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
+                        }     
+                        res.status(200).json(foodSales)             
+                    })
+                    .catch(err => res.status(400).send(err))
+            } else if (option == 'day') {
+                let date = moment(req.body.date, 'DD-MM-YYYY');
+                return FoodOrder.findAll({
+                        where: {
+                            createdAt: {
+                                [Op.gt]: date.toDate(),
+                                [Op.lt]: date.add(1,'d').toDate()
+                            }
+                        },
+                        order: [ ['createdAt', 'ASC'] ]
+                    })
+                    .then(salesHistory => {
+                        let foodSales = [];
+                        let item;
+                        for(let i=0;i<foods.length;i++) {
+                            item = salesHistory.filter(x => {
+                                return x.foodId == foods[i].id
+                            })
+                            let price = item.length * foods[i].price;
+                            foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
+                        }     
+                        res.status(200).json(foodSales)         
+                    })
+                    .catch(err => res.status(400).send(err))
+            } else if (option == 'week') {
+                let start = moment(req.body.date.start, 'DD-MM-YYYY');
+                let end = moment(req.body.date.end, 'DD-MM-YYYY');
+                return FoodOrder.findAll({
+                        where: {
+                            createdAt: {
+                                [Op.gte]: start.toDate(),
+                                [Op.lte]: end.toDate()
+                            }
+                        },
+                        order: [ ['createdAt', 'ASC'] ]
+                    })
+                    .then(salesHistory => {
+                        let foodSales = [];
+                        let item;
+                        for(let i=0;i<foods.length;i++) {
+                            item = salesHistory.filter(x => {
+                                return x.foodId == foods[i].id
+                            })
+                            let price = item.length * foods[i].price;
+                            foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
+                        }     
+                        res.status(200).json(foodSales)         
+                    })
+                    .catch(err => res.status(400).send(err))
             }
 
         })
