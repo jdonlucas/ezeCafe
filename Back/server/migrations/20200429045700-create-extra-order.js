@@ -38,7 +38,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    },
+    { charset: 'latin1' },);
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('extraOrders');
