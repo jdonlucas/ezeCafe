@@ -5,7 +5,7 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID + ' CHARSET latin1 COLLATE latin1_swedish_ci',
+        type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
       extraId: {
