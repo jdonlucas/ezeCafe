@@ -104,16 +104,20 @@ Es necesario revisar varios puntos:
 # Back
 
 - Verificar que las rutas en los cors apunten a negocio.ezecafe.com.mx y no a localhost:7000
-- Correr el servidor con forever y no con npm:
+- Se utiliza pm2 para el monitoreo de la app, pm2 correo como un deamon, para detener la app se usa:
 ```
-$ forever start ./bin/www
+$ pm2 stop www
 ```
-para esto hay que estar parados en el directorio Back/ que alberga los archivos del servidor
+con www el nombre de la app, si se hacen cambios, reiniciar pm2: 
+```
+$ pm2 restart www 
+```
+para mas información, consultar [esta liga](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
 
 # Front 
 
 - Verificar que las rutas de la api sean db.ezecafe.com.mx y no localhost:3000
-- Correr ng build --prod para obtener el compilado de la aplicacion de angular
+- Correr ng build --prod --aot=true para obtener el compilado de la aplicacion de angular
 - Eliminar en servidor los archivos anteriores de la aplicacion
 - Copiar los archivos generador con ng build, ubicados en dist/ezeCafe/ en la carpeta root del subdominio negocio en servidor
 
