@@ -39,8 +39,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     },
-    { charset: 'latin1',
-      collate: 'latin1_swedish_c1' });
+    { charset: 'latin1'});
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('extraOrders');
