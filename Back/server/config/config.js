@@ -3,10 +3,8 @@ module.exports = {
   development: {
     use_env_variable:  "DEVELOPMENT_DATABASE_URL",
     dialect: 'mysql',
-    dialectOptions: {
-      charset: 'latin1',
-      collate: 'latin1_swedish_ci'
-    },
+    charset: 'latin1',
+    collate: 'latin1_swedish_ci'
   },
   test: {
     username: "root",
