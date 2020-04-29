@@ -1,9 +1,5 @@
 require('dotenv').config()
 module.exports = {
-  define: {
-    charset: 'latin1',
-    collate: 'latin1_swedish_ci'
-  },
   development: {
     use_env_variable:  "DEVELOPMENT_DATABASE_URL"
   },
@@ -22,6 +18,8 @@ module.exports = {
     dialect: 'mysql',
     dialectOptions: {
       useUTC: false,
+      charset: 'latin1',
+      collate: 'latin1_swedish_ci'
     },
     timezone: '-06:00',
     use_env_variable: 'DATABASE_URL'
