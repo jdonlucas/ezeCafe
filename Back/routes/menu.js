@@ -3,6 +3,7 @@ var router = express.Router();
 const MenuBeveragesController = require('../server/controllers/MenuBeveragesController');
 const MenuFoodController = require('../server/controllers/MenuFoodController');
 const MenuSpecialController = require('../server/controllers/MenuSpecialController');
+const MenuExtraController = require('../server/controllers/MenuExtraController');
 
 //routes for food menu
 router.post('/newFood', MenuFoodController.create);
