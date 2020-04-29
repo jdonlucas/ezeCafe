@@ -27,8 +27,8 @@ module.exports = {
         type: Sequelize.DATE
       }
     },
-    { charset: 'utf8',
-      collate: 'utf8_general_ci' });
+    { charset: 'latin1',
+      collate: 'latin1_swedish_ci' });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('MenuExtras');
