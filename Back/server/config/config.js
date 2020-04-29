@@ -2,10 +2,6 @@ require('dotenv').config()
 module.exports = {
   development: {
     use_env_variable:  "DEVELOPMENT_DATABASE_URL",
-    dialectOptions: {
-      charset: 'latin1',
-      collate: 'latin1_swedish_ci'
-    },
   },
   test: {
     username: "root",
