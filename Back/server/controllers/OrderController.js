@@ -6,10 +6,12 @@ const Order = require('../models').Order;
 const FoodOrder = require('../models').FoodOrder;
 const BeverageOrder = require('../models').BeveragesOrder;
 const specialOrder = require('../models').specialOrder;
+const extraOrder = require('../models').extraOrder;
 const MenuFood = require('../models').MenuFood;
 const MenuBeveragesSpecific = require('../models').MenuBeveragesSpecific;
 const MenuBeverages = require('../models').MenuBeverages;
 const MenuSpecial = require('../models').MenuSpecial;
+const MenuExtra = require('../models').MenuExtra;
 const User = require('../models').User;
 const Sales = require('../models').Sales;
 
@@ -37,7 +39,6 @@ var OrderController = {
 
     show(req, res) {
         const orderId = req.body.orderId;
-        console.log(orderId)
         return Order.findAll({
             where: {
                 id: orderId,
@@ -61,6 +62,10 @@ var OrderController = {
                 {
                     model: MenuSpecial,
                     as: 'special'
+                },
+                {
+                    model: MenuExtra,
+                    as: 'extra'
                 },
                 {
                     model: User
@@ -98,6 +103,12 @@ var OrderController = {
             res.json({newSpecialOrder: specialOrderCreated});
         }).catch(err => res.status(500).send(err));
     },
+    createExtra(req,res) {
+        let extraData = req.body.extraData;
+        extraOrder.create(extraData).then(extraOrderCreated => {
+            res.json({newExtraOrder: extraOrderCreated});
+        }).catch(err => res.status(500).send(err));
+    },
     updateFoodOrder(req,res) {
         let orderFoodData = req.body.foodData;
         let query = { where: { id: req.body.params.id }};
@@ -122,6 +133,15 @@ var OrderController = {
         specialOrder.update(orderSpecialData, query)
             .then(specialOrderUpdated => {
                 res.json({ newSpecial: specialOrderUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    updateExtraOrder(req,res) {
+        let orderExtraData = req.body.extraData;
+        let query = { where: { id: req.body.params.id }};
+        extraOrder.update(orderExtraData, query)
+            .then(extraOrderUpdated => {
+                res.json({ newExtra: extraOrderUpdated })
             })
             .catch(err => res.status(500).send(err));
     },

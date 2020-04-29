@@ -45,6 +45,13 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'orderId',
       onDelete: 'cascade',
       hooks: true
+    });
+    Order.belongsToMany(models.MenuExtra,{
+      through: 'extraOrder',
+      as: 'extra',
+      foreignKey: 'orderId',
+      onDelete: 'cascade',
+      hooks: true
     })
   };
 

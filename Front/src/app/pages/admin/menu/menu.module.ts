@@ -8,10 +8,11 @@ import { BebidasComponent } from './bebidas/bebidas.component';
 import { HomeComponent } from './home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EspecialComponent } from './especial/especial.component';
+import { ExtraComponent } from './extra/extra.component';
 
 
 @NgModule({
-  declarations: [AlimentosComponent, BebidasComponent, HomeComponent, EspecialComponent],
+  declarations: [AlimentosComponent, BebidasComponent, HomeComponent, EspecialComponent, ExtraComponent],
   imports: [
     CommonModule,
     MenuRoutingModule,

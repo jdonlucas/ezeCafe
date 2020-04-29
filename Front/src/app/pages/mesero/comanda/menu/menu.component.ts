@@ -23,16 +23,19 @@ export class MenuComponent implements OnInit {
   public foodList: any;
   public beveragesList: any;
   public menuList: any;
+  public extraList: any;
   public beveragesSpecificList: any;
   public errors: any
   public show = true;
   public showFood = false;
   public showMenu = false;
+  public showExtra = false;
   public showSpecific = false;
   public itemsList = [];
   public foodItems = [];
   public beverageItems = [];
   public menuItems = [];
+  public extraItems = [];
   public totalAmount: number;
   public showConfirm = false;
   public closeC = false;
@@ -69,6 +72,7 @@ export class MenuComponent implements OnInit {
     this.fetchBeverages();
     this.fetchFood();
     this.fetchMenu();
+    this.fetchExtra();
     this.totalAmount = 0.00;
   }
 
@@ -111,36 +115,59 @@ export class MenuComponent implements OnInit {
       .catch(err => this.errors = err);
   }
 
+  fetchExtra() {
+    this._menuService.showExtra()
+      .then(response => {
+        this.extraList = response['extraList'].sort((a,b) => 
+          a.product.localeCompare(b.product)
+        );
+      })
+      .catch(err => this.errors = err);
+  }
+
   toggle(btnId: any) {
     let divId = btnId.target.id;
     let element = document.getElementById(divId);
     if (divId == 'foodButton') {
       this.showFood = true;
-      this.show = this.showMenu = false;
+      this.show = this.showMenu = this.showExtra = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
       let bButton = document.getElementById('beveragesButton');
       bButton.classList.remove("selected");
       document.getElementById('menuButton').classList.remove('selected')
+      document.getElementById('extraButton').classList.remove('selected')
     } else if (divId == 'beveragesButton') {
       this.show = true;
-      this.showFood = this.showMenu = false;
+      this.showFood = this.showMenu = this.showExtra = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
       let bButton = document.getElementById('foodButton');
       bButton.classList.remove("selected");
       document.getElementById('menuButton').classList.remove('selected')
-    } else {
+      document.getElementById('extraButton').classList.remove('selected')
+    } else if (divId == 'menuButton') {
       this.showMenu = true;
-      this.showFood = this.show = false;
+      this.showFood = this.show = this.showExtra = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
       let bButton = document.getElementById('foodButton');
       bButton.classList.remove("selected");
       document.getElementById('beveragesButton').classList.remove('selected')
+      document.getElementById('extraButton').classList.remove('selected')
+    } else {
+      this.showExtra = true;
+      this.showFood = this.show = this.showMenu = false;
+      if(!element.classList.contains('selected')) {
+        element.classList.add('selected');
+      }
+      let bButton = document.getElementById('foodButton');
+      bButton.classList.remove("selected");
+      document.getElementById('beveragesButton').classList.remove('selected')
+      document.getElementById('menuButton').classList.remove('selected')
     }
   }
   hideSpecific() {
@@ -212,6 +239,30 @@ export class MenuComponent implements OnInit {
     this.itemsList.push({id: special.id,name: special.product + " (" + special.type + ")",price: special.price});
     this.totalAmount = this.totalAmount + special.price;
   }
+
+
+  addExtra(extra) {
+    let find: boolean;
+    this.extraItems.forEach(x => {
+      if(x.id == extra.id) {
+        find = true;
+      } else {
+        find = false;
+      }
+    })
+    if(!find){
+      this.extraItems.push({id: extra.id,quantity: 1});
+    } else {
+      for(let i=0;i<this.extraItems.length;i++) {
+        if(this.extraItems[i].id == extra.id) {
+          this.extraItems[i].quantity = this.extraItems[i].quantity + 1
+        }
+      }
+    }
+    this.itemsList.push({id: extra.id,name: extra.product,price: extra.price});
+    this.totalAmount = this.totalAmount + extra.price;
+  }
+
   removeItem(item: any) {
     let index = this.itemsList.indexOf(item);
     this.totalAmount = this.totalAmount - item.price;
@@ -245,12 +296,21 @@ export class MenuComponent implements OnInit {
         }
       }
     })
+    this.extraItems.forEach(x => {
+      if(x.id == item.id) {
+        if(x.quantity == 1) {
+          this.extraItems.splice(this.extraItems.indexOf(x),1);
+        } else {
+          x.quantity = x.quantity - 1;
+        }
+      }
+    })
   }
   toggleDiv(){
      this.showConfirm = !this.showConfirm;
   }
   async saveOrder(){
-    let foodData, beverageData, menuData;
+    let foodData, beverageData, menuData, extraData;
     const orderData = {
       name: this.orderForm.value.name,
       status: 'pendiente',
@@ -284,6 +344,14 @@ export class MenuComponent implements OnInit {
         };
         this._orderService.newSpecialOrder(menuData);
       };
+      for(let i=0;i<this.extraItems.length;i++){
+        extraData = {
+          extraId: this.extraItems[i].id,
+          orderId: order.id,
+          quantity: this.extraItems[i].quantity
+        };
+        this._orderService.newExtraOrder(extraData);
+      };
       this._router.navigate(['/comandas/index']);
     })
       .catch(err => this.errors = err);
@@ -296,7 +364,7 @@ export class MenuComponent implements OnInit {
   }
   async closeOrder(){
     if(this.totalAmount != 0) {
-      let foodData, beverageData, menuData;
+      let foodData, beverageData, menuData, extraData;
       const orderData = {
         name: this.orderForm.value.name,
         status: 'cerrada',
@@ -330,11 +398,19 @@ export class MenuComponent implements OnInit {
           };
           this._orderService.newSpecialOrder(menuData);
         };
+        for(let i=0;i<this.extraItems.length;i++){
+          extraData = {
+            extraId: this.extraItems[i].id,
+            orderId: this.order.id,
+            quantity: this.extraItems[i].quantity
+          };
+          this._orderService.newExtraOrder(extraData);
+        };
         this.confirm = false;
         this.pago = true;
       })
         .catch(err => this.errors = err);
-      this._spinnerService.hide();
+      this._spinnerService.hide(); 
     } else {
       this.confirm = false;
       this.alert = true;

@@ -12,8 +12,10 @@ router.post('/updateOrder', OrderController.update);
 router.post('/newFoodOrder', OrderController.createFood);
 router.post('/newBeverageOrder', OrderController.createBeverage);
 router.post('/newSpecialOrder', OrderController.createSpecial);
+router.post('/newExtraOrder', OrderController.createExtra);
 router.post('/updateFoodOrder', OrderController.updateFoodOrder);
 router.post('/updateBeverageOrder', OrderController.updateBeverageOrder);
 router.post('/updateSpecialOrder', OrderController.updateSpecialOrder);
+router.post('/updateExtraOrder', OrderController.updateExtraOrder);
 
 module.exports = router;

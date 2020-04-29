@@ -5,6 +5,7 @@ import { faMugHot } from '@fortawesome/free-solid-svg-icons';
 import { faHamburger } from '@fortawesome/free-solid-svg-icons';
 import { faUserTag } from '@fortawesome/free-solid-svg-icons';
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
   faHamburger = faHamburger;
   faUserTag = faUserTag;
   faArrowCircleRight = faArrowCircleRight;
+  faPlusCircle = faPlusCircle;
 
   constructor(
     private _store: Store<AppState>

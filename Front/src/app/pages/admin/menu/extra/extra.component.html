@@ -1,0 +1,71 @@
+<div class="container2">
+    <div class="top">
+        <h1 class="titleSection">Menú extras</h1>
+        <button routerLink="/admin/menu"><fa-icon [icon]="faArrowLeft"></fa-icon></button>
+    </div>
+    <div class="foodContainer">
+        <div class="foodItem">
+            <div class="md-form eButtons">
+                <div class="searchIcon"><fa-icon [icon]="faSearch"></fa-icon></div>
+                <form [formGroup]="searchMenu" class="fullWidth">
+                    <input type="text" id="filter" class="form-control" (keyup)="onChange($event);" placeholder="Filtrar"
+                    formControlName="filter" />
+                </form>
+            </div>
+            <div class="whiteframe">
+                <ul>
+                    <li *ngFor="let item of menuListSearch; let last = last" class="{{ last? 'last' : ''}}">
+                        <div class="items">
+                            <div>{{ item.product }}</div>
+                            <div class="total">${{ item.price }} mxn</div>
+                        </div>
+                        <div class="eButtons">
+                            <button class="editButton" (click)="edit(item.id,item.product,item.price)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                            <button class="editButton" (click)="deleteMenu(item.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="foodItem" *ngIf="add">
+            <div class="centerV">
+                <h2>Ingresa los datos del nuevo extra.</h2>
+                <form [formGroup]="addMenu">
+                    <div class="form-group">
+                        <div class="md-form">
+                            <input type="text" id="product" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': addMenu.get('product').touched && addMenu.get('product').invalid }"
+                            formControlName="product" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form">
+                            <input type="text" id="price" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': addMenu.get('price').touched && addMenu.get('price').invalid }"
+                            formControlName="price" />
+                        </div>
+                    </div>
+                    <button class="ezeButton fullWidth" [disabled]="!addMenu.valid" (click)="addNewMenu()">Añadir</button>
+                </form>
+            </div>
+        </div>
+        <div class="foodItem" *ngIf="editM">
+            <div class="centerV">
+                <h3>Ingresa sólo los campos que quieres alterar.</h3>
+                <form [formGroup]="editMenu">
+                    <div class="form-group">
+                        <div class="md-form">
+                            <input type="text" id="productEdit" class="form-control" placeholder="Producto" [ngClass]="{ 'is-invalid': editMenu.get('productEdit').touched && editMenu.get('productEdit').invalid }"
+                            formControlName="productEdit" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form">
+                            <input type="text" id="priceEdit" class="form-control" placeholder="Precio" [ngClass]="{ 'is-invalid': editMenu.get('priceEdit').touched && editMenu.get('priceEdit').invalid }"
+                            formControlName="priceEdit" />
+                        </div>
+                    </div>
+                    <button class="ezeButton fullWidth" [disabled]="!editMenu.valid" (click)="updateMenu()">Añadir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,11 +10,11 @@ import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-especial',
-  templateUrl: './especial.component.html',
-  styleUrls: ['./especial.component.css']
+  selector: 'app-extra',
+  templateUrl: './extra.component.html',
+  styleUrls: ['./extra.component.css']
 })
-export class EspecialComponent implements OnInit {
+export class ExtraComponent implements OnInit {
 
   public userData: any;
   public menuList: any;
@@ -35,7 +35,7 @@ export class EspecialComponent implements OnInit {
     private _menuService: MenuService,
     private _spinnerService: NgxSpinnerService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._store.select('auth').subscribe(auth => {
       let authData = auth.authData ? auth.authData : {};
       this.userData = authData.user ? authData.user : {};
@@ -50,9 +50,6 @@ export class EspecialComponent implements OnInit {
       ]),
       price: new FormControl('',[
         Validators.required
-      ]),
-      type: new FormControl('',[
-        Validators.required
       ])
     });
     this.editMenu = new FormGroup({
@@ -61,59 +58,53 @@ export class EspecialComponent implements OnInit {
       ]),
       priceEdit: new FormControl('',[
         Validators.required
-      ]),
-      typeEdit: new FormControl('',[
-        Validators.required
       ])
     })
     this.showMenu();
   }
 
   showMenu() {
-    this._menuService.showSpecial()
+    this._menuService.showExtra()
       .then(response => {
-        this.menuList = response['specialList'];
+        this.menuList = response['extraList'];
         this.menuListSearch = this.menuList.slice()
       })
   }
   addNewMenu(){
     const menuData = {
       product: this.addMenu.value.product,
-      price: this.addMenu.value.price,
-      type: this.addMenu.value.type
+      price: this.addMenu.value.price
     }
-    this._menuService.addSpecial(menuData)
+    this._menuService.addExtra(menuData)
       .then(response => {
         this.addMenu.reset();
         this.showMenu();
       })
   }
-  edit(id: any,product: any,price: any,type: any) {
+  edit(id: any,product: any,price: any) {
     this.add = false;
     this.editM = true;
     this.parentId = id;
     this.editMenu.controls['productEdit'].setValue(product);
     this.editMenu.controls['priceEdit'].setValue(price);
-    this.editMenu.controls['typeEdit'].setValue(type);
   }
   async updateMenu() {
     const newMenuData = {
       product: this.editMenu.value.productEdit,
-      price: this.editMenu.value.priceEdit,
-      type: this.editMenu.value.typeEdit
+      price: this.editMenu.value.priceEdit
     }
     const disableMenu = {
       status: 'disabled'
     }
     this._spinnerService.show();
-    await this._menuService.updateSpecial(disableMenu,this.parentId)
+    await this._menuService.updateExtra(disableMenu,this.parentId)
       .then(response => {
         this.editMenu.reset();
         this.searchMenu.reset();
         this.add = true;
         this.editM = false;
       })
-    await this._menuService.addSpecial(newMenuData)
+    await this._menuService.addExtra(newMenuData)
       .then(response => {
         this.showMenu();
       })
@@ -123,7 +114,7 @@ export class EspecialComponent implements OnInit {
     const disableMenu = {
       status: 'disabled'
     }
-    this._menuService.updateSpecial(disableMenu,id)
+    this._menuService.updateExtra(disableMenu,id)
       .then(response => {
         this.showMenu();
       })
@@ -142,5 +133,4 @@ export class EspecialComponent implements OnInit {
       })
     }
   }
-
 }

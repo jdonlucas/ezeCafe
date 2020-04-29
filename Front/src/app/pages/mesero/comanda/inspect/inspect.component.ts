@@ -19,6 +19,7 @@ export class InspectComponent implements OnInit {
   public beveragesItem = [];
   public paymentForm: FormGroup;
   public menuItem = [];
+  public extraItem = [];
   public itemsList = [];
   public orderName: any;
   public employee: any;
@@ -48,6 +49,7 @@ export class InspectComponent implements OnInit {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
       this.menuItem = res[0].special;
+      this.extraItem = res[0].extra;
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){
         for(let j=0;j<this.foodItem[i].FoodOrder.quantity;j++){
@@ -65,6 +67,12 @@ export class InspectComponent implements OnInit {
         for(let j=0;j<this.menuItem[i].specialOrder.quantity;j++){
           this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price});
           this.totalAmount = this.totalAmount + parseFloat(this.menuItem[i].price);
+        }
+      }
+      for(let i=0;i<this.extraItem.length;i++){
+        for(let j=0;j<this.extraItem[i].extraOrder.quantity;j++){
+          this.itemsList.push({name: this.extraItem[i].product, price: this.extraItem[i].price});
+          this.totalAmount = this.totalAmount + parseFloat(this.extraItem[i].price);
         }
       }
     }).catch(err => { this.errors = err; })

@@ -3,6 +3,7 @@ var router = express.Router();
 const MenuBeveragesController = require('../server/controllers/MenuBeveragesController');
 const MenuFoodController = require('../server/controllers/MenuFoodController');
 const MenuSpecialController = require('../server/controllers/MenuSpecialController');
+const MenuExtraController = require('../server/controllers/MenuExtraController');
 
 //routes for food menu
 router.post('/newFood', MenuFoodController.create);
@@ -27,5 +28,11 @@ router.post('/updateSpecial', MenuSpecialController.update);
 router.get('/listAllSpecial', MenuSpecialController.index);
 router.post('/showSpecial', MenuSpecialController.show);
 router.post('/deleteSpecial', MenuSpecialController.delete);
+//routes for extra elements
+router.post('/newExtra', MenuExtraController.create);
+router.post('/updateExtra', MenuExtraController.update);
+router.get('/listAllExtra', MenuExtraController.index);
+router.post('/showExtra', MenuExtraController.show);
+router.post('/deleteExtra', MenuExtraController.delete);
 
 module.exports = router;
