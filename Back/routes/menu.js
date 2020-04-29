@@ -27,5 +27,11 @@ router.post('/updateSpecial', MenuSpecialController.update);
 router.get('/listAllSpecial', MenuSpecialController.index);
 router.post('/showSpecial', MenuSpecialController.show);
 router.post('/deleteSpecial', MenuSpecialController.delete);
+//routes for extra elements
+router.post('/newExtra', MenuExtraController.create);
+router.post('/updateExtra', MenuExtraController.update);
+router.get('/listAllExtra', MenuExtraController.index);
+router.post('/showExtra', MenuExtraController.show);
+router.post('/deleteExtra', MenuExtraController.delete);
 
 module.exports = router;
