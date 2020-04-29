@@ -1,5 +1,9 @@
 require('dotenv').config()
 module.exports = {
+  define: {
+    charset: 'latin1',
+    collate: 'latin1_swedish_ci'
+  },
   development: {
     use_env_variable:  "DEVELOPMENT_DATABASE_URL"
   },
