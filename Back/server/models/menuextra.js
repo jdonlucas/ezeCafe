@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       defaultValue: 'active'
+    },
+    type: {
+      type: DataTypes.STRING,
+      defaultValue: 'otros'
     }
   }, {});
   MenuExtra.associate = function(models) {
