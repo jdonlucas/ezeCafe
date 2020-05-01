@@ -38,6 +38,7 @@ export class SalesComponent implements OnInit {
   public errorCode: any;
   public cash = 0.0;
   public card = 0.0;
+  public plataforma = 0.0;
   public delete = false;
   public cancel = false;
   faPlus = faPlus;
@@ -70,6 +71,7 @@ export class SalesComponent implements OnInit {
     this.orders = [];
     this.card = 0.0;
     this.cash = 0.0;
+    this.plataforma = 0.0;
     this._orderService.showOrders(queryDate).then(response => {
         for(let i=0;i<response["orderHistory"].length;i++) {
           if(response["orderHistory"][i].status == 'cerrada'){
@@ -78,6 +80,8 @@ export class SalesComponent implements OnInit {
               this.card = this.card + response["orderHistory"][i].Sale.costo
             } else if (response["orderHistory"][i].Sale.pago == 'efectivo') {
               this.cash = this.cash + response["orderHistory"][i].Sale.costo
+            } else if (response["orderHistory"][i].Sale.pago == 'plataforma') {
+              this.plataforma = this.cash + response["orderHistory"][i].Sale.costo
             }
           }
           this.orders.sort((a,b) => 

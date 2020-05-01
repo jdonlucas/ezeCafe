@@ -12,18 +12,18 @@ export class BulletinService {
   ) {
   }
   showAd(noticeId: any) {
-    return this._http.post('http://localhost:3000/api/notice/showAd', {
+    return this._http.post('https://db.ezecafe.com.mx/api/notice/showAd', {
       noticeId: noticeId
     }).toPromise()
   }
 
   addNotice(noticeData: any) {
-    return this._http.post('http://localhost:3000/api/notice/newAd', {
+    return this._http.post('https://db.ezecafe.com.mx/api/notice/newAd', {
       noticeData: noticeData
     }).toPromise();
   }
   updateNotice(noticeData: any, noticeId: any) {
-      return this._http.post('http://localhost:3000/api/notice/updateAd',{
+      return this._http.post('https://db.ezecafe.com.mx/api/notice/updateAd',{
         noticeData: noticeData,
         params: {
           id: noticeId
@@ -31,11 +31,11 @@ export class BulletinService {
     }).toPromise()
   }
   showNotices() {
-      return this._http.get('http://localhost:3000/api/notice/listAllAd').toPromise()
+      return this._http.get('https://db.ezecafe.com.mx/api/notice/listAllAd').toPromise()
   }
 
   deleteNotice(noticeId: any) {
-      return this._http.post('http://localhost:3000/api/notice/deleteAd',{
+      return this._http.post('https://db.ezecafe.com.mx/api/notice/deleteAd',{
         noticeId: noticeId
     }).toPromise()
   }

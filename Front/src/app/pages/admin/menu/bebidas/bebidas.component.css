@@ -23,7 +23,9 @@
 .options button:hover {
     background-color: var(--black-clear-color);
 }
-
+#deleteGeneralbeverages {
+    height: 100%;
+}
 .authButton button {
     width: auto;
     margin: 15px;
@@ -70,7 +72,7 @@
 }
 .foodContainer {
     display: flex;
-    height: 600px;
+    height: calc(100vh - 170px);
 }
 .foodItem {
     width: 50%;
@@ -203,3 +205,24 @@
     margin: 10px;
     height: 100%;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #252C33; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(66, 66, 66); 
+    border-radius: 9px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(88, 88, 88); 
+  }

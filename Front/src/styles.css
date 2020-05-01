@@ -394,7 +394,7 @@ input:-webkit-autofill:active  {
 .whiteframe ul::-webkit-scrollbar
 {
 	width: 6px;
-	background-color: #252C33;
+    background-color: #252C33;
 }
 
 .whiteframe ul::-webkit-scrollbar-thumb

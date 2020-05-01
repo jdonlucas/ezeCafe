@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
   public orderData: any;
   public orderForm: FormGroup;
   public paymentForm: FormGroup;
+  public platformGain: FormGroup;
   public foodList: any;
   public beveragesList: any;
   public menuList: any;
@@ -43,6 +44,7 @@ export class MenuComponent implements OnInit {
   public alert = false;
   public pago = false;
   public calculator = false;
+  public plataforma = false;
   private order: any;
   public userData: any;
   faTrash = faTrashAlt;
@@ -69,6 +71,10 @@ export class MenuComponent implements OnInit {
       amount: new FormControl('',[]),
       change: new FormControl('',[])
     });
+    this.platformGain = new FormGroup ({
+      plat: new FormControl('',[]),
+      gain: new FormControl('',[])
+    })
     this.fetchBeverages();
     this.fetchFood();
     this.fetchMenu();
@@ -109,7 +115,7 @@ export class MenuComponent implements OnInit {
     this._menuService.showSpecial()
       .then(response => {
         this.menuList = response['specialList'].sort((a,b) => 
-          a.product.localeCompare(b.product)
+          b.type.localeCompare(a.type)
         );
       })
       .catch(err => this.errors = err);
@@ -420,6 +426,10 @@ export class MenuComponent implements OnInit {
     this.pago = false;
     this.calculator = true;
   }
+  platform() {
+    this.pago = false;
+    this.plataforma = true;
+  }
   public onChange(event: Event): void {
     this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
   }
@@ -444,6 +454,14 @@ export class MenuComponent implements OnInit {
         ingreso: ingreso,
         costo: this.totalAmount,
         OrderId: this.order.id
+      } 
+    } else if (payMethod == "platform") {
+      saleData = {
+        pago: 'plataforma',
+        ingreso: this.platformGain.value.gain,
+        costo: this.platformGain.value.gain,
+        OrderId: this.order.id,
+        plataforma: this.platformGain.value.plat
       } 
     }
     this._spinnerService.show();

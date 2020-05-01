@@ -16,8 +16,8 @@
                     <div class="gInfo">
                         <div class="status {{order.status}}" >{{order.status}}</div>
                         <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div class="date">{{order.createdAt | date:'shortTime'}}</div></div>
-                        <div class="total">${{order.subtotal}} mxn</div>
-                        <div class="payment {{ order.Sale.pago == 'efectivo' ? 'cash' : 'tarjeta'}}" *ngIf="order.Sale">{{order.Sale.pago}}</div>
+                        <div class="total">${{order.Sale.costo}} mxn</div>
+                        <div class="payment {{ order.Sale.pago == 'efectivo' ? 'cash' : order.Sale.pago == 'tarjeta' ? 'tarjeta' : 'plataforma' }}" *ngIf="order.Sale">{{order.Sale.pago}}</div>
                         <button *ngIf="order.status != 'cancelada'" (click)="print(order.id)" class="printButton"><fa-icon [icon]="faPrint"></fa-icon></button>
                     </div>
                     <div class="editButtons">

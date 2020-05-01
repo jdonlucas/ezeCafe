@@ -1,7 +1,7 @@
 <div class="container2">
     <div class="top">
         <h1 class="titleSection">Ventas</h1>
-        <h2>Efectivo: ${{ cash }} Tarjeta: ${{ card }}</h2>
+        <h2>Efectivo: ${{ cash }} Tarjeta: ${{ card }} Plataforma: ${{ plataforma }}</h2>
     </div>
     <div class="settings">
         <button class="eButton" (click)="printCorte()"><fa-icon [icon]="faPrint"></fa-icon> Corte</button>
@@ -19,8 +19,8 @@
                 <li *ngFor="let order of orders; let last = last" class="{{ last? 'last' : ''}}">
                     <div class="gInfo">
                         <div class="info"><div *ngIf="!order.name">{{order.id}}</div><div *ngIf="order.name">{{order.name}}</div><div class="date">{{order.createdAt | date:'shortTime'}}</div></div>
-                        <div class="total">${{order.subtotal}} mxn</div>
-                        <div class="payment {{ order.Sale.pago == 'efectivo' ? 'cash' : 'tarjeta'}}" *ngIf="order.Sale">{{order.Sale.pago}}</div>
+                        <div class="total">${{order.Sale.costo}} mxn</div>
+                        <div class="payment {{ order.Sale.pago == 'efectivo' ? 'cash' : order.Sale.pago == 'tarjeta' ? 'tarjeta' : 'plataforma' }}" *ngIf="order.Sale">{{order.Sale.pago}}</div>
                     </div>
                     <div class="editButtons">
                         <button *ngIf="order.status == 'pendiente'" [routerLink]="['/comandas/index/edit',order.id]"><fa-icon [icon]="faEdit"></fa-icon></button>

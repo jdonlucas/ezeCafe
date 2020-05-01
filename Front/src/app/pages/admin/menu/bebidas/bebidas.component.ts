@@ -174,6 +174,16 @@ export class BebidasComponent implements OnInit {
     const disableBeverage = {
       status: 'disabled'
     }
+    this._menuService.showSpecificBeverage(beverageId)
+      .then((response: any) => {
+        let beverages = response['menuBeveragesSpecific'];
+        for(let i=0;i<beverages.length;i++) {
+          this._menuService.updateBeverageSpecific(disableBeverage,beverages[i].id)
+        }
+      })
+      .catch(err => {
+        this.errors = err;
+      })
     this._menuService.updateBeverage(disableBeverage,beverageId)
       .then(response => {
         this.beverages();

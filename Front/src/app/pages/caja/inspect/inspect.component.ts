@@ -28,6 +28,7 @@ export class InspectComponent implements OnInit {
   public errors: any
   public show = false;
   public card = true;
+  public platform: string;
   faArrowLeft = faArrowLeft;
   faEdit = faEdit;
 
@@ -49,23 +50,22 @@ export class InspectComponent implements OnInit {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
       this.menuItem = res[0].special;
+      this.totalAmount = res[0].Sale.costo;
+      this.platform = res[0].Sale.plataforma;
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){
         for(let j=0;j<this.foodItem[i].FoodOrder.quantity;j++){
           this.itemsList.push({name: this.foodItem[i].product, price: this.foodItem[i].price});
-          this.totalAmount = this.totalAmount + parseFloat(this.foodItem[i].price);
         }
       }
       for(let i=0;i<this.beveragesItem.length;i++){
         for(let j=0;j<this.beveragesItem[i].BeveragesOrder.quantity;j++){
           this.itemsList.push({name: this.beveragesItem[i].beverage.product + ' ' + this.beveragesItem[i].type, price: this.beveragesItem[i].price,id:this.beveragesItem[i].id});
-          this.totalAmount = this.totalAmount + parseFloat(this.beveragesItem[i].price);
         }
       }
       for(let i=0;i<this.menuItem.length;i++){
         for(let j=0;j<this.menuItem[i].specialOrder.quantity;j++){
           this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price});
-          this.totalAmount = this.totalAmount + parseFloat(this.menuItem[i].price);
         }
       }
     }).catch(err => { this.errors = err; })

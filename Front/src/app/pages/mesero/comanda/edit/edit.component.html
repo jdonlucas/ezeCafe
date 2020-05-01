@@ -71,7 +71,30 @@
     </div>
     <div class="paddingContainer" *ngIf="pago">
         <h2>Selecciona la forma de pago</h2>
-        <button class="ezeButton" (click)="saveSale('card')">Pago con tarjeta</button><button class="ezeButton" (click)="cash();">Pago en efectivo</button>
+        <button class="ezeButton" (click)="saveSale('card')">Pago con tarjeta</button>
+        <button class="ezeButton" (click)="cash();">Pago en efectivo</button>
+        <button class="ezeButton" (click)="platform();">Plataforma de envío</button>
+    </div>
+    <div class="paddingContainer" *ngIf="plataforma">
+        <form [formGroup]="platformGain">
+            <h2>Ingresa la ganancia real</h2>
+            <p>(La ganancia que refleja la plataforma.)</p>
+            <div class="inputForms">
+                <div class="form-group">
+                    <select class="browser-default custom-select users" formControlName="plat">
+                        <option value="" disabled selected>Selecciona la plataforma</option>
+                        <option value="DiDi">DiDi</option>
+                        <option value="Sin delantal">Sin delantal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="md-form">
+                        <input type="text" id="gain" class="form-control" placeholder="Ganancia"  value="" formControlName="gain" />
+                    </div>
+                </div>
+            </div>
+            <button class="ezeButton" (click)="saveSale('platform')">Guardar y salir</button>
+        </form>
     </div>
     <div class="paddingContainer" *ngIf="calculator">
         <form [formGroup]="paymentForm">

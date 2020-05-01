@@ -24,6 +24,7 @@ export class EditComponent implements OnInit {
   public extraList: any;
   public orderForm: FormGroup;
   public paymentForm: FormGroup;
+  public platformGain: FormGroup;
   public foodItem = [];
   public beveragesItem = [];
   public menuItem = [];
@@ -42,6 +43,7 @@ export class EditComponent implements OnInit {
   public alert = false;
   public pago = false;
   public calculator = false;
+  public plataforma = false;
   public errors: any
   public userData: any;
   public totalAmount: number;
@@ -75,6 +77,10 @@ export class EditComponent implements OnInit {
     this.orderForm = new FormGroup ({
       name: new FormControl('',[])
     });
+    this.platformGain = new FormGroup ({
+      plat: new FormControl('',[]),
+      gain: new FormControl('',[])
+    })
     this._orderService.showOrder(this.orderId).then(res => {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
@@ -144,7 +150,7 @@ export class EditComponent implements OnInit {
     this._menuService.showSpecial()
       .then(response => {
         this.menuList = response['specialList'].sort((a,b) => 
-          a.product.localeCompare(b.product)
+          b.type.localeCompare(a.type)
         );
       })
       .catch(err => this.errors = err);
@@ -440,6 +446,10 @@ export class EditComponent implements OnInit {
     this.pago = false;
     this.calculator = true;
   }
+  platform() {
+    this.pago = false;
+    this.plataforma = true;
+  }
   public onChange(event: Event): void {
     this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
   }
@@ -464,6 +474,14 @@ export class EditComponent implements OnInit {
         ingreso: ingreso,
         costo: this.totalAmount,
         OrderId: this.orderId
+      } 
+    } else if (payMethod == "platform") {
+      saleData = {
+        pago: 'plataforma',
+        ingreso: this.platformGain.value.gain,
+        costo: this.platformGain.value.gain,
+        OrderId: this.orderId,
+        plataforma: this.platformGain.value.plat
       } 
     }
     this._spinnerService.show();

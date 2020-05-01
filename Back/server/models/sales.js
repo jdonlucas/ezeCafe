@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     OrderId: {
       type: DataTypes.UUID,
       unique: true
+    },
+    plataforma: {
+      type: DataTypes.STRING,
+      defaultValue: ''
     }
   }, {});
   Sales.associate = function(models) {

@@ -10,7 +10,8 @@
             </ul>
             <div class="total">
                 <div class="totalContent">
-                    <p>Total:</p>
+                    <p *ngIf="platform == ''">Total:</p>
+                    <p *ngIf="platform != ''">Total ({{platform}}):</p>
                     <p>${{totalAmount}} mxn</p>
                 </div>
             </div>

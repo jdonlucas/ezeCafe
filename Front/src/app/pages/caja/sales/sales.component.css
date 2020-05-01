@@ -140,6 +140,9 @@
 .tarjeta {
     background: #fc61b6;
 }
+.plataforma {
+    background: #fc6661;
+}
 .top {
     display: flex;
     justify-content: space-between;

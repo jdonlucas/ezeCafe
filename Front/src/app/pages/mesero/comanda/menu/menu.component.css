@@ -207,3 +207,39 @@
 .promocion {
     background: rgb(176, 7, 243);
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #252C33; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(66, 66, 66); 
+    border-radius: 9px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(88, 88, 88); 
+  }
+
+.custom-select {
+    padding: 0.375rem 1.75rem 0.375rem 0rem;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+}
+.custom-select:focus {
+    outline: none;
+    box-shadow: none;
+}
+.users {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
