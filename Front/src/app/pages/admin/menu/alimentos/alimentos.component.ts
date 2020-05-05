@@ -93,21 +93,15 @@ export class AlimentosComponent implements OnInit {
       product: this.editFood.value.productEdit,
       price: this.editFood.value.priceEdit
     }
-    const disableFood = {
-      status: 'disabled'
-    }
     this._spinnerService.show();
-    await this._menuService.updateFood(disableFood,this.parentId)
+    await this._menuService.updateFood(newFoodData,this.parentId)
       .then(response => {
         this.editFood.reset();
         this.searchFood.reset();
         this.add = true;
         this.editF = false;
+        this.showFood();
       })
-    await this._menuService.addFood(newFoodData)
-    .then(response => {
-      this.showFood();
-    })
     this._spinnerService.hide();
   }
   deleteFood(id: any) {

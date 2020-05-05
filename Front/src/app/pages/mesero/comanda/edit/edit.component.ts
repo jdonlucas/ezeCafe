@@ -160,7 +160,7 @@ export class EditComponent implements OnInit {
     this._menuService.showExtra()
       .then(response => {
         this.extraList = response['extraList'].sort((a,b) => 
-          a.product.localeCompare(b.product)
+          a.type.localeCompare(b.type)
         );
       })
       .catch(err => this.errors = err);

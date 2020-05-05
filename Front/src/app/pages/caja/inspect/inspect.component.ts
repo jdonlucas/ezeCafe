@@ -21,6 +21,7 @@ export class InspectComponent implements OnInit {
   public paymentForm: FormGroup;
   public menuItem = [];
   public itemsList = [];
+  public extraItem = [];
   public orderName: any;
   public employee: any;
   public payment: any;
@@ -50,6 +51,7 @@ export class InspectComponent implements OnInit {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
       this.menuItem = res[0].special;
+      this.extraItem = res[0].extra;
       this.totalAmount = res[0].Sale.costo;
       this.platform = res[0].Sale.plataforma;
       this.orderName = res[0].name ? res[0].name : res[0].id;
@@ -66,6 +68,11 @@ export class InspectComponent implements OnInit {
       for(let i=0;i<this.menuItem.length;i++){
         for(let j=0;j<this.menuItem[i].specialOrder.quantity;j++){
           this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price});
+        }
+      }
+      for(let i=0;i<this.extraItem.length;i++){
+        for(let j=0;j<this.extraItem[i].extraOrder.quantity;j++){
+          this.itemsList.push({name: this.extraItem[i].product, price: this.extraItem[i].price});
         }
       }
     }).catch(err => { this.errors = err; })

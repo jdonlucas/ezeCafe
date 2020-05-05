@@ -102,19 +102,13 @@ export class EspecialComponent implements OnInit {
       price: this.editMenu.value.priceEdit,
       type: this.editMenu.value.typeEdit
     }
-    const disableMenu = {
-      status: 'disabled'
-    }
     this._spinnerService.show();
-    await this._menuService.updateSpecial(disableMenu,this.parentId)
+    await this._menuService.updateSpecial(newMenuData,this.parentId)
       .then(response => {
         this.editMenu.reset();
         this.searchMenu.reset();
         this.add = true;
         this.editM = false;
-      })
-    await this._menuService.addSpecial(newMenuData)
-      .then(response => {
         this.showMenu();
       })
     this._spinnerService.hide();

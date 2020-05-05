@@ -42,7 +42,7 @@
                     <button *ngFor="let item of menuList" type="button" class="butn {{item.type}}" (click)="addMenu(item)">{{item.product}} ({{item.type}})</button>
                 </div>
                 <div id="extra" class="button-matrix" *ngIf="showExtra">
-                    <button *ngFor="let extra of extraList" type="button" class="butn" (click)="addExtra(extra)">{{extra.product}}</button>
+                    <button *ngFor="let extra of extraList" type="button" class="butn {{extra.type}}" (click)="addExtra(extra)">{{extra.product}}</button>
                 </div>
                 <div id="controlButtons">
                     <button class="ezeButton" (click)="changeName()">Regresar</button>

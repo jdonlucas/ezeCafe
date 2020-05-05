@@ -50,6 +50,9 @@ export class ExtraComponent implements OnInit {
       ]),
       price: new FormControl('',[
         Validators.required
+      ]),
+      type: new FormControl('',[
+        Validators.required
       ])
     });
     this.editMenu = new FormGroup({
@@ -57,6 +60,9 @@ export class ExtraComponent implements OnInit {
         Validators.required
       ]),
       priceEdit: new FormControl('',[
+        Validators.required
+      ]),
+      typeEdit: new FormControl('',[
         Validators.required
       ])
     })
@@ -73,7 +79,8 @@ export class ExtraComponent implements OnInit {
   addNewMenu(){
     const menuData = {
       product: this.addMenu.value.product,
-      price: this.addMenu.value.price
+      price: this.addMenu.value.price,
+      type: this.addMenu.value.type
     }
     this._menuService.addExtra(menuData)
       .then(response => {
@@ -81,31 +88,27 @@ export class ExtraComponent implements OnInit {
         this.showMenu();
       })
   }
-  edit(id: any,product: any,price: any) {
+  edit(id: any,product: any,price: any,type: any) {
     this.add = false;
     this.editM = true;
     this.parentId = id;
     this.editMenu.controls['productEdit'].setValue(product);
     this.editMenu.controls['priceEdit'].setValue(price);
+    this.editMenu.controls['typeEdit'].setValue(type);
   }
   async updateMenu() {
     const newMenuData = {
       product: this.editMenu.value.productEdit,
-      price: this.editMenu.value.priceEdit
-    }
-    const disableMenu = {
-      status: 'disabled'
+      price: this.editMenu.value.priceEdit,
+      type: this.editMenu.value.typeEdit
     }
     this._spinnerService.show();
-    await this._menuService.updateExtra(disableMenu,this.parentId)
+    await this._menuService.updateExtra(newMenuData,this.parentId)
       .then(response => {
         this.editMenu.reset();
         this.searchMenu.reset();
         this.add = true;
         this.editM = false;
-      })
-    await this._menuService.addExtra(newMenuData)
-      .then(response => {
         this.showMenu();
       })
     this._spinnerService.hide();

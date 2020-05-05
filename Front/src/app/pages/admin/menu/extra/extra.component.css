@@ -70,7 +70,7 @@
 }
 .foodContainer {
     display: flex;
-    height: 600px;
+    height: calc(100vh - 170px);
 }
 .foodItem {
     width: 50%;
@@ -167,9 +167,13 @@
     color: #fff;
     height: fit-content;
 }
-.employee {
-    background: rgb(243, 7, 145);
+.drink {
+    background: #e5446d;
 }
-.deal {
-    background: rgb(176, 7, 243);
+.food {
+    background: #f8f4e3;
+    color: rgb(94, 94, 94);
+}
+.others {
+    background: #706c61;
 }

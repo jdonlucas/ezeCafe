@@ -82,7 +82,8 @@
   margin-bottom: 4px;
   padding: 15px;
   width: 32.6%;
-  height: 15vh;
+  height: fit-content;
+  min-height: 15vh;
   background: #1b232a;
   color: white;
   font-size: 20px;
@@ -242,4 +243,15 @@
 .users {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.bebidas {
+    background: #e5446d;
+}
+.alimentos {
+    background: #f8f4e3;
+    color: rgb(94, 94, 94);
+}
+.otros {
+    background: #706c61;
 }

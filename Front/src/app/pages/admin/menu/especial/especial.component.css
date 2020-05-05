@@ -70,7 +70,7 @@
 }
 .foodContainer {
     display: flex;
-    height: 600px;
+    height: calc(100vh - 170px);
 }
 .foodItem {
     width: 50%;

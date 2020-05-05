@@ -233,24 +233,15 @@ export class BebidasComponent implements OnInit {
       price: this.updateSpecific.value.priceUpdate,
       beverageId: this.beverageParentId
     }
-    const disableSpecific = {
-      status: 'disabled'
-    }
     this._spinnerService.show();
-    await this._menuService.updateBeverageSpecific(disableSpecific,this.editId)
+    await this._menuService.updateBeverageSpecific(newInfo,this.editId)
       .then(response => {
         this.updateSpecificBeverages = false;
+        this.showBeveragesSpecific(this.beverageParentId);
       })
       .catch(err => {
         this.errors = err;
       })
-    await this._menuService.newSpecificBeverage(newInfo)
-        .then(response => {
-          this.showBeveragesSpecific(this.beverageParentId);
-        })
-        .catch(err => {
-          this.errors = err;
-        })
         this._spinnerService.hide();
   }
   createNewBeverageSpecific() {

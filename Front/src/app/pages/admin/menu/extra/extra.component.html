@@ -18,9 +18,10 @@
                         <div class="items">
                             <div>{{ item.product }}</div>
                             <div class="total">${{ item.price }} mxn</div>
+                            <div class="type {{item.type == 'bebidas' ? 'drink': item.type == 'alimentos' ? 'food' : 'others' }}">{{ item.type }}</div>
                         </div>
                         <div class="eButtons">
-                            <button class="editButton" (click)="edit(item.id,item.product,item.price)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                            <button class="editButton" (click)="edit(item.id,item.product,item.price,item.type)"><fa-icon [icon]="faEdit"></fa-icon></button>
                             <button class="editButton" (click)="deleteMenu(item.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
                         </div>
                     </li>
@@ -43,6 +44,14 @@
                             formControlName="price" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <select class="browser-default custom-select users" [ngClass]="{ 'is-invalid': addMenu.get('type').touched && addMenu.get('type').invalid }" formControlName="type">
+                            <option value="" disabled selected>Tipo de extra</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="otros">Otros</option>
+                        </select>
+                    </div>
                     <button class="ezeButton fullWidth" [disabled]="!addMenu.valid" (click)="addNewMenu()">Añadir</button>
                 </form>
             </div>
@@ -63,7 +72,15 @@
                             formControlName="priceEdit" />
                         </div>
                     </div>
-                    <button class="ezeButton fullWidth" [disabled]="!editMenu.valid" (click)="updateMenu()">Añadir</button>
+                    <div class="form-group">
+                        <select class="browser-default custom-select users" [ngClass]="{ 'is-invalid': editMenu.get('typeEdit').touched && editMenu.get('typeEdit').invalid }" formControlName="typeEdit">
+                            <option value="" disabled selected>Tipo de extra</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="otros">Otros</option>
+                        </select>
+                    </div>
+                    <button class="ezeButton fullWidth" [disabled]="!editMenu.valid" (click)="updateMenu()">Actualizar</button>
                 </form>
             </div>
         </div>
