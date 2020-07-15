@@ -10,5 +10,6 @@ router.post('/daySales', StatisticsController.showDay);
 router.post('/yearSales', StatisticsController.showYear);
 router.post('/getFoods', StatisticsController.getFood);
 router.post('/getDrinks', StatisticsController.getDrink);
+router.post('/stickersSales', StatisticsController.stickersSales);
 
 module.exports = router;

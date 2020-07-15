@@ -1,0 +1,68 @@
+<div class="selectCombo">
+    <h3> Cambiar fecha</h3>
+    <form [formGroup]="dateForm">
+        <div class="selects">
+            <div class="showMonth form-group">
+                <select class="browser-default custom-select" id="year" formControlName="year" (change)="onChangeDate()">
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="form-group showMonth">
+                <select class="browser-default custom-select" id="month" formControlName="month" (change)="onChangeDate()">
+                    <option value="01-01">Enero</option>
+                    <option value="01-02">Febrero</option>
+                    <option value="01-03">Marzo</option>
+                    <option value="01-04">Abril</option>
+                    <option value="01-05">Mayo</option>
+                    <option value="01-06">Junio</option>
+                    <option value="01-07">Julio</option>
+                    <option value="01-08">Agosto</option>
+                    <option value="01-09">Septiembre</option>
+                    <option value="01-10">Octubre</option>
+                    <option value="01-11">Noviembre</option>
+                    <option value="01-12">Diciembre</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="stickersContainer">
+    <div class="card">
+        <div class="title">
+            <h2>Stickers Sebas</h2>
+        </div>
+        <div class="content">
+            <div class="total section">
+                <div class="totalLabel">
+                    Vendidos:
+                </div>
+                <div class="totalAmount">
+                    {{sebas}}
+                </div>
+            </div>
+            <div class="total amount">
+                <div class="totalLabel">
+                    Total:
+                </div>
+                <div class="totalAmount">
+                    ${{sebasAmount}} mxn
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="title">
+            <h2>Stickers Karla</h2>
+        </div>
+        <div class="content">
+            <div class="total">
+                <div class="totalLabel">
+                    Vendidos:
+                </div>
+                <div class="totalAmount">
+                    {{karla}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+ .card {
+    background: rgb(18, 22, 25);
+    width: 40%;
+    margin: auto;
+    transform: translateY(-50%);
+ }
+ .stickersContainer {
+    position: relative;
+    display: flex;
+    text-align: center;
+    height: calc(100vh - 76px);
+ }
+ .title {
+    margin-top: 10px;
+    border-bottom: 10px groove gray;
+ }
+ .total {
+     display: flex;
+     justify-content: space-between;
+ }
+ .content {
+    padding: 10px;
+    font-size: 23px;
+ }
+ .section  {
+    border-bottom: 1px dashed gray;
+    padding-bottom: 5px;
+ }
+ .amount {
+     padding-top: 5px;
+ }
+ .selectCombo {
+    position: absolute;
+    z-index: 20;
+    right: 30px;
+ }
+.selects {
+    text-align: center;
+    display: flex;
+}
+.showMonth {
+    width: 40%;
+    margin: auto;
+    margin-bottom: 20px;
+}

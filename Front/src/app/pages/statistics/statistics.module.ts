@@ -11,9 +11,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 
 import { ChartsModule } from 'ng2-charts';
+import { StickersComponent } from './stickers/stickers.component';
 
 @NgModule({
-  declarations: [ChartsComponent],
+  declarations: [ChartsComponent, StickersComponent],
   imports: [
     CommonModule,
     StatisticsRoutingModule,

@@ -10,6 +10,7 @@ import { faInbox } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faStickyNote } from '@fortawesome/free-regular-svg-icons';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -37,6 +38,7 @@ export class MenuComponent implements OnInit {
   faPaperPlane = faPaperPlane;
   faCog = faCog;
   faChartLine = faChartLine;
+  faStickyNote = faStickyNote;
 
   public userData: any;
 
