@@ -385,6 +385,65 @@ var StatisticsController = {
                     .catch(err => res.status(400).send(err))
             }
         })
+    },
+    stickersSales(req,res) {
+        Extra.findAll({
+            where: {
+                type: 'otros',
+                [Op.or]: [
+                    {
+                        product: {
+                            [Op.like]: '%Stikers%'
+                        }
+                    },
+                    {
+                        product: {
+                            [Op.like]: '%Separadores%'
+                        }
+                    }
+                ]
+            },
+            attributes: ['id','product','price'],
+        })
+        .then(response => { 
+            let stickers = response;
+            let date = moment(req.body.date, 'DD-MM-YYYY');
+            date.startOf('month').format('DD-MM-YYYY');
+            return ExtraOrder.findAll({
+                where: {
+                    createdAt: {
+                        [Op.gt]: date.toDate(),
+                        [Op.lt]: date.add(1,'M').toDate()
+                    }
+                },
+                order: [ ['createdAt', 'ASC'] ]
+            })
+            .then(salesHistory => {
+                let karlaSales = 0;
+                let sebasSales = 0;
+                let sebasAmount = 0.0;
+                let stickersSale = [];
+                let item;
+                for(let i=0;i<stickers.length;i++) {
+                    if (stickers[i].product.includes('donlucasart')) {
+                        item = salesHistory.filter(x => {
+                            return x.extraId == stickers[i].id
+                        })
+                        karlaSales = item.length;
+                    } else if (stickers[i].product.toLowerCase().includes('sebas')) {
+                        item = salesHistory.filter(x => {
+                            return x.extraId == stickers[i].id
+                        })
+                        let price = item.length * stickers[i].price;
+                        sebasAmount += price;
+                        sebasSales += item.length;
+                    }
+                }
+                stickersSale.push({'karla': karlaSales, 'sebas': sebasSales, 'sebasAmount': sebasAmount})
+                res.status(200).json(stickersSale)             
+            })
+            .catch(err => res.status(400).send(err))
+        })
     }
 
 };
