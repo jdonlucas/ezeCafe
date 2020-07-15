@@ -13,44 +13,44 @@ export class StatisticsService {
   }
 
   getMonth(date: any) {
-      return this._http.post('http://localhost:3000/api/statistics/monthSales', { 
+      return this._http.post('https://db.ezecafe.com.mx/api/statistics/monthSales', { 
         date: date
       }).toPromise();
   }
   getWeek(start, end) {
-      return this._http.post('http://localhost:3000/api/statistics/weekSales', { 
+      return this._http.post('https://db.ezecafe.com.mx/api/statistics/weekSales', { 
         start: start,
         end: end
       }).toPromise();
   }
   years() {
-    return this._http.get('http://localhost:3000/api/statistics/getYears').toPromise();
+    return this._http.get('https://db.ezecafe.com.mx/api/statistics/getYears').toPromise();
   }
   getDay(day: any) {
-    return this._http.post('http://localhost:3000/api/statistics/daySales', {
+    return this._http.post('https://db.ezecafe.com.mx/api/statistics/daySales', {
       date: day
     }).toPromise()
   }
   getYear(year: any) {
-    return this._http.post('http://localhost:3000/api/statistics/yearSales', {
+    return this._http.post('https://db.ezecafe.com.mx/api/statistics/yearSales', {
       date: year
     }).toPromise()
   }
   getFood(option: any, date: any) {
-    return this._http.post('http://localhost:3000/api/statistics/getFoods', {
+    return this._http.post('https://db.ezecafe.com.mx/api/statistics/getFoods', {
       date:  date,
       option: option
     }).toPromise()
   }
   getDrink(option: any, date: any) {
-    return this._http.post('http://localhost:3000/api/statistics/getDrinks', {
+    return this._http.post('https://db.ezecafe.com.mx/api/statistics/getDrinks', {
       date:  date,
       option: option
     }).toPromise()
   }
   // Venta de stickers
   getStickersSale(date: any) {
-    return this._http.post('http://localhost:3000/api/statistics/stickersSales', {
+    return this._http.post('https://db.ezecafe.com.mx/api/statistics/stickersSales', {
       date:  date,
     }).toPromise()
   }
