@@ -8,6 +8,8 @@ const Drink = require('../models').MenuBeverages;
 const DrinkSpecific = require('../models').MenuBeveragesSpecific;
 const FoodOrder = require('../models').FoodOrder;
 const DrinkOrder = require('../models').BeveragesOrder;
+const Extra = require('../models').MenuExtra;
+const ExtraOrder = require('../models').extraOrder;
 
 var StatisticsController = {
     showMonth(req,res) {
