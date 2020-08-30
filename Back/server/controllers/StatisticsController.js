@@ -422,15 +422,18 @@ var StatisticsController = {
             })
             .then(salesHistory => {
                 let karlaSales = 0;
+                let karlaAmount = 0.0;
                 let sebasSales = 0;
                 let sebasAmount = 0.0;
                 let stickersSale = [];
                 let item;
                 for(let i=0;i<stickers.length;i++) {
-                    if (stickers[i].product.includes('donlucasart')) {
+                    if (stickers[i].product.includes('donlucasart') || stickers[i].product.includes('lasharly')) {
                         item = salesHistory.filter(x => {
                             return x.extraId == stickers[i].id
                         })
+                        let price = item.length * stickers[i].price;
+                        karlaAmount += price;
                         karlaSales = item.length;
                     } else if (stickers[i].product.toLowerCase().includes('sebas')) {
                         item = salesHistory.filter(x => {
@@ -441,7 +444,7 @@ var StatisticsController = {
                         sebasSales += item.length;
                     }
                 }
-                stickersSale.push({'karla': karlaSales, 'sebas': sebasSales, 'sebasAmount': sebasAmount})
+                stickersSale.push({'karla': karlaSales, 'karlaAmount': karlaAmount, 'sebas': sebasSales, 'sebasAmount': sebasAmount})
                 res.status(200).json(stickersSale)             
             })
             .catch(err => res.status(400).send(err))
