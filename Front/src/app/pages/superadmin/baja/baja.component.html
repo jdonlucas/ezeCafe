@@ -13,7 +13,7 @@
                     <th class="text-center">Editar/Eliminar</th>
                   </tr>
                 </thead>
-                <tr *ngFor="let user of users | slice: -10;">
+                <tr *ngFor="let user of users">
                     <td *ngIf="userData.id != user.id && user.Active" align="center">{{ user.Name }}</td>
                     <td *ngIf="userData.id != user.id && user.Active" align="center" id="quantity">{{ user.Lastname }}</td>
                     <td *ngIf="userData.id != user.id && user.Active" align="center">{{ user.Username }}</td>
