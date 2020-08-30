@@ -7,7 +7,7 @@
     "dev": "sequelize db:migrate & nodemon ./bin/www"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
