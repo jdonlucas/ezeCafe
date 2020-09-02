@@ -18,7 +18,7 @@ export class AuthService {
   constructor(
       private _router: Router,
       private _http: HttpClient,
-      private _store: Store<AppState>
+      private _store: Store<AppState>,
   ) {
       this.setAuthData(JSON.parse(localStorage.getItem('authData')));
       this.initializeAuthSuscriber();
@@ -58,6 +58,7 @@ export class AuthService {
       userData.token = token;
       if (userData.user) {
         this.setAuthData(userData); // redirige al usuario a su home segun su rol
+        localStorage.setItem('dateData', this.formatDate());
         if(userData.user.Role.name == "SuperAdmin") {
           this._router.navigate(['/superadmin']);
         } else if (userData.user.Role.name == "Admin") {
@@ -164,4 +165,17 @@ export class AuthService {
     }).toPromise();
   }
     
+  formatDate() {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
 }

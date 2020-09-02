@@ -29,7 +29,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 })
 export class IndexComponent implements OnInit {
   
-  date = new FormControl(new Date());
+  date = new FormControl(new Date(localStorage.getItem('dateData')));
   startDate = new Date();
   public userData: any;
   public newOrder: any;
@@ -65,6 +65,8 @@ export class IndexComponent implements OnInit {
 
   fetchOrders() {
     let queryDate = this.datePipe.transform(this.date.value,'dd-MM-yyyy');
+    let toSetDate = this.datePipe.transform(this.date.value,'MM-dd-yyyy');
+    localStorage.setItem('dateData', toSetDate);
     this.orders = [];
     this._orderService.showOrders(queryDate).then(response => {
         for(let i=0;i<response["orderHistory"].length;i++) {
