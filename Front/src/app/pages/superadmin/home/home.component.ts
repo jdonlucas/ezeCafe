@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
       }
     });
     this.fetchNotice();
+    localStorage.setItem('dateData', this.formatDate());
   }
 
   fetchNotice() {
@@ -64,6 +65,20 @@ export class HomeComponent implements OnInit {
           a.expiration.localeCompare(b.expiration)
         );
       })
+  }
+  
+  formatDate() {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [month, day, year].join('-');
   }
 
 }
