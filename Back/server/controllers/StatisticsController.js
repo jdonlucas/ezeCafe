@@ -434,7 +434,7 @@ var StatisticsController = {
                         })
                         let price = item.length * stickers[i].price;
                         karlaAmount += price;
-                        karlaSales = item.length;
+                        karlaSales += item.length;
                     } else if (stickers[i].product.toLowerCase().includes('sebas')) {
                         item = salesHistory.filter(x => {
                             return x.extraId == stickers[i].id
