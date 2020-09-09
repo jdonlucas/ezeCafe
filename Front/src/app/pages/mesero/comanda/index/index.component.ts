@@ -99,12 +99,12 @@ export class IndexComponent implements OnInit {
     }
   }
   confirmDelete(){
-    this._salesService.deleteSale(this.orderId);
     this._orderService.deleteOrder(this.orderId).then(res => {
       this.hide();
       this.fetchOrders();
       this.orderId = '';
     }).catch(err => {});
+    this._salesService.deleteSale(this.orderId);
   }
   confirmCancel(){
     let orderData = {
@@ -116,5 +116,6 @@ export class IndexComponent implements OnInit {
         this.fetchOrders();
         this.orderId = '';
       }).catch(err => {});
+    this._salesService.deleteSale(this.orderId).then().catch();
   }
 }

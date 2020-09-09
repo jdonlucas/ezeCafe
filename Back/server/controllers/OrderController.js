@@ -85,30 +85,39 @@ var OrderController = {
             res.json({ newOrder: orderCreated });
         }).catch(err => res.status(500).send(err));
     },
-    createFood(req,res) {
-        let foodData = req.body.foodData;
-        FoodOrder.create(foodData).then(foodOrderCreated => {
-            res.json({newFoodOrder: foodOrderCreated});
-        }).catch(err => res.status(500).send(err));
+    //-------------------------------------------------
+    saveItems(req, res) {
+        let items = req.body.items;
+        if(items.beverages.length > 0) {
+            items.beverages.forEach(b =>  {
+                BeverageOrder.create(b).then(beverageCreated => {
+                    res.json({ newBeverage: beverageCreated })
+                })
+            })
+        }
+        if(items.food.length > 0) {
+            items.food.forEach(f => {
+                FoodOrder.create(f).then(foodCreated => {
+                    res.json({ newFood: foodCreated })
+                })
+            })
+        }
+        if(items.special.length > 0) {
+            items.special.forEach(s => {
+                specialOrder.create(s).then(specialCreated => {
+                    res.json({ newSpecial: specialCreated })
+                })
+            })
+        }
+        if(items.extra.length > 0) {
+            items.extra.forEach(e => {
+                extraOrder.create(e).then(extraCreated => {
+                    res.json({ newExtra: extraCreated })
+                })
+            })
+        }
     },
-    createBeverage(req,res) {
-        let beverageData = req.body.beverageData;
-        BeverageOrder.create(beverageData).then(beverageCrated => {
-            res.json({newBeverageOrder: beverageCrated});
-        }).catch(err => res.status(500).send(err));
-    },
-    createSpecial(req,res) {
-        let specialData = req.body.specialData;
-        specialOrder.create(specialData).then(specialOrderCreated => {
-            res.json({newSpecialOrder: specialOrderCreated});
-        }).catch(err => res.status(500).send(err));
-    },
-    createExtra(req,res) {
-        let extraData = req.body.extraData;
-        extraOrder.create(extraData).then(extraOrderCreated => {
-            res.json({newExtraOrder: extraOrderCreated});
-        }).catch(err => res.status(500).send(err));
-    },
+    //-------------------------------------------------
     updateFoodOrder(req,res) {
         let orderFoodData = req.body.foodData;
         let query = { where: { id: req.body.params.id }};

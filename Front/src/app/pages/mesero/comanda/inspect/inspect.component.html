@@ -19,8 +19,8 @@
     </div>
 </div>
 <div class="whiteframe infoVenta">
-    <p class="cobro">Cobró {{employee}}</p>
-    <div class="payment"><p>Forma de pago: {{ payment }}</p><button class="editButton" (click)="showEdit();"><fa-icon [icon]="faEdit" ></fa-icon></button></div>
+    <p class="{{payment ? 'cobro' : 'noPayment'}}">Cobró {{employee}}</p>
+    <div class="payment" *ngIf="payment"><p>Forma de pago: {{ payment }}</p><button class="editButton" (click)="showEdit();"><fa-icon [icon]="faEdit" ></fa-icon></button></div>
 </div>
 <div class="alertContainer" *ngIf="show">
     <div class="paddingContainer" *ngIf="card">

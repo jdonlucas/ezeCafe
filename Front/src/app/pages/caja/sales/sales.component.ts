@@ -83,7 +83,7 @@ export class SalesComponent implements OnInit {
             } else if (response["orderHistory"][i].Sale.pago == 'efectivo') {
               this.cash = this.cash + response["orderHistory"][i].Sale.costo
             } else if (response["orderHistory"][i].Sale.pago == 'plataforma') {
-              this.plataforma = this.cash + response["orderHistory"][i].Sale.costo
+              this.plataforma = this.plataforma + response["orderHistory"][i].Sale.costo
             }
           }
           this.orders.sort((a,b) => 

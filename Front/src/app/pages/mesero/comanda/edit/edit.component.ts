@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { HostListener, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from "@angular/forms";
 import { Store } from '@ngrx/store';
@@ -116,6 +116,11 @@ export class EditComponent implements OnInit {
       }
       (<HTMLInputElement>document.getElementById('name')).placeholder = res[0].name ? res[0].name : res[0].id;
     }).catch(err => { this.errors = err; })
+  }
+
+  @HostListener("window:beforeunload", ["$event"]) 
+  unloadHandler(event: Event) {
+    event.returnValue = false;
   }
 
   fetchBeverages() {
@@ -241,139 +246,129 @@ export class EditComponent implements OnInit {
     
   }
   addFood(food) {
-    let find = false;
-    let quantity: any;
-    let order: any;
-    this.foodItem.forEach(x => {
-      if(x.id == food.id) {
-        find = true;
-        quantity = parseFloat(x.FoodOrder.quantity) + 1;
-        x.FoodOrder.quantity = quantity;
-        order = x.FoodOrder.id;
-      }
-    })
-    if(!find) {
-      let foodData = {
-        foodId: food.id,
-        orderId: this.orderId,
-        quantity: 1
-      };
-      this._orderService.newFoodOrder(foodData).then((res) => {
-        food.FoodOrder = res['newFoodOrder'];
-        this.foodItem.push(food)
-      });
-    } else {
-      let foodData = { quantity: quantity };
-      this._orderService.updateFoodOrder(order,foodData);
-    }
-    this.itemsList.push({name: food.product,price: food.price, id: food.id,type: 'food'});
-    this.totalAmount = this.totalAmount + food.price;
-    this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
-  }
-  addMenu(special) {
-    let find = false;
-    let quantity: any;
-    let order: any;
-    this.menuItem.forEach(x => {
-      if(x.id == special.id) {
-        find = true;
-        quantity = parseFloat(x.specialOrder.quantity) + 1;
-        x.specialOrder.quantity = quantity;
-        order = x.specialOrder.id;
-
-      }
-    })
-    if(!find){
-      let specialData = {
-        specialId: special.id,
-        orderId: this.orderId,
-        quantity: 1
-      };
-      this._orderService.newSpecialOrder(specialData).then((res) => {
-        special.specialOrder = res['newSpecialOrder'];
-        this.menuItem.push(special);
-      });
-      this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price});
-      this.totalAmount = this.totalAmount + special.price;
+    let foodElement = this.foodItem.find( item => item.id == food.id )
+    if(typeof foodElement != 'undefined') {
+      let index = this.foodItem.indexOf(foodElement);
+      this.foodItem[index].FoodOrder.quantity = parseFloat(this.foodItem[index].FoodOrder.quantity) + 1;
+      let foodData = { quantity: this.foodItem[index].FoodOrder.quantity };
+      this._orderService.updateFoodOrder(this.foodItem[index].FoodOrder.id,foodData);
+      this.itemsList.push({name: food.product,price: food.price, id: food.id,type: 'food'});
+      this.totalAmount = this.totalAmount + food.price;
       this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
     } else {
-      let specialData = { quantity: quantity };
-      this._orderService.updateSpecialOrder(order,specialData);
+      let orderItems = {
+        beverages: [],
+        food: [{
+          foodId: food.id,
+          orderId: this.orderId,
+          quantity: 1
+        }],
+        special: [],
+        extra: []
+      }
+      this._orderService.saveOrderItems(orderItems).then((res) => {
+        food.FoodOrder = res['newFood'];
+        this.foodItem.push(food)
+        this.itemsList.push({name: food.product,price: food.price, id: food.id,type: 'food'});
+        this.totalAmount = this.totalAmount + food.price;
+        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+      });
+    }
+  }
+  addMenu(special) {
+    let specialElement = this.menuItem.find( x => x.id == special.id )
+    if(typeof specialElement != 'undefined'){
+      let index = this.menuItem.indexOf(specialElement);
+      this.menuItem[index].specialOrder.quantity = parseFloat(this.menuItem[index].specialOrder.quantity) + 1;
+      let specialData = { quantity: this.menuItem[index].specialOrder.quantity };
+      this._orderService.updateSpecialOrder(this.menuItem[index].specialOrder.id,specialData);
       this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price,id: special.id,type: 'special'});
       this.totalAmount = this.totalAmount + special.price;
       this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+    } else {
+      let orderItems = {
+        beverages: [],
+        food: [],
+        special: [{
+          specialId: special.id,
+          orderId: this.orderId,
+          quantity: 1
+        }],
+        extra: []
+      }
+      this._orderService.saveOrderItems(orderItems).then((res) => {
+        special.specialOrder = res['newSpecial'];
+        this.menuItem.push(special);
+        this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price,id: special.id,type: 'special'});
+        this.totalAmount = this.totalAmount + special.price;
+        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+      });
     }
   }
 
 
   addExtra(extra) {
-    let find = false;
-    let quantity: any;
-    let order: any;
-    this.extraItem.forEach(x => {
-      if(x.id == extra.id) {
-        find = true;
-        quantity = parseFloat(x.extraOrder.quantity) + 1;
-        x.extraOrder.quantity = quantity;
-        order = x.extraOrder.id;
-
-      }
-    })
-    if(!find){
-      let extraData = {
-        extraId: extra.id,
-        orderId: this.orderId,
-        quantity: 1
-      };
-      this._orderService.newExtraOrder(extraData).then((res) => {
-        extra.extraOrder = res['newExtraOrder'];
-        this.menuItem.push(extra);
-      });
-      this.itemsList.push({name: extra.product,price: extra.price});
-      this.totalAmount = this.totalAmount + extra.price;
-      this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
-    } else {
-      let extraData = { quantity: quantity };
-      this._orderService.updateExtraOrder(order,extraData);
+    let extraElement = this.extraItem.find(x => x.id == extra.id)
+    if(typeof extraElement != 'undefined'){
+      let index = this.extraItem.indexOf(extraElement);
+      this.extraItem[index].extraOrder.quantity = parseFloat(this.extraItem[index].extraOrder.quantity) + 1;
+      let extraData = { quantity: this.extraItem[index].extraOrder.quantity };
+      this._orderService.updateExtraOrder(this.extraItem[index].extraOrder.id,extraData);
       this.itemsList.push({name: extra.product,price: extra.price,id:extra.id,type: 'extra'});
       this.totalAmount = this.totalAmount + extra.price;
       this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+    } else {
+      let orderItems = {
+        beverages: [],
+        food: [],
+        special: [],
+        extra: [{
+          extraId: extra.id,
+          orderId: this.orderId,
+          quantity: 1
+        }]
+      }
+      this._orderService.saveOrderItems(orderItems).then((res) => {
+        extra.extraOrder = res['newExtra'];
+        this.extraItem.push(extra);
+        this.itemsList.push({name: extra.product,price: extra.price});
+        this.totalAmount = this.totalAmount + extra.price;
+        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount})
+      })
     }
   }
   addBeverage(name,price,b) {
-    let find = false;
-    let quantity: any;
-    let order: any;
-    this.beveragesItem.forEach(x => {
-      if(x.id == b.id) {
-        find = true;
-        quantity = parseFloat(x.BeveragesOrder.quantity) + 1;
-        x.BeveragesOrder.quantity = quantity;
-        order = x.BeveragesOrder.id;
+    let beveragesElement = this.beveragesItem.find(x => x.id == b.id)
+    if(typeof beveragesElement != 'undefined') {
+      let index = this.beveragesItem.indexOf(beveragesElement);
+      this.beveragesItem[index].BeveragesOrder.quantity = parseFloat(this.beveragesItem[index].BeveragesOrder.quantity) + 1;
+      let beveragesData = { quantity: this.beveragesItem[index].BeveragesOrder.quantity };
+      this._orderService.updateBeverageOrder(this.beveragesItem[index].BeveragesOrder.id,beveragesData).then(() => {
+        this.itemsList.push({name: name,price: price,id: b.id,type: 'beverage'});
+        this.hideSpecific();
+        this.totalAmount = this.totalAmount + price;
+        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+      })
+
+    } else  {
+      let orderItems = {
+        beverages: [{
+          beveragesId: b.id,
+          orderId: this.orderId,
+          quantity: 1
+        }],
+        food: [],
+        special: [],
+        extra: []
       }
-    })
-    if(!find) {
-      let beverageData = {
-        beveragesId: b.id,
-        orderId: this.orderId,
-        quantity: 1
-      };
-      this._orderService.newBeverageOrder(beverageData).then((res) => {
-        b.BeveragesOrder = res['newBeverageOrder']
+      this._orderService.saveOrderItems(orderItems).then((res) => {
+        b.BeveragesOrder = res['newBeverage']
         this.beveragesItem.push(b)
         this.itemsList.push({name: name,price: price});
         this.hideSpecific();
         this.totalAmount = this.totalAmount + price;
         this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
       });
-    } else  {
-      let beverage = { quantity: quantity};
-      this._orderService.updateBeverageOrder(order,beverage).then(() => {
-        this.itemsList.push({name: name,price: price,id: b.id,type: 'beverage'});
-        this.hideSpecific();
-        this.totalAmount = this.totalAmount + price;
-        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
-      })
     }
   }
 
@@ -385,43 +380,41 @@ export class EditComponent implements OnInit {
       this.itemsList.splice(index,1);
     }
     if (item.type == 'beverage') {
-      this.beveragesItem.forEach( async x => {
-        if(x.id == item.id) {
-          let beverage = { quantity: parseFloat(x.BeveragesOrder.quantity) - 1};
-          this._spinnerService.show();
-          this._orderService.updateBeverageOrder(x.BeveragesOrder.id,beverage).then(() => {
-            x.BeveragesOrder.quantity = parseFloat(x.BeveragesOrder.quantity) - 1;
-          })
-          this._spinnerService.hide();
-        }
-      });
+      let element = this.beveragesItem.find( x => x.id == item.id)
+      let index = this.beveragesItem.indexOf(element)
+      let beverage = { quantity: parseFloat(this.beveragesItem[index].BeveragesOrder.quantity) - 1};
+      this._spinnerService.show();
+      this._orderService.updateBeverageOrder(this.beveragesItem[index].BeveragesOrder.id,beverage).then(() => {
+        this.beveragesItem[index].BeveragesOrder.quantity = parseFloat(this.beveragesItem[index].BeveragesOrder.quantity) - 1;
+      })
+      this._spinnerService.hide();
     } else if (item.type == 'food') {
-      this.foodItem.forEach(async x => {
-        if(x.id == item.id) {
-          let foodData = { quantity: parseFloat(x.FoodOrder.quantity) - 1 };
-          this._orderService.updateFoodOrder(x.FoodOrder.id,foodData).then(() => {
-            x.FoodOrder.quantity = parseFloat(x.FoodOrder.quantity) - 1;
-          });
-        } 
-      });
+      let element = this.foodItem.find( x => x.id == item.id)
+      let index = this.foodItem.indexOf(element)
+      let foodData = { quantity: parseFloat(this.foodItem[index].FoodOrder.quantity) - 1};
+      this._spinnerService.show();
+      this._orderService.updateFoodOrder(this.foodItem[index].FoodOrder.id,foodData).then(() => {
+        this.foodItem[index].FoodOrder.quantity = parseFloat(this.foodItem[index].FoodOrder.quantity) - 1;
+      })
+      this._spinnerService.hide();
     } else if (item.type == 'special') {
-      this.menuItem.forEach(async x => {
-        if(x.id == item.id) {
-          let special = { quantity: parseFloat(x.specialOrder.quantity) - 1};
-          this._orderService.updateSpecialOrder(x.specialOrder.id,special).then(() => {
-            x.specialOrder.quantity = parseFloat(x.specialOrder.quantity) - 1;
-          });
-        } 
-      });
+      let element = this.menuItem.find( x => x.id == item.id)
+      let index = this.menuItem.indexOf(element)
+      let special = { quantity: parseFloat(this.menuItem[index].specialOrder.quantity) - 1};
+      this._spinnerService.show();
+      this._orderService.updateSpecialOrder(this.menuItem[index].specialOrder.id,special).then(() => {
+        this.menuItem[index].specialOrder.quantity = parseFloat(this.menuItem[index].specialOrder.quantity) - 1;
+      })
+      this._spinnerService.hide();
     } else if (item.type == 'extra') {
-      this.extraItem.forEach(async x => {
-        if(x.id == item.id) {
-          let extra = { quantity: parseFloat(x.extraOrder.quantity) - 1};
-          this._orderService.updateExtraOrder(x.extraOrder.id,extra).then((resp) => {
-            x.extraOrder.quantity = parseFloat(x.extraOrder.quantity) - 1;
-          });
-        } 
-      });
+      let element = this.extraItem.find( x => x.id == item.id)
+      let index = this.extraItem.indexOf(element)
+      let extra = { quantity: parseFloat(this.extraItem[index].extraOrder.quantity) - 1};
+      this._spinnerService.show();
+      this._orderService.updateExtraOrder(this.extraItem[index].extraOrder.id,extra).then(() => {
+        this.extraItem[index].extraOrder.quantity = parseFloat(this.extraItem[index].extraOrder.quantity) - 1;
+      })
+      this._spinnerService.hide();
     } 
   }
   confirmClose() {

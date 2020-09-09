@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { HostListener, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormControlName } from "@angular/forms";
 import { Store } from '@ngrx/store';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -9,6 +9,7 @@ import { SalesService } from 'src/app/services/sales.service';
 import { PrintService } from 'src/app/services/print.service';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Router } from "@angular/router";
+import { computeMsgId } from '@angular/compiler';
 
 @Component({
   selector: 'app-menu',
@@ -80,6 +81,12 @@ export class MenuComponent implements OnInit {
     this.fetchMenu();
     this.fetchExtra();
     this.totalAmount = 0.00;
+
+  }
+
+  @HostListener("window:beforeunload", ["$event"]) 
+  unloadHandler(event: Event) {
+    event.returnValue = false;
   }
 
   fetchBeverages() {
@@ -182,90 +189,48 @@ export class MenuComponent implements OnInit {
     this.closeC = false;
   }
   addBeverage(name,price,b) {
-    let find: boolean;
-    this.beverageItems.forEach(x => {
-      if(x.id == b.id) {
-        find = true;
-      } else {
-        find = false;
-      }
-    })
-    if(!find){
+    let beverage = this.beverageItems.find( item => item.id == b.id)
+    if(typeof beverage == 'undefined'){
       this.beverageItems.push({id: b.id,quantity: 1});
     } else {
-      for(let i=0;i<this.beverageItems.length;i++) {
-        if(this.beverageItems[i].id == b.id) {
-          this.beverageItems[i].quantity = this.beverageItems[i].quantity + 1
-        }
-      }
+      let index = this.beverageItems.indexOf(beverage)
+      this.beverageItems[index].quantity = this.beverageItems[index].quantity + 1;
     }
-    this.itemsList.push({id: b.id,name: name,price: price});
+    this.itemsList.push({type: 'beverage',id: b.id,name: name,price: price});
     this.hideSpecific();
     this.totalAmount = this.totalAmount + price;
   }
   addFood(food) {
-    let find: boolean;
-    this.foodItems.forEach(x => {
-      if(x.id == food.id) {
-        find = true;
-      } else {
-        find = false;
-      }
-    })
-    if(!find){
+    let foodItem = this.foodItems.find(item => item.id == food.id)
+    if(typeof foodItem == 'undefined'){
       this.foodItems.push({id: food.id,quantity: 1});
     } else {
-      for(let i=0;i<this.foodItems.length;i++) {
-        if(this.foodItems[i].id == food.id) {
-          this.foodItems[i].quantity = this.foodItems[i].quantity + 1
-        }
-      }
+      let index = this.foodItems.indexOf(foodItem)
+      this.foodItems[index].quantity = this.foodItems[index].quantity + 1;
     }
-    this.itemsList.push({id: food.id,name: food.product,price: food.price});
+    this.itemsList.push({type: 'food', id: food.id,name: food.product,price: food.price});
     this.totalAmount = this.totalAmount + food.price;
   }
   addMenu(special) {
-    let find: boolean;
-    this.menuItems.forEach(x => {
-      if(x.id == special.id) {
-        find = true;
-      } else {
-        find = false;
-      }
-    })
-    if(!find){
+    let specialItem = this.menuItems.find(item => item.id == special.id)
+    if(typeof specialItem == 'undefined'){
       this.menuItems.push({id: special.id,quantity: 1});
     } else {
-      for(let i=0;i<this.menuItems.length;i++) {
-        if(this.menuItems[i].id == special.id) {
-          this.menuItems[i].quantity = this.menuItems[i].quantity + 1
-        }
-      }
+      let index = this.menuItems.indexOf(specialItem)
+      this.menuItems[index].quantity = this.menuItems[index].quantity + 1;
     }
-    this.itemsList.push({id: special.id,name: special.product + " (" + special.type + ")",price: special.price});
+    this.itemsList.push({type: 'special', id: special.id,name: special.product + " (" + special.type + ")",price: special.price});
     this.totalAmount = this.totalAmount + special.price;
   }
-
-
   addExtra(extra) {
-    let find: boolean;
-    this.extraItems.forEach(x => {
-      if(x.id == extra.id) {
-        find = true;
-      } else {
-        find = false;
-      }
-    })
-    if(!find){
+    let extraItem = this.extraItems.find(item => item.id == extra.id)
+    if(typeof extraItem == 'undefined'){
       this.extraItems.push({id: extra.id,quantity: 1});
     } else {
-      for(let i=0;i<this.extraItems.length;i++) {
-        if(this.extraItems[i].id == extra.id) {
-          this.extraItems[i].quantity = this.extraItems[i].quantity + 1
-        }
-      }
+      let index = this.extraItems.indexOf(extraItem)
+      this.extraItems[index].quantity = this.extraItems[index].quantity + 1;
     }
-    this.itemsList.push({id: extra.id,name: extra.product,price: extra.price});
+    this.itemsList.push({type:'extra',id: extra.id,name: extra.product,price: extra.price});
     this.totalAmount = this.totalAmount + extra.price;
   }
 
@@ -275,48 +240,45 @@ export class MenuComponent implements OnInit {
     if (index > -1) {
       this.itemsList.splice(index,1);
     }
-    this.beverageItems.forEach(x => {
-      if(x.id == item.id) {
-        if(x.quantity == 1) {
-          this.beverageItems.splice(this.beverageItems.indexOf(x),1);
-        } else {
-          x.quantity = x.quantity - 1;
-        }
+    if (item.type == 'beverage') {
+      let beverage = this.beverageItems.find( element => element.id == item.id)
+      if (beverage.quantity == 1) {
+        this.beverageItems.splice(this.beverageItems.indexOf(item),1);
+      } else {
+        let index = this.beverageItems.indexOf(item);
+        this.beverageItems[index].quantity = this.beverageItems[index].quantity - 1;
       }
-    });
-    this.foodItems.forEach(x => {
-      if(x.id == item.id) {
-        if(x.quantity == 1) {
-          this.foodItems.splice(this.foodItems.indexOf(x),1);
-        } else {
-          x.quantity = x.quantity - 1;
-        }
+    } else if (item.type == 'food') {
+      let foodItem = this.foodItems.find(element => element.id == item.id);
+      if(foodItem.quantity == 1) {
+        this.foodItems.splice(this.foodItems.indexOf(foodItem),1);
+      } else {
+        let index = this.foodItems.indexOf(foodItem);
+        this.foodItems[index].quantity = this.foodItems[index].quantity - 1;
       }
-    });
-    this.menuItems.forEach(x => {
-      if(x.id == item.id) {
-        if(x.quantity == 1) {
-          this.menuItems.splice(this.menuItems.indexOf(x),1);
-        } else {
-          x.quantity = x.quantity - 1;
-        }
+    } else if (item.type == 'special') {
+      let specialItem = this.menuItems.find(element => element.id == item.id)
+      if (specialItem.quantity == 1) {
+        this.menuItems.splice(this.menuItems.indexOf(specialItem),1);
+      } else {
+        let index = this.menuItems.indexOf(specialItem);
+        this.menuItems[index].quantity = this.menuItems[index].quantity - 1;
       }
-    })
-    this.extraItems.forEach(x => {
-      if(x.id == item.id) {
-        if(x.quantity == 1) {
-          this.extraItems.splice(this.extraItems.indexOf(x),1);
-        } else {
-          x.quantity = x.quantity - 1;
-        }
+    } else if (item.type == 'extra') {
+      let extraItem = this.extraItems.find(element => element.id == item.id)
+      if(extraItem.quantity == 1) {
+        this.extraItems.splice(this.extraItems.indexOf(extraItem),1);
+      } else {
+        let index = this.extraItems.indexOf(extraItem);
+        this.extraItems[index].quantity = this.extraItems[index].quantity - 1;
       }
-    })
+    }
   }
   toggleDiv(){
      this.showConfirm = !this.showConfirm;
   }
   async saveOrder(){
-    let foodData, beverageData, menuData, extraData;
+    let foodData = [], beverageData = [], menuData = [], extraData = [];
     const orderData = {
       name: this.orderForm.value.name,
       status: 'pendiente',
@@ -327,37 +289,40 @@ export class MenuComponent implements OnInit {
     await this._orderService.newOrder(orderData).then(response => {
       let order = response['newOrder'];
       for(let i=0;i<this.foodItems.length;i++){
-        foodData = {
+        foodData.push({
           foodId: this.foodItems[i].id,
           orderId: order.id,
           quantity: this.foodItems[i].quantity
-        };
-        this._orderService.newFoodOrder(foodData);
+        });
       };
       for(let i=0;i<this.beverageItems.length;i++){
-        beverageData = {
+        beverageData.push({
           beveragesId: this.beverageItems[i].id,
           orderId: order.id,
           quantity: this.beverageItems[i].quantity
-        };
-        this._orderService.newBeverageOrder(beverageData);
+        });
       };
       for(let i=0;i<this.menuItems.length;i++){
-        menuData = {
+        menuData.push({
           specialId: this.menuItems[i].id,
           orderId: order.id,
           quantity: this.menuItems[i].quantity
-        };
-        this._orderService.newSpecialOrder(menuData);
+        });
       };
       for(let i=0;i<this.extraItems.length;i++){
-        extraData = {
+        extraData.push({
           extraId: this.extraItems[i].id,
           orderId: order.id,
           quantity: this.extraItems[i].quantity
-        };
-        this._orderService.newExtraOrder(extraData);
+        });
       };
+      let orderItems = {
+        beverages: beverageData,
+        food: foodData,
+        special: menuData,
+        extra: extraData
+      }
+      this._orderService.saveOrderItems(orderItems);
       this._router.navigate(['/comandas/index']);
     })
       .catch(err => this.errors = err);
@@ -368,9 +333,10 @@ export class MenuComponent implements OnInit {
     this.confirm = true;
     this.alert = false;
   }
+
   async closeOrder(){
     if(this.totalAmount != 0) {
-      let foodData, beverageData, menuData, extraData;
+      let foodData = [], beverageData = [], menuData = [], extraData = [];
       const orderData = {
         name: this.orderForm.value.name,
         status: 'cerrada',
@@ -381,37 +347,40 @@ export class MenuComponent implements OnInit {
       await this._orderService.newOrder(orderData).then(response => {
         this.order = response['newOrder'];
         for(let i=0;i<this.foodItems.length;i++){
-          foodData = {
+          foodData.push({
             foodId: this.foodItems[i].id,
             orderId: this.order.id,
             quantity: this.foodItems[i].quantity
-          };
-          this._orderService.newFoodOrder(foodData);
+          });
         };
         for(let i=0;i<this.beverageItems.length;i++){
-          beverageData = {
+          beverageData.push({
             beveragesId: this.beverageItems[i].id,
             orderId: this.order.id,
             quantity: this.beverageItems[i].quantity
-          };
-          this._orderService.newBeverageOrder(beverageData);
+          });
         };
         for(let i=0;i<this.menuItems.length;i++){
-          menuData = {
+          menuData.push({
             specialId: this.menuItems[i].id,
             orderId: this.order.id,
             quantity: this.menuItems[i].quantity
-          };
-          this._orderService.newSpecialOrder(menuData);
+          });
         };
         for(let i=0;i<this.extraItems.length;i++){
-          extraData = {
+          extraData.push({
             extraId: this.extraItems[i].id,
             orderId: this.order.id,
             quantity: this.extraItems[i].quantity
-          };
-          this._orderService.newExtraOrder(extraData);
+          });
         };
+        let orderItems = {
+          beverages: beverageData,
+          food: foodData,
+          special: menuData,
+          extra: extraData
+        }
+        this._orderService.saveOrderItems(orderItems);
         this.confirm = false;
         this.pago = true;
       })
