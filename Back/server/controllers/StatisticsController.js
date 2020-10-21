@@ -157,7 +157,6 @@ var StatisticsController = {
         
 
     },
-
     getFood(req,res){
         let option = req.body.option;
         Food.findAll({
@@ -177,16 +176,8 @@ var StatisticsController = {
                     order: [ ['createdAt', 'ASC'] ]
                 })
                 .then(salesHistory => {
-                    let foodSales = [];
-                    let item;
-                    for(let i=0;i<foods.length;i++) {
-                        item = salesHistory.filter(x => {
-                            return x.foodId == foods[i].id
-                        })
-                        let price = item.length * foods[i].price;
-                        foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
-                    }     
-                    res.status(200).json(foodSales)             
+                    res.status(200).json(
+                        StatisticsController.countFoodSales(foods, salesHistory))            
                 })
                 .catch(err => res.status(400).send(err))
             } else if (option == 'year') {
@@ -203,16 +194,8 @@ var StatisticsController = {
                         order: [ ['createdAt', 'ASC'] ]
                     })
                     .then(salesHistory => {
-                        let foodSales = [];
-                        let item;
-                        for(let i=0;i<foods.length;i++) {
-                            item = salesHistory.filter(x => {
-                                return x.foodId == foods[i].id
-                            })
-                            let price = item.length * foods[i].price;
-                            foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
-                        }     
-                        res.status(200).json(foodSales)             
+                        res.status(200).json(
+                            StatisticsController.countFoodSales(foods, salesHistory))             
                     })
                     .catch(err => res.status(400).send(err))
             } else if (option == 'day') {
@@ -227,16 +210,8 @@ var StatisticsController = {
                         order: [ ['createdAt', 'ASC'] ]
                     })
                     .then(salesHistory => {
-                        let foodSales = [];
-                        let item;
-                        for(let i=0;i<foods.length;i++) {
-                            item = salesHistory.filter(x => {
-                                return x.foodId == foods[i].id
-                            })
-                            let price = item.length * foods[i].price;
-                            foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
-                        }     
-                        res.status(200).json(foodSales)         
+                        res.status(200).json(
+                            StatisticsController.countFoodSales(foods, salesHistory))         
                     })
                     .catch(err => res.status(400).send(err))
             } else if (option == 'week') {
@@ -251,17 +226,9 @@ var StatisticsController = {
                         },
                         order: [ ['createdAt', 'ASC'] ]
                     })
-                    .then(salesHistory => {
-                        let foodSales = [];
-                        let item;
-                        for(let i=0;i<foods.length;i++) {
-                            item = salesHistory.filter(x => {
-                                return x.foodId == foods[i].id
-                            })
-                            let price = item.length * foods[i].price;
-                            foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
-                        }     
-                        res.status(200).json(foodSales)         
+                    .then(salesHistory => { 
+                        res.status(200).json(
+                            StatisticsController.countFoodSales(foods, salesHistory))         
                     })
                     .catch(err => res.status(400).send(err))
             }
@@ -298,16 +265,7 @@ var StatisticsController = {
                     order: [ ['createdAt', 'ASC'] ]
                 })
                 .then(salesHistory => {
-                    let drinkSales = [];
-                    let item;
-                    for(let i=0;i<drinks.length;i++) {
-                        item = salesHistory.filter(x => {
-                            return x.beveragesId == drinks[i].id
-                        })
-                        let price = item.length * drinks[i].price;
-                        drinkSales.push({'product': drinks[i].beverage.product + " " + drinks[i].type, 'quantity': item.length, 'sale': price})
-                    }     
-                    res.status(200).json(drinkSales)             
+                    res.status(200).json(StatisticsController.countSales(drinks, salesHistory))  
                 })
                 .catch(err => res.status(400).send(err))
             } else if (option == 'year') {
@@ -324,16 +282,7 @@ var StatisticsController = {
                         order: [ ['createdAt', 'ASC'] ]
                     })
                     .then(salesHistory => {
-                        let drinkSales = [];
-                        let item;
-                        for(let i=0;i<drinks.length;i++) {
-                            item = salesHistory.filter(x => {
-                                return x.beveragesId == drinks[i].id
-                            })
-                            let price = item.length * drinks[i].price;
-                            drinkSales.push({'product': drinks[i].beverage.product + " " + drinks[i].type, 'quantity': item.length, 'sale': price})
-                        }     
-                        res.status(200).json(drinkSales)             
+                        res.status(200).json(StatisticsController.countSales(drinks, salesHistory))  
                     })
                     .catch(err => res.status(400).send(err))
             } else if (option == 'day') {
@@ -348,16 +297,7 @@ var StatisticsController = {
                         order: [ ['createdAt', 'ASC'] ]
                     })
                     .then(salesHistory => {
-                        let drinkSales = [];
-                        let item;
-                        for(let i=0;i<drinks.length;i++) {
-                            item = salesHistory.filter(x => {
-                                return x.beveragesId == drinks[i].id
-                            })
-                            let price = item.length * drinks[i].price;
-                            drinkSales.push({'product': drinks[i].beverage.product + " " +drinks[i].type, 'quantity': item.length, 'sale': price})
-                        }     
-                        res.status(200).json(drinkSales)         
+                        res.status(200).json(StatisticsController.countSales(drinks, salesHistory))  
                     })
                     .catch(err => res.status(400).send(err))
             } else if (option == 'week') {
@@ -372,21 +312,40 @@ var StatisticsController = {
                         },
                         order: [ ['createdAt', 'ASC'] ]
                     })
-                    .then(salesHistory => {
-                        let drinkSales = [];
-                        let item;
-                        for(let i=0;i<drinks.length;i++) {
-                            item = salesHistory.filter(x => {
-                                return x.beveragesId == drinks[i].id
-                            })
-                            let price = item.length * drinks[i].price;
-                            drinkSales.push({'product': drinks[i].beverage.product + " " + drinks[i].type, 'quantity': item.length, 'sale': price})
-                        }     
-                        res.status(200).json(drinkSales)         
+                    .then(salesHistory => {     
+                        res.status(200).json(StatisticsController.countSales(drinks, salesHistory))  
                     })
                     .catch(err => res.status(400).send(err))
             }
         })
+    },
+    countSales(productType, salesHistory) {
+        let productSales = [];
+        let item;
+        for(let i=0;i<productType.length;i++) {
+            item = salesHistory.filter(x => {
+                return x.beveragesId == productType[i].id
+            })
+            let quantity = 0;
+            item.forEach(function(sale) {
+                quantity += parseInt(sale.quantity)
+            })
+            let price = quantity * productType[i].price;
+            productSales.push({'product': productType[i].beverage.product + " " +productType[i].type, 'quantity': quantity, 'sale': price})
+        }
+        return productSales;  
+    },
+    countFoodSales(foods, salesHistory) {
+        let foodSales = [];
+        let item;
+        for(let i=0;i<foods.length;i++) {
+            item = salesHistory.filter(x => {
+                return x.foodId == foods[i].id
+            })
+            let price = item.length * foods[i].price;
+            foodSales.push({'product': foods[i].product, 'quantity': item.length, 'sale': price})
+        } 
+        return foodSales;  
     },
     stickersSales(req,res) {
         Extra.findAll({
@@ -432,16 +391,23 @@ var StatisticsController = {
                         item = salesHistory.filter(x => {
                             return x.extraId == stickers[i].id
                         })
-                        let price = item.length * stickers[i].price;
-                        karlaAmount += price;
-                        karlaSales += item.length;
+                        let quantity = 0;
+                        item.forEach(function(sale) {
+                            quantity += sale.quantity;
+                        })
+                        console.log(quantity, stickers[i].price, quantity * stickers[i].price)
+                        karlaAmount += quantity * stickers[i].price;
+                        karlaSales += quantity;
                     } else if (stickers[i].product.toLowerCase().includes('sebas')) {
                         item = salesHistory.filter(x => {
                             return x.extraId == stickers[i].id
                         })
-                        let price = item.length * stickers[i].price;
-                        sebasAmount += price;
-                        sebasSales += item.length;
+                        let quantity = 0;
+                        item.forEach(function(sale) {
+                            quantity += sale.quantity
+                        })
+                        sebasAmount += quantity * stickers[i].price;
+                        sebasSales += quantity;
                     }
                 }
                 stickersSale.push({'karla': karlaSales, 'karlaAmount': karlaAmount, 'sebas': sebasSales, 'sebasAmount': sebasAmount})
