@@ -4,6 +4,7 @@ const MenuBeveragesController = require('../server/controllers/MenuBeveragesCont
 const MenuFoodController = require('../server/controllers/MenuFoodController');
 const MenuSpecialController = require('../server/controllers/MenuSpecialController');
 const MenuExtraController = require('../server/controllers/MenuExtraController');
+const DiscountController = require('../server/controllers/DiscountController');
 
 //routes for food menu
 router.post('/newFood', MenuFoodController.create);
