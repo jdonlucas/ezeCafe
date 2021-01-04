@@ -128,7 +128,6 @@ var StatisticsController = {
         let date = req.body.date;
         let less = parseInt(date) - 1;
         let more = parseInt(date) + 1;
-        console.log(date, less, more)
         return Sales.findAll({
                 where: {
                     createdAt: {
@@ -141,6 +140,8 @@ var StatisticsController = {
             .then(salesHistory => {
                 let totalDay = 0.0;
                 let startDate = moment(salesHistory[0].createdAt).locale('es').format('MMMM');
+                console.log(startDate)
+                console.log(salesHistory[0])
                 let totalHour = [];
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).locale('es').format('MMMM') != startDate) {
