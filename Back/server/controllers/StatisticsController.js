@@ -80,8 +80,8 @@ var StatisticsController = {
         return Sales.findAll({attributes: ['createdAt']}).then(sales => {
             let years = [];
             for(let i=0;i<sales.length;i++) {
-                if( ! years.includes(parseInt(moment(sales[i]).format('YYYY'))) ) {
-                    years.push(parseInt(moment(sales[i]).format('YYYY')));
+                if( ! years.includes(parseInt(moment(sales[i].createdAt).format('YYYY'))) ) {
+                    years.push(parseInt(moment(sales[i].createdAt).format('YYYY')));
                 }
             }
             res.status(200).json( years )
@@ -125,7 +125,7 @@ var StatisticsController = {
             .catch(error => res.status(400).send(error));
     },
     showYear(req,res) {
-        let date = moment(req.body.date).format('YYYY');
+        let date = req.body.date;
         let less = parseInt(date) - 1;
         let more = parseInt(date) + 1;
         return Sales.findAll({

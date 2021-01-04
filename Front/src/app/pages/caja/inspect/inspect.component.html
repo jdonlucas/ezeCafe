@@ -8,11 +8,17 @@
             <ul class="itemList">
                 <li *ngFor="let i of itemsList"><div>{{i.name}}</div><div>${{i.price}}</div></li>
             </ul>
+            <ul class="itemList">
+                <li *ngFor="let i of discountItems">
+                    <div>{{i.name}}</div>
+                    <div>
+                        {{ i.type == 'percentage' ? '-' + i.amount + '%' : '- $' + i.amount }}</div></li>
+            </ul>
             <div class="total">
                 <div class="totalContent">
                     <p *ngIf="platform == ''">Total:</p>
                     <p *ngIf="platform != ''">Total ({{platform}}):</p>
-                    <p>${{totalAmount}} mxn</p>
+                    <p>${{amountDiscount}} mxn</p>
                 </div>
             </div>
         </div>

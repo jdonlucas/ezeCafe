@@ -56,7 +56,7 @@
     border: none;
     background: transparent;
     color: #83898f;
-    width: 25%;
+    width: 20%;
     padding-top: 18px;
     padding-bottom: 10px;
 }
@@ -198,7 +198,7 @@
     border-radius: 8px;
     background-color: #252C33;
 }
-#alertOrder {
+#alertOrder, .alertDiscount {
     padding: 20px;
     text-align: center;
 }

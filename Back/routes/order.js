@@ -14,5 +14,7 @@ router.post('/updateFoodOrder', OrderController.updateFoodOrder);
 router.post('/updateBeverageOrder', OrderController.updateBeverageOrder);
 router.post('/updateSpecialOrder', OrderController.updateSpecialOrder);
 router.post('/updateExtraOrder', OrderController.updateExtraOrder);
+router.post('/updateDiscount', OrderController.updateDiscount);
+router.post('/removeDiscount', OrderController.removeDiscount);
 
 module.exports = router;

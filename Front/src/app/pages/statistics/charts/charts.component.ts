@@ -91,14 +91,21 @@ export class ChartsComponent implements OnInit {
           yearSelect: ['']
         })
         
-        this._statisticsService.years().then(resp => {
-          let response: any;
-          response = resp;
-          response.forEach(year => {
+        this._statisticsService.years().then((resp: number[]) => {
+          resp.sort(function(a, b){return b-a})
+          resp.forEach(year => {
             allYears.push({ id: year, name: year });
           });
           this.yearsData = allYears;
           this.yearForm.controls.yearSelect.patchValue(this.yearsData[0].id);
+          this.totalYear = 0.0;
+          this._statisticsService.getYear(String(this.yearForm.value.yearSelect)).then(resp => {
+            let infoVenta:  any;
+            infoVenta = resp;
+            for (let i=0;i<infoVenta.length;i++) {
+              this.totalYear += infoVenta[i].total;
+            }
+          })
         })
 
         of(this.getWeekDateMonth()).subscribe(weeks => {
@@ -147,14 +154,6 @@ export class ChartsComponent implements OnInit {
 
     this.changeTotalWeek(queryDate);
 
-    this.totalYear = 0.0;
-    this._statisticsService.getYear(this.yearForm.value.yearsData).then(resp => {
-      let infoVenta:  any;
-      infoVenta = resp;
-      for (let i=0;i<infoVenta.length;i++) {
-        this.totalYear += infoVenta[i].total;
-      }
-    })
 
     this.typeDate = 'month'; this.dateForProduct = queryDate;
     this._statisticsService.getDrink('month',queryDate).then((resp: any) => {
@@ -269,7 +268,8 @@ export class ChartsComponent implements OnInit {
   }
 
   onChangeYearDate() {
-    let year = this.yearForm.value.yearsData;
+    let year = String(this.yearForm.value.yearSelect);
+    console.log(year)
     this.days = [];
     this.ventas = [];
     this.totalYear = 0.0;

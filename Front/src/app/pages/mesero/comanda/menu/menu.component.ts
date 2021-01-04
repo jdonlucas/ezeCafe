@@ -32,13 +32,17 @@ export class MenuComponent implements OnInit {
   public showFood = false;
   public showMenu = false;
   public showExtra = false;
+  public showDiscount = false;
   public showSpecific = false;
   public itemsList = [];
   public foodItems = [];
+  public discountList = [];
   public beverageItems = [];
   public menuItems = [];
   public extraItems = [];
+  public discountItems = [];
   public totalAmount: number;
+  public amountDiscount: number;
   public showConfirm = false;
   public closeC = false;
   public confirm = true;
@@ -46,6 +50,8 @@ export class MenuComponent implements OnInit {
   public pago = false;
   public calculator = false;
   public plataforma = false;
+  public showAlert = false;
+  public showAlert2 = false;
   private order: any;
   public userData: any;
   faTrash = faTrashAlt;
@@ -80,7 +86,9 @@ export class MenuComponent implements OnInit {
     this.fetchFood();
     this.fetchMenu();
     this.fetchExtra();
+    this.fetchDiscount();
     this.totalAmount = 0.00;
+    this.amountDiscount = 0.0;
 
   }
 
@@ -137,13 +145,22 @@ export class MenuComponent implements OnInit {
       })
       .catch(err => this.errors = err);
   }
+  fetchDiscount() {
+    this._menuService.showDiscount()
+      .then(response => {
+        this.discountList = response['discountList'].sort((a,b) => 
+          a.type.localeCompare(b.type)
+        );
+      })
+      .catch(err => this.errors = err);
+  }
 
   toggle(btnId: any) {
     let divId = btnId.target.id;
     let element = document.getElementById(divId);
     if (divId == 'foodButton') {
       this.showFood = true;
-      this.show = this.showMenu = this.showExtra = false;
+      this.show = this.showMenu = this.showExtra = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -151,9 +168,10 @@ export class MenuComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('menuButton').classList.remove('selected')
       document.getElementById('extraButton').classList.remove('selected')
+      document.getElementById('discountButton').classList.remove('selected')
     } else if (divId == 'beveragesButton') {
       this.show = true;
-      this.showFood = this.showMenu = this.showExtra = false;
+      this.showFood = this.showMenu = this.showExtra = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -161,9 +179,10 @@ export class MenuComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('menuButton').classList.remove('selected')
       document.getElementById('extraButton').classList.remove('selected')
+      document.getElementById('discountButton').classList.remove('selected')
     } else if (divId == 'menuButton') {
       this.showMenu = true;
-      this.showFood = this.show = this.showExtra = false;
+      this.showFood = this.show = this.showExtra = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -171,9 +190,10 @@ export class MenuComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('beveragesButton').classList.remove('selected')
       document.getElementById('extraButton').classList.remove('selected')
-    } else {
+      document.getElementById('discountButton').classList.remove('selected')
+    } else if (divId == 'extraButton') {
       this.showExtra = true;
-      this.showFood = this.show = this.showMenu = false;
+      this.showFood = this.show = this.showMenu = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -181,6 +201,18 @@ export class MenuComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('beveragesButton').classList.remove('selected')
       document.getElementById('menuButton').classList.remove('selected')
+      document.getElementById('discountButton').classList.remove('selected')
+    } else {
+      this.showDiscount = true;
+      this.showFood = this.show = this.showMenu = this.showExtra = false;
+      if(!element.classList.contains('selected')) {
+        element.classList.add('selected');
+      }
+      let bButton = document.getElementById('foodButton');
+      bButton.classList.remove("selected");
+      document.getElementById('beveragesButton').classList.remove('selected')
+      document.getElementById('menuButton').classList.remove('selected')
+      document.getElementById('extraButton').classList.remove('selected')
     }
   }
   hideSpecific() {
@@ -199,6 +231,7 @@ export class MenuComponent implements OnInit {
     this.itemsList.push({type: 'beverage',id: b.id,name: name,price: price});
     this.hideSpecific();
     this.totalAmount = this.totalAmount + price;
+    this.checkDiscounts();
   }
   addFood(food) {
     let foodItem = this.foodItems.find(item => item.id == food.id)
@@ -210,6 +243,7 @@ export class MenuComponent implements OnInit {
     }
     this.itemsList.push({type: 'food', id: food.id,name: food.product,price: food.price});
     this.totalAmount = this.totalAmount + food.price;
+    this.checkDiscounts();
   }
   addMenu(special) {
     let specialItem = this.menuItems.find(item => item.id == special.id)
@@ -221,6 +255,7 @@ export class MenuComponent implements OnInit {
     }
     this.itemsList.push({type: 'special', id: special.id,name: special.product + " (" + special.type + ")",price: special.price});
     this.totalAmount = this.totalAmount + special.price;
+    this.checkDiscounts();
   }
   addExtra(extra) {
     let extraItem = this.extraItems.find(item => item.id == extra.id)
@@ -232,11 +267,37 @@ export class MenuComponent implements OnInit {
     }
     this.itemsList.push({type:'extra',id: extra.id,name: extra.product,price: extra.price});
     this.totalAmount = this.totalAmount + extra.price;
+    this.checkDiscounts();
+  }
+  addDiscount(discount) {
+    let discountItem = this.discountItems.find(item => item.id == discount.id)
+    if(typeof discountItem == 'undefined'){
+      if(this.itemsList.length) {
+        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount});
+        //this.itemsList.push({type:'discount',id: discount.id,name: discount.name,amount: discount.amount,discounType: discount.type});
+        if (discount.type == 'percentage') {
+          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
+        } else {
+          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
+        }
+      } else {
+        this.confirm = false;
+        this.showAlert2 = true;
+        this.closeC = true;
+      }
+    } else {
+      this.confirm = false;
+      this.showAlert = true;
+      this.closeC = true;
+    }
   }
 
   removeItem(item: any) {
     let index = this.itemsList.indexOf(item);
-    this.totalAmount = this.totalAmount - item.price;
+    if (item.type != 'discount') {
+      this.totalAmount = this.totalAmount - item.price;
+      this.checkDiscounts();
+    }
     if (index > -1) {
       this.itemsList.splice(index,1);
     }
@@ -245,7 +306,7 @@ export class MenuComponent implements OnInit {
       if (beverage.quantity == 1) {
         this.beverageItems.splice(this.beverageItems.indexOf(item),1);
       } else {
-        let index = this.beverageItems.indexOf(item);
+        let index = this.beverageItems.indexOf(beverage);
         this.beverageItems[index].quantity = this.beverageItems[index].quantity - 1;
       }
     } else if (item.type == 'food') {
@@ -274,15 +335,19 @@ export class MenuComponent implements OnInit {
       }
     }
   }
+  removeDiscount(item) {
+    this.discountItems = this.discountItems.filter( x => x.id !== item.id );
+    this.checkDiscounts();
+  }
   toggleDiv(){
      this.showConfirm = !this.showConfirm;
   }
   async saveOrder(){
-    let foodData = [], beverageData = [], menuData = [], extraData = [];
+    let foodData = [], beverageData = [], menuData = [], extraData = [], discountData = [];
     const orderData = {
       name: this.orderForm.value.name,
       status: 'pendiente',
-      subtotal: this.totalAmount,
+      subtotal: this.amountDiscount,
       UserId: this.userData.id
     };
     this._spinnerService.show();
@@ -316,11 +381,18 @@ export class MenuComponent implements OnInit {
           quantity: this.extraItems[i].quantity
         });
       };
+      for(let i=0;i<this.discountItems.length;i++){
+        discountData.push({
+          discountId: this.discountItems[i].id,
+          orderId: order.id
+        });
+      };
       let orderItems = {
         beverages: beverageData,
         food: foodData,
         special: menuData,
-        extra: extraData
+        extra: extraData,
+        discounts: discountData
       }
       this._orderService.saveOrderItems(orderItems);
       this._router.navigate(['/comandas/index']);
@@ -332,15 +404,16 @@ export class MenuComponent implements OnInit {
     this.closeC = !this.closeC;
     this.confirm = true;
     this.alert = false;
+    this.showAlert = false;
   }
 
   async closeOrder(){
-    if(this.totalAmount != 0) {
-      let foodData = [], beverageData = [], menuData = [], extraData = [];
+    if(this.amountDiscount != 0) {
+      let foodData = [], beverageData = [], menuData = [], extraData = [], discountData = [];
       const orderData = {
         name: this.orderForm.value.name,
         status: 'cerrada',
-        subtotal: this.totalAmount,
+        subtotal: this.amountDiscount,
         UserId: this.userData.id
       };
       this._spinnerService.show();
@@ -374,11 +447,18 @@ export class MenuComponent implements OnInit {
             quantity: this.extraItems[i].quantity
           });
         };
+        for(let i=0;i<this.discountItems.length;i++){
+          discountData.push({
+            discountId: this.discountItems[i].id,
+            orderId: this.order.id,
+          });
+        };
         let orderItems = {
           beverages: beverageData,
           food: foodData,
           special: menuData,
-          extra: extraData
+          extra: extraData,
+          discounts: discountData
         }
         this._orderService.saveOrderItems(orderItems);
         this.confirm = false;
@@ -400,28 +480,28 @@ export class MenuComponent implements OnInit {
     this.plataforma = true;
   }
   public onChange(event: Event): void {
-    this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
+    this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.amountDiscount);
   }
   async saveSale(payMethod) {
     let saleData: any;
     let ingreso: any;
     if (this.paymentForm.value.amount == ''){
-      ingreso = this.totalAmount;
+      ingreso = this.amountDiscount;
     } else {
       ingreso = this.paymentForm.value.amount;
     }
     if(payMethod == "card"){
       saleData = {
         pago: 'tarjeta',
-        ingreso: this.totalAmount,
-        costo: this.totalAmount,
+        ingreso: this.amountDiscount,
+        costo: this.amountDiscount,
         OrderId: this.order.id
       } 
     } else if (payMethod == "cash") {
       saleData = {
         pago: 'efectivo',
         ingreso: ingreso,
-        costo: this.totalAmount,
+        costo: this.amountDiscount,
         OrderId: this.order.id
       } 
     } else if (payMethod == "platform") {
@@ -442,4 +522,20 @@ export class MenuComponent implements OnInit {
     this._spinnerService.hide();
   }
 
+  checkDiscounts() {
+    if(this.discountItems.length) {
+      this.amountDiscount = this.totalAmount;
+      this.discountItems.forEach( discount => {
+        if (discount.type == 'percentage') {
+          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
+        } else {
+          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
+        }
+      })
+    } else {
+      this.amountDiscount = this.totalAmount;
+    }
+  }
+
 }
+

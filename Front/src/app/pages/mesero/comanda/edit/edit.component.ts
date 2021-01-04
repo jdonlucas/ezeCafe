@@ -29,13 +29,16 @@ export class EditComponent implements OnInit {
   public beveragesItem = [];
   public menuItem = [];
   public extraItem = [];
+  public discountItems = [];
   public itemsList = [];
+  public discountList = [];
   public beveragesSpecificList: any;
   public showSpecific = false;
   public show = true;
   public showFood = false;
   public showMenu = false;
   public showExtra = false;
+  public showDiscount = false;
   public showConfirm = false;
   public orderId: any;
   public closeC = false;
@@ -47,6 +50,9 @@ export class EditComponent implements OnInit {
   public errors: any
   public userData: any;
   public totalAmount: number;
+  public amountDiscount: number;
+  public showAlert = false;
+  public showAlert2 = false;
   public orderName: any;
   faTrash = faTrashAlt;
 
@@ -73,6 +79,7 @@ export class EditComponent implements OnInit {
     this.fetchFood();
     this.fetchMenu();
     this.fetchExtra();
+    this.fetchDiscount()
     this.orderId = this.route.snapshot.params.id;
     this.orderForm = new FormGroup ({
       name: new FormControl('',[])
@@ -86,11 +93,13 @@ export class EditComponent implements OnInit {
       this.beveragesItem = res[0].beverages;
       this.menuItem = res[0].special;
       this.extraItem = res[0].extra;
+      this.discountItems = res[0].discount;
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){
         for(let j=0;j<this.foodItem[i].FoodOrder.quantity;j++){
           this.itemsList.push({name: this.foodItem[i].product, price: this.foodItem[i].price,id:this.foodItem[i].id, type: 'food'});
           this.totalAmount = this.totalAmount + this.foodItem[i].price;
+          this.amountDiscount = this.totalAmount;
         }
       }
       for(let i=0;i<this.beveragesItem.length;i++){
@@ -98,6 +107,7 @@ export class EditComponent implements OnInit {
           this.itemsList.push({name: this.beveragesItem[i].beverage.product + ' ' + this.beveragesItem[i].type, price: this.beveragesItem[i].price,id:this.beveragesItem[i].id,
           type: 'beverage'});
           this.totalAmount = this.totalAmount + this.beveragesItem[i].price;
+          this.amountDiscount = this.totalAmount;
         }
       }
       for(let i=0;i<this.menuItem.length;i++){
@@ -105,6 +115,7 @@ export class EditComponent implements OnInit {
           this.itemsList.push({name: this.menuItem[i].product + " (" + this.menuItem[i].type + ")", price: this.menuItem[i].price,id: this.menuItem[i].id,
           type: 'special'});
           this.totalAmount = this.totalAmount + parseFloat(this.menuItem[i].price);
+          this.amountDiscount = this.totalAmount;
         }
       }
       for(let i=0;i<this.extraItem.length;i++){
@@ -112,8 +123,11 @@ export class EditComponent implements OnInit {
           this.itemsList.push({name: this.extraItem[i].product, price: this.extraItem[i].price,id: this.extraItem[i].id,
           type: 'extra'});
           this.totalAmount = this.totalAmount + parseFloat(this.extraItem[i].price);
+          this.amountDiscount = this.totalAmount;
         }
       }
+      this.checkDiscounts();
+
       (<HTMLInputElement>document.getElementById('name')).placeholder = res[0].name ? res[0].name : res[0].id;
     }).catch(err => { this.errors = err; })
   }
@@ -170,13 +184,22 @@ export class EditComponent implements OnInit {
       })
       .catch(err => this.errors = err);
   }
+  fetchDiscount() {
+    this._menuService.showDiscount()
+      .then(response => {
+        this.discountList = response['discountList'].sort((a,b) => 
+          a.type.localeCompare(b.type)
+        );
+      })
+      .catch(err => this.errors = err);
+  }
 
   toggle(btnId: any) {
     let divId = btnId.target.id;
     let element = document.getElementById(divId);
     if (divId == 'foodButton') {
       this.showFood = true;
-      this.show = this.showMenu = this.showExtra = false;
+      this.show = this.showMenu = this.showExtra = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -184,9 +207,10 @@ export class EditComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('menuButton').classList.remove('selected')
       document.getElementById('extraButton').classList.remove('selected')
+      document.getElementById('discountButton').classList.remove('selected')
     } else if (divId == 'beveragesButton') {
       this.show = true;
-      this.showFood = this.showMenu = this.showExtra = false;
+      this.showFood = this.showMenu = this.showExtra = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -194,9 +218,10 @@ export class EditComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('menuButton').classList.remove('selected')
       document.getElementById('extraButton').classList.remove('selected')
+      document.getElementById('discountButton').classList.remove('selected')
     } else if (divId == 'menuButton') {
       this.showMenu = true;
-      this.showFood = this.show = this.showExtra = false;
+      this.showFood = this.show = this.showExtra = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -204,9 +229,10 @@ export class EditComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('beveragesButton').classList.remove('selected')
       document.getElementById('extraButton').classList.remove('selected')
-    } else {
+      document.getElementById('discountButton').classList.remove('selected')
+    } else if (divId == 'extraButton') {
       this.showExtra = true;
-      this.showFood = this.show = this.showMenu = false;
+      this.showFood = this.show = this.showMenu = this.showDiscount = false;
       if(!element.classList.contains('selected')) {
         element.classList.add('selected');
       }
@@ -214,6 +240,18 @@ export class EditComponent implements OnInit {
       bButton.classList.remove("selected");
       document.getElementById('beveragesButton').classList.remove('selected')
       document.getElementById('menuButton').classList.remove('selected')
+      document.getElementById('discountButton').classList.remove('selected')
+    } else {
+      this.showDiscount = true;
+      this.showFood = this.show = this.showMenu = this.showExtra = false;
+      if(!element.classList.contains('selected')) {
+        element.classList.add('selected');
+      }
+      let bButton = document.getElementById('foodButton');
+      bButton.classList.remove("selected");
+      document.getElementById('beveragesButton').classList.remove('selected')
+      document.getElementById('menuButton').classList.remove('selected')
+      document.getElementById('extraButton').classList.remove('selected')
     }
   }
   changeName() {
@@ -254,7 +292,8 @@ export class EditComponent implements OnInit {
       this._orderService.updateFoodOrder(this.foodItem[index].FoodOrder.id,foodData);
       this.itemsList.push({name: food.product,price: food.price, id: food.id,type: 'food'});
       this.totalAmount = this.totalAmount + food.price;
-      this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+      this.checkDiscounts();
+      this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
     } else {
       let orderItems = {
         beverages: [],
@@ -271,7 +310,8 @@ export class EditComponent implements OnInit {
         this.foodItem.push(food)
         this.itemsList.push({name: food.product,price: food.price, id: food.id,type: 'food'});
         this.totalAmount = this.totalAmount + food.price;
-        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+        this.checkDiscounts();
+        this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
       });
     }
   }
@@ -284,7 +324,8 @@ export class EditComponent implements OnInit {
       this._orderService.updateSpecialOrder(this.menuItem[index].specialOrder.id,specialData);
       this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price,id: special.id,type: 'special'});
       this.totalAmount = this.totalAmount + special.price;
-      this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+      this.checkDiscounts();
+      this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
     } else {
       let orderItems = {
         beverages: [],
@@ -301,7 +342,8 @@ export class EditComponent implements OnInit {
         this.menuItem.push(special);
         this.itemsList.push({name: special.product + " (" + special.type + ")",price: special.price,id: special.id,type: 'special'});
         this.totalAmount = this.totalAmount + special.price;
-        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+        this.checkDiscounts();
+        this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
       });
     }
   }
@@ -316,7 +358,8 @@ export class EditComponent implements OnInit {
       this._orderService.updateExtraOrder(this.extraItem[index].extraOrder.id,extraData);
       this.itemsList.push({name: extra.product,price: extra.price,id:extra.id,type: 'extra'});
       this.totalAmount = this.totalAmount + extra.price;
-      this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+      this.checkDiscounts();
+      this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
     } else {
       let orderItems = {
         beverages: [],
@@ -333,7 +376,8 @@ export class EditComponent implements OnInit {
         this.extraItem.push(extra);
         this.itemsList.push({name: extra.product,price: extra.price});
         this.totalAmount = this.totalAmount + extra.price;
-        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount})
+        this.checkDiscounts();
+        this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount})
       })
     }
   }
@@ -347,7 +391,8 @@ export class EditComponent implements OnInit {
         this.itemsList.push({name: name,price: price,id: b.id,type: 'beverage'});
         this.hideSpecific();
         this.totalAmount = this.totalAmount + price;
-        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+        this.checkDiscounts();
+        this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
       })
 
     } else  {
@@ -367,15 +412,44 @@ export class EditComponent implements OnInit {
         this.itemsList.push({name: name,price: price});
         this.hideSpecific();
         this.totalAmount = this.totalAmount + price;
-        this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+        this.checkDiscounts();
+        this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
       });
+    }
+  }
+  addDiscount(discount) {
+    let discountItem = this.discountItems.find(item => item.id == discount.id)
+    if(typeof discountItem == 'undefined'){
+      if(this.itemsList.length) {
+        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount});
+        //this.itemsList.push({type:'discount',id: discount.id,name: discount.name,amount: discount.amount,discounType: discount.type});
+        if (discount.type == 'percentage') {
+          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
+        } else {
+          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
+        }
+        this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
+        this._orderService.updateDiscount({
+          discountId: discount.id,
+          orderId: this.orderId
+        })
+      } else {
+        this.confirm = false;
+        this.showAlert2 = true;
+        this.closeC = true;
+      }
+    } else {
+      this.confirm = false;
+      this.showAlert = true;
+      this.closeC = true;
     }
   }
 
   removeItem(item: any) {
     let index = this.itemsList.indexOf(item);
     this.totalAmount = this.totalAmount - item.price;
-    this._orderService.updateOrder(this.orderId,{subtotal: this.totalAmount});
+    this.checkDiscounts();
+    this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
     if (index > -1) {
       this.itemsList.splice(index,1);
     }
@@ -417,6 +491,12 @@ export class EditComponent implements OnInit {
       this._spinnerService.hide();
     } 
   }
+  removeDiscount(item) {
+    this.discountItems = this.discountItems.filter( x => x.id !== item.id );
+    this._orderService.removeDiscount(item.id, this.orderId)
+    this.checkDiscounts();
+    this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
+  }
   confirmClose() {
     this.closeC = !this.closeC;
     this.confirm = true;
@@ -444,28 +524,28 @@ export class EditComponent implements OnInit {
     this.plataforma = true;
   }
   public onChange(event: Event): void {
-    this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.totalAmount);
+    this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.amountDiscount);
   }
   async saveSale(payMethod) {
     let saleData: any;
     let ingreso: any;
     if (this.paymentForm.value.amount == ''){
-      ingreso = this.totalAmount;
+      ingreso = this.amountDiscount;
     } else {
       ingreso = this.paymentForm.value.amount;
     }
     if(payMethod == "card"){
       saleData = {
         pago: 'tarjeta',
-        ingreso: this.totalAmount,
-        costo: this.totalAmount,
+        ingreso: this.amountDiscount,
+        costo: this.amountDiscount,
         OrderId: this.orderId
       } 
     } else if (payMethod == "cash") {
       saleData = {
         pago: 'efectivo',
         ingreso: ingreso,
-        costo: this.totalAmount,
+        costo: this.amountDiscount,
         OrderId: this.orderId
       } 
     } else if (payMethod == "platform") {
@@ -484,6 +564,20 @@ export class EditComponent implements OnInit {
       })
       .catch(err => this.errors = err);
     this._spinnerService.hide();
+  }
+  checkDiscounts() {
+    if(this.discountItems.length) {
+      this.amountDiscount = this.totalAmount;
+      this.discountItems.forEach( discount => {
+        if (discount.type == 'percentage') {
+          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
+        } else {
+          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
+        }
+      })
+    } else {
+      this.amountDiscount = this.totalAmount;
+    }
   }
 
 }

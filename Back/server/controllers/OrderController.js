@@ -7,11 +7,13 @@ const FoodOrder = require('../models').FoodOrder;
 const BeverageOrder = require('../models').BeveragesOrder;
 const specialOrder = require('../models').specialOrder;
 const extraOrder = require('../models').extraOrder;
+const discountOrder = require('../models').discountOrder;
 const MenuFood = require('../models').MenuFood;
 const MenuBeveragesSpecific = require('../models').MenuBeveragesSpecific;
 const MenuBeverages = require('../models').MenuBeverages;
 const MenuSpecial = require('../models').MenuSpecial;
 const MenuExtra = require('../models').MenuExtra;
+const discount = require('../models').discount;
 const User = require('../models').User;
 const Sales = require('../models').Sales;
 
@@ -68,6 +70,10 @@ var OrderController = {
                     as: 'extra'
                 },
                 {
+                    model: discount,
+                    as: 'discount'
+                },
+                {
                     model: User
                 },
                 {
@@ -76,7 +82,9 @@ var OrderController = {
             ]
         })
             .then(order => res.status(200).json(order))
-            .catch(error => res.status(400).send(error));
+            .catch(error => //res.status(400).send(error)
+                console.log(error)
+            );
     },
 
     create(req, res,) {
@@ -88,6 +96,7 @@ var OrderController = {
     //-------------------------------------------------
     saveItems(req, res) {
         let items = req.body.items;
+        console.log(items)
         if(items.beverages.length > 0) {
             items.beverages.forEach(b =>  {
                 BeverageOrder.create(b).then(beverageCreated => {
@@ -113,6 +122,13 @@ var OrderController = {
             items.extra.forEach(e => {
                 extraOrder.create(e).then(extraCreated => {
                     res.json({ newExtra: extraCreated })
+                })
+            })
+        }
+        if(items.discounts.length > 0) {
+            items.discounts.forEach(e => {
+                discountOrder.create(e).then(discountCreated => {
+                    res.json({ newDiscount: discountCreated })
                 })
             })
         }
@@ -151,6 +167,27 @@ var OrderController = {
         extraOrder.update(orderExtraData, query)
             .then(extraOrderUpdated => {
                 res.json({ newExtra: extraOrderUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    updateDiscount(req,res) {
+        let discountData = req.body.discountData;
+        discountOrder.create(discountData)
+            .then(discountUpdated => {
+                res.json({ newDiscount: discountUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    removeDiscount(req,res) {
+        let [discountId,orderId] = req.body.discountId;
+        discountOrder.destroy({
+            where: {
+                discountId: discountId,
+                orderId: orderId
+            }
+        })
+            .then(discountUpdated => {
+                res.json({ deletedDiscount: discountUpdated })
             })
             .catch(err => res.status(500).send(err));
     },

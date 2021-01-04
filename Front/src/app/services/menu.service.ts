@@ -131,4 +131,28 @@ export class MenuService {
         extraId: extraId
     }).toPromise()
   }
+  // discounts 
+
+  addDiscount(discountData: any) {
+    return this._http.post('https://db.ezecafe.com.mx/api/menu/newDiscount', {
+      discountData: discountData
+    }).toPromise();
+  }
+  updateDiscount(discountData: any, discountId: any) {
+      return this._http.post('https://db.ezecafe.com.mx/api/menu/updateDiscount',{
+        discountData: discountData,
+        params: {
+          id: discountId
+        }
+    }).toPromise()
+  }
+  showDiscount() {
+      return this._http.get('https://db.ezecafe.com.mx/api/menu/listAllDiscount').toPromise()
+  }
+
+  deleteDiscount(discountId: any) {
+      return this._http.post('https://db.ezecafe.com.mx/api/menu/deleteDiscount',{
+        discountId: discountId
+    }).toPromise()
+  }
 }

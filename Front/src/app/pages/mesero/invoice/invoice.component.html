@@ -12,12 +12,17 @@
             <div class="name">{{item.name}}</div>
             <div class="price">${{item.price}}</div>
         </li>
+        <p class="center" *ngIf=discountItems>------ Descuentos -----</p>
+        <li *ngFor="let i of discountItems">
+            <div>{{i.name}}</div>
+            <div>
+                {{ i.type == 'percentage' ? '-' + i.amount + '%' : '- $' + i.amount }}</div></li>
         <li class="total">
             <div>
                 Total:
             </div>
             <div>
-                ${{totalAmount}} MN
+                ${{amountDiscount}} MN
             </div>
         </li>
     </ul>

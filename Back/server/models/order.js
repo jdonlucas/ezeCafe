@@ -52,7 +52,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'orderId',
       onDelete: 'cascade',
       hooks: true
-    })
+    });
+    Order.belongsToMany(models.discount,{
+      through: 'discountOrder',
+      as: 'discount',
+      foreignKey: 'orderId',
+      onDelete: 'cascade',
+      hooks: true
+    });
   };
 
   return Order;

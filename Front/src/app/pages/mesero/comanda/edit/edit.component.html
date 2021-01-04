@@ -14,12 +14,22 @@
             </form>
             <div class="whiteframe">
                 <ul class="itemList">
-                    <li *ngFor="let i of itemsList"><div><button (click)="removeItem(i);"><fa-icon [icon]="faTrash"></fa-icon></button>&emsp;{{i.name}}</div><div>${{i.price}}</div></li>
+                    <li *ngFor="let i of itemsList">
+                        <div><button (click)="removeItem(i);">
+                            <fa-icon [icon]="faTrash"></fa-icon></button>&emsp;{{i.name}}</div>
+                            <div>${{i.price}}</div></li>
+                </ul>
+                <ul class="itemList">
+                    <li *ngFor="let i of discountItems">
+                        <div><button (click)="removeDiscount(i);">
+                            <fa-icon [icon]="faTrash"></fa-icon></button>&emsp;{{i.name}}</div>
+                            <div>
+                                {{ i.type == 'percentage' ? '-' + i.amount + '%' : '- $' + i.amount }}</div></li>
                 </ul>
                 <div class="total">
                     <div class="totalContent">
                         <p>Total:</p>
-                        <p>${{totalAmount}} mxn</p>
+                        <p>${{amountDiscount}} mxn</p>
                     </div>
                 </div>
             </div>
@@ -30,6 +40,7 @@
                 <button id="foodButton" (click)="toggle($event)">Alimentos</button>
                 <button id="menuButton" (click)="toggle($event)">Promociones</button>
                 <button id="extraButton" (click)="toggle($event)">Extras</button>
+                <button id="discountButton" (click)="toggle($event)">Descuentos</button>
             </div>
             <div class="menuContent">
                 <div id="food" class="button-matrix" *ngIf="showFood">
@@ -43,6 +54,9 @@
                 </div>
                 <div id="extra" class="button-matrix" *ngIf="showExtra">
                     <button *ngFor="let extra of extraList" type="button" class="butn {{extra.type}}" (click)="addExtra(extra)">{{extra.product}}</button>
+                </div>
+                <div id="discount" class="button-matrix" *ngIf="showDiscount">
+                    <button *ngFor="let discount of discountList" type="button" class="butn {{discount.type}}" (click)="addDiscount(discount)">{{discount.name}}</button>
                 </div>
                 <div id="controlButtons">
                     <button class="ezeButton" (click)="changeName()">Regresar</button>
@@ -116,6 +130,16 @@
     <div id="alertOrder" *ngIf="alert">
         <h2>¡No puedes cerrar comanda en ceros!</h2>
         <p>._.</p>
+    </div>
+    <div class="alertDiscount" *ngIf="showAlert">
+        <h2>¡Ya se ha aplicado este descuento!</h2>
+        <p>._.</p>
+        <button class="ezeButton" (click)="confirmClose()">Cerrar</button>
+    </div>
+    <div class="alertDiscount" *ngIf="showAlert2">
+        <h2>Añade al menos un articulo para agregar descuentos!</h2>
+        <p>._.</p>
+        <button class="ezeButton" (click)="confirmClose()">Cerrar</button>
     </div>
 </div>
 <div class="backgroundDiv" *ngIf="showSpecific || showConfirm" (click)="hideSpecific()"></div>

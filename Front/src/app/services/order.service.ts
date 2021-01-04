@@ -82,5 +82,15 @@ export class OrderService {
       }
     }).toPromise();
   }
+  updateDiscount(discountData: any) {
+    return this._http.post('https://db.ezecafe.com.mx/api/order/updateDiscount', {
+      discountData: discountData
+    }).toPromise();
+  }
+  removeDiscount(discountId: any, orderId: any) {
+    return this._http.post('https://db.ezecafe.com.mx/api/order/removeDiscount', {
+      discountId: [discountId, orderId]
+    }).toPromise();
+  }
     
 }

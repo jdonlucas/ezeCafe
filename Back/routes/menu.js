@@ -4,6 +4,7 @@ const MenuBeveragesController = require('../server/controllers/MenuBeveragesCont
 const MenuFoodController = require('../server/controllers/MenuFoodController');
 const MenuSpecialController = require('../server/controllers/MenuSpecialController');
 const MenuExtraController = require('../server/controllers/MenuExtraController');
+const DiscountController = require('../server/controllers/DiscountController');
 
 //routes for food menu
 router.post('/newFood', MenuFoodController.create);
@@ -34,5 +35,12 @@ router.post('/updateExtra', MenuExtraController.update);
 router.get('/listAllExtra', MenuExtraController.index);
 router.post('/showExtra', MenuExtraController.show);
 router.post('/deleteExtra', MenuExtraController.delete);
+//routes for discounts
+router.post('/newDiscount', DiscountController.create);
+router.post('/updateDiscount', DiscountController.update);
+router.get('/listAllDiscount', DiscountController.index);
+router.post('/showDiscount', DiscountController.show);
+router.post('/deleteDiscount', DiscountController.delete);
+
 
 module.exports = router;

@@ -6,6 +6,7 @@ import { BebidasComponent } from './bebidas/bebidas.component';
 import { EspecialComponent } from './especial/especial.component';
 import { HomeComponent } from './home/home.component';
 import { ExtraComponent } from './extra/extra.component';
+import { DiscountsComponent } from './discounts/discounts.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'alimentos', component: AlimentosComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
   { path: 'bebidas', component: BebidasComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
   { path: 'especial', component: EspecialComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
-  { path: 'extra', component: ExtraComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }}
+  { path: 'extra', component: ExtraComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }},
+  { path: 'descuentos', component: DiscountsComponent, canActivate: [UserGuard], data: { whichUser: 'Admin' }}
 ];
 
 @NgModule({

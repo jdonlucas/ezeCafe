@@ -18,10 +18,12 @@ export class InvoiceComponent implements OnInit {
   public menuItem = [];
   public itemsList = [];
   public extraItem = [];
+  public discountItems = [];
   public orderName: any;
   public employee: any;
   public payment: any;
   public totalAmount: number;
+  public amountDiscount: number;
   public errors: any
   public show = false;
   public card = true;
@@ -40,6 +42,7 @@ export class InvoiceComponent implements OnInit {
       this.beveragesItem = res[0].beverages;
       this.menuItem = res[0].special;
       this.extraItem = res[0].extra;
+      this.discountItems = res[0].discount;
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){
         for(let j=0;j<this.foodItem[i].FoodOrder.quantity;j++){
@@ -65,9 +68,25 @@ export class InvoiceComponent implements OnInit {
           this.totalAmount = this.totalAmount + parseFloat(this.extraItem[i].price);
         }
       }
+
+      this.checkDiscounts();
       Promise.all(this.itemsList)
         .then(() => this.printService.onDataReady());
     }).catch(err => { this.errors = err; })
+  }
+  checkDiscounts() {
+    if(this.discountItems.length) {
+      this.amountDiscount = this.totalAmount;
+      this.discountItems.forEach( discount => {
+        if (discount.type == 'percentage') {
+          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
+        } else {
+          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
+        }
+      })
+    } else {
+      this.amountDiscount = this.totalAmount;
+    }
   }
 
 }

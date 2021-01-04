@@ -30,3 +30,7 @@
 .ticket {
   margin-top: 20px;
 }
+.center {
+  margin: auto;
+  width: fit-content;
+}
