@@ -34,5 +34,11 @@ router.post('/updateExtra', MenuExtraController.update);
 router.get('/listAllExtra', MenuExtraController.index);
 router.post('/showExtra', MenuExtraController.show);
 router.post('/deleteExtra', MenuExtraController.delete);
+//routes for discounts
+router.post('/newDiscount', DiscountController.create);
+router.post('/updateDiscount', DiscountController.update);
+router.get('/listAllDiscount', DiscountController.index);
+router.post('/showDiscount', DiscountController.show);
+router.post('/deleteDiscount', DiscountController.delete);
 
 module.exports = router;

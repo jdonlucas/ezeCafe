@@ -7,31 +7,33 @@ const FoodOrder = require('../models').FoodOrder;
 const BeverageOrder = require('../models').BeveragesOrder;
 const specialOrder = require('../models').specialOrder;
 const extraOrder = require('../models').extraOrder;
+const discountOrder = require('../models').discountOrder;
 const MenuFood = require('../models').MenuFood;
 const MenuBeveragesSpecific = require('../models').MenuBeveragesSpecific;
 const MenuBeverages = require('../models').MenuBeverages;
 const MenuSpecial = require('../models').MenuSpecial;
 const MenuExtra = require('../models').MenuExtra;
+const discount = require('../models').discount;
 const User = require('../models').User;
 const Sales = require('../models').Sales;
 
 var OrderController = {
     index(req, res) {
         let date = moment(req.body.date, 'DD-MM-YYYY');
-        return Order.findAll({
-		where: {
-		    createdAt: {
-		   	[Op.gt]: date.toDate(),
-			[Op.lt]: date.add(1,'days').toDate()
-		    }
-		}, 
-		include: [
-            	    {
-                	model: User
-            	    },
-            	    {
-                	model: Sales
-            	    }
+        return Order.findAll({ 
+            where: {
+                createdAt: {
+                    [Op.gt]: date.format(),
+                    [Op.lt]: date.add(1,'days').format()
+                }
+            },
+            include: [
+                {
+                    model: User
+                },
+                {
+                    model: Sales
+                }
         ]})
             .then(orderHistory => res.status(200).json({ orderHistory }))
             .catch(error => res.status(400).send(error));
@@ -39,7 +41,6 @@ var OrderController = {
 
     show(req, res) {
         const orderId = req.body.orderId;
-        console.log(orderId)
         return Order.findAll({
             where: {
                 id: orderId,
@@ -69,6 +70,10 @@ var OrderController = {
                     as: 'extra'
                 },
                 {
+                    model: discount,
+                    as: 'discount'
+                },
+                {
                     model: User
                 },
                 {
@@ -77,7 +82,9 @@ var OrderController = {
             ]
         })
             .then(order => res.status(200).json(order))
-            .catch(error => res.status(400).send(error));
+            .catch(error => //res.status(400).send(error)
+                console.log(error)
+            );
     },
 
     create(req, res,) {
@@ -117,6 +124,13 @@ var OrderController = {
                 })
             })
         }
+        if(items.discounts.length > 0) {
+            items.discounts.forEach(e => {
+                discountOrder.create(e).then(discountCreated => {
+                    res.json({ newDiscount: discountCreated })
+                })
+            })
+        }
     },
     //-------------------------------------------------
     updateFoodOrder(req,res) {
@@ -152,6 +166,27 @@ var OrderController = {
         extraOrder.update(orderExtraData, query)
             .then(extraOrderUpdated => {
                 res.json({ newExtra: extraOrderUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    updateDiscount(req,res) {
+        let discountData = req.body.discountData;
+        discountOrder.create(discountData)
+            .then(discountUpdated => {
+                res.json({ newDiscount: discountUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    removeDiscount(req,res) {
+        let [discountId,orderId] = req.body.discountId;
+        discountOrder.destroy({
+            where: {
+                discountId: discountId,
+                orderId: orderId
+            }
+        })
+            .then(discountUpdated => {
+                res.json({ deletedDiscount: discountUpdated })
             })
             .catch(err => res.status(500).send(err));
     },
