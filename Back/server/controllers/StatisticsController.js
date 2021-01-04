@@ -126,11 +126,12 @@ var StatisticsController = {
     },
     showYear(req,res) {
         let date = req.body.date;
+        let more = parseInt(date) + 1;
         return Sales.findAll({
                 where: {
                     createdAt: {
                         [Op.gt]: new Date('01-01-' + date),
-                        [Op.lt]: new Date('12-31-' + date)
+                        [Op.lt]: new Date('01-01-' + more)
                     }
                 },
                 order: [ ['createdAt', 'ASC'] ]
