@@ -126,13 +126,11 @@ var StatisticsController = {
     },
     showYear(req,res) {
         let date = req.body.date;
-        let less = parseInt(date) - 1;
-        let more = parseInt(date) + 1;
         return Sales.findAll({
                 where: {
                     createdAt: {
-                        [Op.gt]: new Date('12-31-' + less),
-                        [Op.lt]: new Date('01-01-' + more)
+                        [Op.gt]: new Date('01-01-' + date),
+                        [Op.lt]: new Date('12-31-' + date)
                     }
                 },
                 order: [ ['createdAt', 'ASC'] ]
@@ -140,8 +138,6 @@ var StatisticsController = {
             .then(salesHistory => {
                 let totalDay = 0.0;
                 let startDate = moment(salesHistory[0].createdAt).locale('es').format('MMMM');
-                console.log(startDate)
-                console.log(salesHistory[0])
                 let totalHour = [];
                 for(let i=0;i<salesHistory.length;i++) {
                     if (moment(salesHistory[i].createdAt).locale('es').format('MMMM') != startDate) {
@@ -182,7 +178,7 @@ var StatisticsController = {
                 })
                 .catch(err => res.status(400).send(err))
             } else if (option == 'year') {
-                let date = moment(req.body.date).format('YYYY');
+                let date = req.body.date;
                 let less = parseInt(date) - 1;
                 let more = parseInt(date) + 1;
                 return FoodOrder.findAll({
@@ -270,7 +266,7 @@ var StatisticsController = {
                 })
                 .catch(err => res.status(400).send(err))
             } else if (option == 'year') {
-                let date = moment(req.body.date).format('YYYY');
+                let date = req.body.date;
                 let less = parseInt(date) - 1;
                 let more = parseInt(date) + 1;
                 return DrinkOrder.findAll({
