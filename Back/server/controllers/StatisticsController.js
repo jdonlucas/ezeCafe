@@ -125,7 +125,7 @@ var StatisticsController = {
             .catch(error => res.status(400).send(error));
     },
     showYear(req,res) {
-        let date = moment(req.body.date).format('YYYY');
+        let date = req.body.date;
         let less = parseInt(date) - 1;
         let more = parseInt(date) + 1;
         console.log(date, less, more)
