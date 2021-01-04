@@ -9,6 +9,7 @@ const OrderController = require('./OrderController');
 const SalesController = require('./SalesController');
 const NoticeController = require('./NoticeController');
 const StatisticsController = require('./StatisticsController');
+const DiscountController = require('./DiscountController');
 
 module.exports = {
   UserController,
@@ -21,5 +22,6 @@ module.exports = {
   OrderController,
   SalesController,
   NoticeController,
-  StatisticsController
+  StatisticsController,
+  DiscountController
 };
