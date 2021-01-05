@@ -126,12 +126,11 @@ var StatisticsController = {
     },
     showYear(req,res) {
         let date = req.body.date;
-        let less = parseInt(date) - 1;
         let more = parseInt(date) + 1;
         return Sales.findAll({
                 where: {
                     createdAt: {
-                        [Op.gt]: new Date('12-31-' + less),
+                        [Op.gt]: new Date('01-01-' + date),
                         [Op.lt]: new Date('01-01-' + more)
                     }
                 },
@@ -178,7 +177,7 @@ var StatisticsController = {
                 })
                 .catch(err => res.status(400).send(err))
             } else if (option == 'year') {
-                let date = moment(req.body.date).format('YYYY');
+                let date = req.body.date;
                 let less = parseInt(date) - 1;
                 let more = parseInt(date) + 1;
                 return FoodOrder.findAll({
@@ -266,7 +265,7 @@ var StatisticsController = {
                 })
                 .catch(err => res.status(400).send(err))
             } else if (option == 'year') {
-                let date = moment(req.body.date).format('YYYY');
+                let date = req.body.date;
                 let less = parseInt(date) - 1;
                 let more = parseInt(date) + 1;
                 return DrinkOrder.findAll({

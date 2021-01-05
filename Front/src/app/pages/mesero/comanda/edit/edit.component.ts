@@ -419,10 +419,10 @@ export class EditComponent implements OnInit {
   }
   addDiscount(discount) {
     let discountItem = this.discountItems.find(item => item.id == discount.id)
+    let stack_order = this.discountItems.length ? this.discountItems.length + 1 : 1;
     if(typeof discountItem == 'undefined'){
       if(this.itemsList.length) {
-        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount});
-        //this.itemsList.push({type:'discount',id: discount.id,name: discount.name,amount: discount.amount,discounType: discount.type});
+        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order});
         if (discount.type == 'percentage') {
           this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
         } else {
@@ -431,7 +431,8 @@ export class EditComponent implements OnInit {
         this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
         this._orderService.updateDiscount({
           discountId: discount.id,
-          orderId: this.orderId
+          orderId: this.orderId,
+          stack_order: stack_order
         })
       } else {
         this.confirm = false;
@@ -567,13 +568,21 @@ export class EditComponent implements OnInit {
   }
   checkDiscounts() {
     if(this.discountItems.length) {
+      let stack_order = 1;
       this.amountDiscount = this.totalAmount;
       this.discountItems.forEach( discount => {
+        discount.stack_order = stack_order;
+        this._orderService.updateDiscount({
+          discountId: discount.id,
+          orderId: this.orderId,
+          stack_order: stack_order
+        })
         if (discount.type == 'percentage') {
           this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
         } else {
           this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
         }
+        stack_order++;
       })
     } else {
       this.amountDiscount = this.totalAmount;

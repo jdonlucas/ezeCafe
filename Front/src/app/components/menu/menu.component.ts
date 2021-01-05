@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { AuthService } from 'src/app/services/auth.service';
@@ -44,13 +44,15 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private _store: Store<AppState>,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(auth => {
       let authData = auth.authData ? auth.authData : {};
       this.userData = authData.user ? authData.user : {};
+      this.ref.markForCheck();
     });
     
   }

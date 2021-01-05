@@ -269,7 +269,6 @@ export class ChartsComponent implements OnInit {
 
   onChangeYearDate() {
     let year = String(this.yearForm.value.yearSelect);
-    console.log(year)
     this.days = [];
     this.ventas = [];
     this.totalYear = 0.0;

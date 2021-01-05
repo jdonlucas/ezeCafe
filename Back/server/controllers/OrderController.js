@@ -67,7 +67,7 @@ var OrderController = {
                 },
                 {
                     model: MenuExtra,
-                    as: 'extra'
+                    as: 'extra',
                 },
                 {
                     model: discount,
@@ -79,6 +79,9 @@ var OrderController = {
                 {
                     model: Sales
                 }
+            ],
+            order: [
+                [discount, discountOrder, 'stack_order', 'ASC']
             ]
         })
             .then(order => res.status(200).json(order))
@@ -100,35 +103,35 @@ var OrderController = {
         if(items.beverages.length > 0) {
             items.beverages.forEach(b =>  {
                 BeverageOrder.create(b).then(beverageCreated => {
-                    res.json({ newBeverage: beverageCreated })
+                    console.log(beverageCreated)
                 })
             })
         }
         if(items.food.length > 0) {
             items.food.forEach(f => {
                 FoodOrder.create(f).then(foodCreated => {
-                    res.json({ newFood: foodCreated })
+                    console.log(foodCreated)
                 })
             })
         }
         if(items.special.length > 0) {
             items.special.forEach(s => {
                 specialOrder.create(s).then(specialCreated => {
-                    res.json({ newSpecial: specialCreated })
+                    console.log(specialCreated)
                 })
             })
         }
         if(items.extra.length > 0) {
             items.extra.forEach(e => {
                 extraOrder.create(e).then(extraCreated => {
-                    res.json({ newExtra: extraCreated })
+                    console.log(extraCreated)
                 })
             })
         }
         if(items.discounts.length > 0) {
             items.discounts.forEach(e => {
                 discountOrder.create(e).then(discountCreated => {
-                    res.json({ newDiscount: discountCreated })
+                    console.log(discountCreated)
                 })
             })
         }

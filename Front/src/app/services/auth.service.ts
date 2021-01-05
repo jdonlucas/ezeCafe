@@ -108,7 +108,7 @@ export class AuthService {
 
   unsetAuthData() {
     localStorage.removeItem('authData');
-    this._store.dispatch(new SetAuthDataAction(null));
+    this._store.dispatch(new SetAuthDataAction({}));
   }
 
   isAuth(noAuth = false) {
@@ -124,7 +124,7 @@ export class AuthService {
         if (noAuth) { // si el usuario no esta autenticado le permite ver la vista del login
           isAuth = !isAuth;
         }
-        if (!isAuth && !noAuth) { // si el token expiró cierra la sesion del usuario
+        if (authData.token && today > expDate) { // si el token expiró cierra la sesion del usuario
           this.logout();
           authData = {}; // y vacia la info del usuario
         } else if (!isAuth && noAuth) { // si el usuario esta autenticado y quiere acceder a login lo manda al home
