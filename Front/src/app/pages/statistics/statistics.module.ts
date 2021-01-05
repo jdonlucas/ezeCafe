@@ -12,9 +12,11 @@ import { MatRadioModule } from '@angular/material/radio';
 
 import { ChartsModule } from 'ng2-charts';
 import { StickersComponent } from './stickers/stickers.component';
+import { ProductsComponent } from './products/products.component';
+import { ChartIndexComponent } from './chart-index/chart-index.component';
 
 @NgModule({
-  declarations: [ChartsComponent, StickersComponent],
+  declarations: [ChartsComponent, StickersComponent, ProductsComponent, ChartIndexComponent],
   imports: [
     CommonModule,
     StatisticsRoutingModule,

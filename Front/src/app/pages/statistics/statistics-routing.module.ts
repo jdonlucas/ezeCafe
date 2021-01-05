@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserGuard } from 'src/app/guards/user.guard';
-import { ChartsComponent } from './charts/charts.component';
+import { ChartIndexComponent } from './chart-index/chart-index.component';
 import { StickersComponent } from './stickers/stickers.component';
 
 
 const routes: Routes = [
-  { path: '', component: ChartsComponent, canActivate: [UserGuard], data: { whichUser: 'SuperAdmin' }},
+  { path: '', component: ChartIndexComponent, canActivate: [UserGuard], data: { whichUser: 'SuperAdmin' }},
   { path: 'stickers', component: StickersComponent, canActivate: [UserGuard], data: { whichUser: 'Mesero' }}
 ];
 
