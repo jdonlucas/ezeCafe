@@ -41,5 +41,6 @@ router.post('/updateDiscount', DiscountController.update);
 router.get('/listAllDiscount', DiscountController.index);
 router.post('/showDiscount', DiscountController.show);
 router.post('/deleteDiscount', DiscountController.delete);
+router.post('/checkDiscount', DiscountController.check);
 
 module.exports = router;

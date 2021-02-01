@@ -1,4 +1,8 @@
 const discount = require('../models').discount;
+const discountOrder = require('../models').discountOrder;
+const Order = require('../models').Order;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 var DiscountController = {
     index(req, res) {
@@ -49,6 +53,22 @@ var DiscountController = {
             })
             .catch(err => res.status(500).send(err));
     },
+    async check(req,res) {
+        let today = new Date();
+        let discountId = req.body.discountId;
+        let employeeId = req.body.employeeId;
+        const hasBeenUsed = await discountOrder.findOne({ where: {discountId: discountId,
+            createdAt: {
+                [Op.gte]: today.setHours(0,0,0,0)
+            }
+        }})
+        let byThisUser = null;
+        if(hasBeenUsed) {
+            byThisUser = await Order.findOne({ where: { id: hasBeenUsed.orderId,
+                UserId: employeeId} })
+        }
+        return res.json({ discountUsed: byThisUser ? true : false })
+    }
 
 };
 
