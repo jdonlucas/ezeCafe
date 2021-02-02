@@ -99,7 +99,6 @@ var OrderController = {
     //-------------------------------------------------
     saveItems(req, res) {
         let items = req.body.items;
-        console.log(items)
         if(items.beverages.length > 0) {
             items.beverages.forEach(b =>  {
                 BeverageOrder.create(b).then(beverageCreated => {
@@ -173,9 +172,18 @@ var OrderController = {
             })
             .catch(err => res.status(500).send(err));
     },
-    updateDiscount(req,res) {
+    createDiscount(req,res) {
         let discountData = req.body.discountData;
         discountOrder.create(discountData)
+            .then(discountUpdated => {
+                res.json({ newDiscount: discountUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    updateDiscount(req,res) {
+        let discountData = req.body.discountData;
+        let query = { where: { id: req.body.discountId }};
+        discountOrder.update(discountData, query)
             .then(discountUpdated => {
                 res.json({ newDiscount: discountUpdated })
             })

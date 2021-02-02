@@ -8,6 +8,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CommentStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-discounts',
@@ -53,6 +54,12 @@ export class DiscountsComponent implements OnInit {
         ]),
         amount: new FormControl('',[
           Validators.required
+        ]),
+        onePerCustomer: new FormControl(false,[
+          Validators.required
+        ]),
+        onePerEmployee: new FormControl(false,[
+          Validators.required
         ])
       });
       this.editDiscount = new FormGroup({
@@ -63,6 +70,12 @@ export class DiscountsComponent implements OnInit {
           Validators.required
         ]),
         amountEdit: new FormControl('',[
+          Validators.required
+        ]),
+        onePerCustomerEdit: new FormControl(false,[
+          Validators.required
+        ]),
+        onePerEmployeeEdit: new FormControl(false,[
           Validators.required
         ])
       })
@@ -80,7 +93,9 @@ export class DiscountsComponent implements OnInit {
       const discountData = {
         name: this.addDiscount.value.name,
         type: this.addDiscount.value.type,
-        amount: this.addDiscount.value.amount
+        amount: this.addDiscount.value.amount,
+        one_per_customer: this.addDiscount.value.onePerCustomer,
+        one_per_employee: this.addDiscount.value.onePerEmployee
       }
       this._menuService.addDiscount(discountData)
         .then(response => {
@@ -88,19 +103,23 @@ export class DiscountsComponent implements OnInit {
           this.showDiscount();
         })
     }
-    edit(id: any,name: any,type: any,amount: any) {
+    edit(id: any,name: any,type: any,amount: any,onePerCustomer: any,onePerEmployee: any) {
       this.add = false;
       this.editM = true;
       this.parentId = id;
       this.editDiscount.controls['nameEdit'].setValue(name);
       this.editDiscount.controls['typeEdit'].setValue(type);
       this.editDiscount.controls['amountEdit'].setValue(amount);
+      this.editDiscount.controls['onePerCustomerEdit'].setValue(onePerCustomer);
+      this.editDiscount.controls['onePerEmployeeEdit'].setValue(onePerEmployee);
     }
     async updateDiscount() {
       const newDiscountData = {
         name: this.editDiscount.value.nameEdit,
         type: this.editDiscount.value.typeEdit,
-        amount: this.editDiscount.value.amountEdit
+        amount: this.editDiscount.value.amountEdit,
+        one_per_customer: this.editDiscount.value.onePerCustomerEdit,
+        one_per_employee: this.editDiscount.value.onePerEmployeeEdit
       }
       this._spinnerService.show();
       await this._menuService.updateDiscount(newDiscountData,this.parentId)

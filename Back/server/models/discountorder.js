@@ -21,7 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    stack_order: DataTypes.INTEGER
+    stack_order: DataTypes.INTEGER,
+    quantity: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    }
   }, {});
   discountOrder.associate = function(models) {
     // associations can be defined here

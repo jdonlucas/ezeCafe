@@ -23,6 +23,7 @@ export class InspectComponent implements OnInit {
   public itemsList = [];
   public extraItem = [];
   public discountItems = [];
+  public discountItemsList = [];
   public orderName: any;
   public employee: any;
   public payment: any;
@@ -78,7 +79,12 @@ export class InspectComponent implements OnInit {
           this.itemsList.push({name: this.extraItem[i].product, price: this.extraItem[i].price});
         }
       }
-      this.checkDiscounts();
+      for(let i=0;i<this.discountItems.length;i++){
+        for(let j=0;j<this.discountItems[i].discountOrder.quantity;j++){
+          this.discountItemsList.push({name: this.discountItems[i].name, type: this.discountItems[i].type, amount: this.discountItems[i].amount});
+        }
+      }
+      this.amountDiscount = this.totalAmount;
     }).catch(err => { this.errors = err; })
   }
   showEdit() {
@@ -118,19 +124,5 @@ export class InspectComponent implements OnInit {
   }
   public onChange(event: Event): void {
     this.paymentForm.get('change').setValue(parseFloat((<HTMLInputElement>event.target).value) - this.amountDiscount);
-  }
-  checkDiscounts() {
-    if(this.discountItems.length) {
-      this.amountDiscount = this.totalAmount;
-      this.discountItems.forEach( discount => {
-        if (discount.type == 'percentage') {
-          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
-        } else {
-          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
-        }
-      })
-    } else {
-      this.amountDiscount = this.totalAmount;
-    }
   }
 }

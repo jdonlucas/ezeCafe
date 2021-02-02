@@ -155,4 +155,12 @@ export class MenuService {
         discountId: discountId
     }).toPromise()
   }
+
+  /* Check discount */
+  checkEmployeeDiscount(discountId, employeeId) {
+    return this._http.post('https://db.ezecafe.com.mx/api/menu/checkDiscount',{
+      discountId: discountId,
+      employeeId: employeeId
+  }).toPromise()
+  }
 }

@@ -7,7 +7,7 @@ import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { PrintService } from 'src/app/services/print.service';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCoins, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Router } from "@angular/router";
 import { computeMsgId } from '@angular/compiler';
 
@@ -41,6 +41,8 @@ export class MenuComponent implements OnInit {
   public menuItems = [];
   public extraItems = [];
   public discountItems = [];
+  public discountItemsList = [];
+  private employeeDiscount = [];
   public totalAmount: number;
   public amountDiscount: number;
   public showConfirm = false;
@@ -151,6 +153,12 @@ export class MenuComponent implements OnInit {
         this.discountList = response['discountList'].sort((a,b) => 
           a.type.localeCompare(b.type)
         );
+        const employees = this.discountList.filter(discountEmpployee => discountEmpployee.one_per_employee)
+        for(let i in employees) {
+          this._menuService.checkEmployeeDiscount(employees[i].id,this.userData.id).then((resp: {discountUsed: false}) => {
+            this.employeeDiscount.push({id: employees[i].id, hasBeenUsed: resp.discountUsed})
+          })
+        }
       })
       .catch(err => this.errors = err);
   }
@@ -272,9 +280,13 @@ export class MenuComponent implements OnInit {
   addDiscount(discount) {
     let discountItem = this.discountItems.find(item => item.id == discount.id)
     let stack_order = this.discountItems.length ? this.discountItems.length + 1 : 1;
+    let discountFromList = this.discountList.find(d => d.id == discount.id);
     if(typeof discountItem == 'undefined'){
       if(this.itemsList.length) {
-        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order});
+        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order,
+          quantity: 1});
+          this.discountItemsList.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order,
+            quantity: 1});
         if (discount.type == 'percentage') {
           this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
         } else {
@@ -286,9 +298,21 @@ export class MenuComponent implements OnInit {
         this.closeC = true;
       }
     } else {
-      this.confirm = false;
-      this.showAlert = true;
-      this.closeC = true;
+      if(discountFromList.one_per_customer || discountFromList.one_per_employee) {
+        this.confirm = false;
+        this.showAlert = true;
+        this.closeC = true;
+      } else {
+        let index = this.discountItems.indexOf(discountItem)
+        this.discountItems[index].quantity = this.discountItems[index].quantity + 1;
+        this.discountItemsList.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order,
+          quantity: 1});
+        if (discount.type == 'percentage') {
+          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
+        } else {
+          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
+        }
+      }
     }
   }
 
@@ -336,7 +360,16 @@ export class MenuComponent implements OnInit {
     }
   }
   removeDiscount(item) {
-    this.discountItems = this.discountItems.filter( x => x.id !== item.id );
+    let list = this.discountItems.filter( x => x.id == item.id )
+    if(list[0].quantity == 1) {
+      this.discountItems = this.discountItems.filter( x => x.id !== item.id );
+      this.discountItemsList = this.discountItemsList.filter( x => x !== item);
+    } else {
+      this.discountItemsList = this.discountItemsList.filter( x => x !== item);
+      let discountItem = this.discountItems.find(item => item.id == item.id)
+      let index = this.discountItems.indexOf(discountItem)
+      this.discountItems[index].quantity = this.discountItems[index].quantity - 1;
+    }
     this.checkDiscounts();
   }
   toggleDiv(){
@@ -385,7 +418,8 @@ export class MenuComponent implements OnInit {
         discountData.push({
           discountId: this.discountItems[i].id,
           orderId: order.id,
-          stack_order: this.discountItems[i].stack_order
+          stack_order: this.discountItems[i].stack_order,
+          quantity: this.discountItems[i].quantity
         });
       };
       let orderItems = {
@@ -406,6 +440,7 @@ export class MenuComponent implements OnInit {
     this.confirm = true;
     this.alert = false;
     this.showAlert = false;
+    this.showAlert2 = false;
   }
 
   async closeOrder(){
@@ -452,7 +487,8 @@ export class MenuComponent implements OnInit {
           discountData.push({
             discountId: this.discountItems[i].id,
             orderId: this.order.id,
-            stack_order: this.discountItems[i].stack_order
+            stack_order: this.discountItems[i].stack_order,
+            quantity: this.discountItems[i].quantity
           });
         };
         let orderItems = {
@@ -528,7 +564,7 @@ export class MenuComponent implements OnInit {
     if(this.discountItems.length) {
       let stack_order = 1;
       this.amountDiscount = this.totalAmount;
-      this.discountItems.forEach( discount => {
+      this.discountItemsList.forEach( discount => {
         discount.stack_order = stack_order;
         if (discount.type == 'percentage') {
           this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
@@ -541,6 +577,13 @@ export class MenuComponent implements OnInit {
       this.amountDiscount = this.totalAmount;
     }
   }
-
+  checkEmployee(id) {
+    let used = this.employeeDiscount.filter(discount => discount.id == id);
+    if(used[0]) {
+      return !used[0].hasBeenUsed
+    } else {
+      return true
+    }
+  }
 }
 

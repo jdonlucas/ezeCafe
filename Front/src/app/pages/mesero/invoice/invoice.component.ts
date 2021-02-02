@@ -19,6 +19,7 @@ export class InvoiceComponent implements OnInit {
   public itemsList = [];
   public extraItem = [];
   public discountItems = [];
+  public discountItemsList = [];
   public orderName: any;
   public employee: any;
   public payment: any;
@@ -68,6 +69,11 @@ export class InvoiceComponent implements OnInit {
           this.totalAmount = this.totalAmount + parseFloat(this.extraItem[i].price);
         }
       }
+      for(let i=0;i<this.discountItems.length;i++){
+        for(let j=0;j<this.discountItems[i].discountOrder.quantity;j++){
+          this.discountItemsList.push({name: this.discountItems[i].name, type: this.discountItems[i].type,amount: this.discountItems[i].amount});
+        }
+      }
 
       this.checkDiscounts();
       Promise.all(this.itemsList)
@@ -77,7 +83,7 @@ export class InvoiceComponent implements OnInit {
   checkDiscounts() {
     if(this.discountItems.length) {
       this.amountDiscount = this.totalAmount;
-      this.discountItems.forEach( discount => {
+      this.discountItemsList.forEach( discount => {
         if (discount.type == 'percentage') {
           this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
         } else {

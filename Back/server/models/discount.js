@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     type: DataTypes.STRING,
     amount: DataTypes.FLOAT,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    one_per_customer: DataTypes.BOOLEAN,
+    one_per_employee: DataTypes.BOOLEAN
   }, {});
   discount.associate = function(models) {
     discount.belongsToMany(models.Order,{

@@ -9,7 +9,7 @@
                 <li *ngFor="let i of itemsList"><div>{{i.name}}</div><div>${{i.price}}</div></li>
             </ul>
             <ul class="itemList">
-                <li *ngFor="let i of discountItems">
+                <li *ngFor="let i of discountItemsList">
                     <div>{{i.name}}</div>
                     <div>
                         {{ i.type == 'percentage' ? '-' + i.amount + '%' : '- $' + i.amount }}</div></li>

@@ -177,3 +177,22 @@
 .others {
     background: #706c61;
 }
+.checkbox {
+    display: flex;
+}
+.checkbox input[type=checkbox] {
+    display: block;
+    width: fit-content;
+    margin-bottom: 0px;
+    margin-top: 4px;
+    margin-right: 5px;
+}
+.checkbox label {
+    position: relative;
+    top: unset;
+    left: unset;
+    transition: none;
+    transform: none;
+    transform-origin: unset;
+    color: inherit;
+}

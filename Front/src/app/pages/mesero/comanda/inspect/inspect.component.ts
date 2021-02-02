@@ -22,6 +22,7 @@ export class InspectComponent implements OnInit {
   public extraItem = [];
   public itemsList = [];
   public discountItems = [];
+  public discountItemsList = [];
   public orderName: any;
   public employee: any;
   public payment: any;
@@ -75,6 +76,11 @@ export class InspectComponent implements OnInit {
       for(let i=0;i<this.extraItem.length;i++){
         for(let j=0;j<this.extraItem[i].extraOrder.quantity;j++){
           this.itemsList.push({name: this.extraItem[i].product, price: this.extraItem[i].price});
+        }
+      }
+      for(let i=0;i<this.discountItems.length;i++){
+        for(let j=0;j<this.discountItems[i].discountOrder.quantity;j++){
+          this.discountItemsList.push({name: this.discountItems[i].name, type: this.discountItems[i].type, amount: this.discountItems[i].amount});
         }
       }
     }).catch(err => { this.errors = err; })

@@ -20,8 +20,8 @@
                             <div>${{i.price}}</div></li>
                 </ul>
                 <ul class="itemList">
-                    <li *ngFor="let i of discountItems">
-                        <div><button (click)="removeItem(i);">
+                    <li *ngFor="let i of discountItemsList">
+                        <div><button (click)="removeDiscount(i);">
                             <fa-icon [icon]="faTrash"></fa-icon></button>&emsp;{{i.name}}</div>
                             <div>
                                 {{ i.type == 'percentage' ? '-' + i.amount + '%' : '- $' + i.amount }}</div></li>
@@ -56,7 +56,12 @@
                     <button *ngFor="let extra of extraList" type="button" class="butn {{extra.type}}" (click)="addExtra(extra)">{{extra.product}}</button>
                 </div>
                 <div id="discount" class="button-matrix" *ngIf="showDiscount">
-                    <button *ngFor="let discount of discountList" type="button" class="butn {{discount.type}}" (click)="addDiscount(discount)">{{discount.name}}</button>
+                    <button *ngFor="let discount of discountList" type="button" 
+                                    class="butn {{discount.type}}" 
+                                    (click)="checkEmployee(discount.id) && addDiscount(discount)">
+                                    {{discount.name}}
+                                    <span *ngIf="!checkEmployee(discount.id)" class="warningDiscount">Ya has usado este descuento el dia de hoy</span>
+                    </button>
                 </div>
                 <div id="controlButtons">
                     <button class="ezeButton" (click)="saveOrder();">Guardar</button>

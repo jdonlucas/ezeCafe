@@ -30,8 +30,10 @@ export class EditComponent implements OnInit {
   public menuItem = [];
   public extraItem = [];
   public discountItems = [];
+  public discountItemsList = [];
   public itemsList = [];
   public discountList = [];
+  private employeeDiscount = [];
   public beveragesSpecificList: any;
   public showSpecific = false;
   public show = true;
@@ -91,7 +93,6 @@ export class EditComponent implements OnInit {
     this._orderService.showOrder(this.orderId).then(res => {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
-      this.menuItem = res[0].special;
       this.extraItem = res[0].extra;
       this.discountItems = res[0].discount;
       this.orderName = res[0].name ? res[0].name : res[0].id;
@@ -124,6 +125,12 @@ export class EditComponent implements OnInit {
           type: 'extra'});
           this.totalAmount = this.totalAmount + parseFloat(this.extraItem[i].price);
           this.amountDiscount = this.totalAmount;
+        }
+      }
+      for(let i=0;i<this.discountItems.length;i++){
+        for(let j=0;j<this.discountItems[i].discountOrder.quantity;j++){
+        this.discountItemsList.push({
+          id: this.discountItems[i].id,name: this.discountItems[i].name,type: this.discountItems[i].type, amount: this.discountItems[i].amount, stack_order: this.discountItems[i].stack_order});
         }
       }
       this.checkDiscounts();
@@ -190,6 +197,12 @@ export class EditComponent implements OnInit {
         this.discountList = response['discountList'].sort((a,b) => 
           a.type.localeCompare(b.type)
         );
+        const employees = this.discountList.filter(discountEmpployee => discountEmpployee.one_per_employee)
+        for(let i in employees) {
+          this._menuService.checkEmployeeDiscount(employees[i].id,this.userData.id).then((resp: {discountUsed: false}) => {
+            this.employeeDiscount.push({id: employees[i].id, hasBeenUsed: resp.discountUsed})
+          })
+        }
       })
       .catch(err => this.errors = err);
   }
@@ -303,7 +316,8 @@ export class EditComponent implements OnInit {
           quantity: 1
         }],
         special: [],
-        extra: []
+        extra: [],
+        discounts: []
       }
       this._orderService.saveOrderItems(orderItems).then((res) => {
         food.FoodOrder = res['newFood'];
@@ -335,7 +349,8 @@ export class EditComponent implements OnInit {
           orderId: this.orderId,
           quantity: 1
         }],
-        extra: []
+        extra: [],
+        discounts: []
       }
       this._orderService.saveOrderItems(orderItems).then((res) => {
         special.specialOrder = res['newSpecial'];
@@ -369,7 +384,8 @@ export class EditComponent implements OnInit {
           extraId: extra.id,
           orderId: this.orderId,
           quantity: 1
-        }]
+        }],
+        discounts: []
       }
       this._orderService.saveOrderItems(orderItems).then((res) => {
         extra.extraOrder = res['newExtra'];
@@ -404,7 +420,8 @@ export class EditComponent implements OnInit {
         }],
         food: [],
         special: [],
-        extra: []
+        extra: [],
+        discounts: []
       }
       this._orderService.saveOrderItems(orderItems).then((res) => {
         b.BeveragesOrder = res['newBeverage']
@@ -420,19 +437,24 @@ export class EditComponent implements OnInit {
   addDiscount(discount) {
     let discountItem = this.discountItems.find(item => item.id == discount.id)
     let stack_order = this.discountItems.length ? this.discountItems.length + 1 : 1;
+    let discountFromList = this.discountList.find(d => d.id == discount.id);
     if(typeof discountItem == 'undefined'){
       if(this.itemsList.length) {
-        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order});
+        this.discountItems.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order,
+          discountOrder: {quantity: 1}});
+          this.discountItemsList.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order,
+            quantity: 1});
         if (discount.type == 'percentage') {
           this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
         } else {
           this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
         }
         this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
-        this._orderService.updateDiscount({
+        this._orderService.createDiscount({
           discountId: discount.id,
           orderId: this.orderId,
-          stack_order: stack_order
+          stack_order: stack_order,
+          quantity: 1
         })
       } else {
         this.confirm = false;
@@ -440,9 +462,25 @@ export class EditComponent implements OnInit {
         this.closeC = true;
       }
     } else {
-      this.confirm = false;
-      this.showAlert = true;
-      this.closeC = true;
+      if(discountFromList.one_per_customer || discountFromList.one_per_employee) {
+        this.confirm = false;
+        this.showAlert = true;
+        this.closeC = true;
+      } else { 
+        let index = this.discountItems.indexOf(discountItem)
+        this.discountItems[index].discountOrder.quantity = this.discountItems[index].discountOrder.quantity + 1;
+        this.discountItemsList.push({id: discount.id,name: discount.name,type: discount.type, amount: discount.amount, stack_order: stack_order,
+          quantity: 1});
+        if (discount.type == 'percentage') {
+          this.amountDiscount = Number((this.amountDiscount * ((100 - discount.amount)/100)).toFixed(2));
+        } else {
+          this.amountDiscount = Number((this.amountDiscount - discount.amount).toFixed(2));
+        }
+        this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
+        this._orderService.updateDiscount(discountItem.discountOrder.id,{
+          quantity: this.discountItems[index].discountOrder.quantity
+        })
+      }
     }
   }
 
@@ -493,8 +531,20 @@ export class EditComponent implements OnInit {
     } 
   }
   removeDiscount(item) {
-    this.discountItems = this.discountItems.filter( x => x.id !== item.id );
-    this._orderService.removeDiscount(item.id, this.orderId)
+    let list = this.discountItems.filter( x => x.id == item.id )
+    if(list[0].quantity == 1) {
+      this.discountItems = this.discountItems.filter( x => x.id !== item.id );
+      this.discountItemsList = this.discountItemsList.filter( x => x !== item);
+      this._orderService.removeDiscount(item.id, this.orderId)
+    } else {
+      this.discountItemsList = this.discountItemsList.filter( x => x !== item);
+      let discountItem = this.discountItems.find(item => item.id == item.id)
+      let index = this.discountItems.indexOf(discountItem)
+      this.discountItems[index].quantity = this.discountItems[index].quantity - 1;
+      this._orderService.updateDiscount(discountItem.discountOder.id,{
+        quantity: this.discountItems[index].quantity
+      })
+    }
     this.checkDiscounts();
     this._orderService.updateOrder(this.orderId,{subtotal: this.amountDiscount});
   }
@@ -570,11 +620,9 @@ export class EditComponent implements OnInit {
     if(this.discountItems.length) {
       let stack_order = 1;
       this.amountDiscount = this.totalAmount;
-      this.discountItems.forEach( discount => {
+      this.discountItemsList.forEach( discount => {
         discount.stack_order = stack_order;
-        this._orderService.updateDiscount({
-          discountId: discount.id,
-          orderId: this.orderId,
+        this._orderService.updateDiscount(discount.id,{
           stack_order: stack_order
         })
         if (discount.type == 'percentage') {
@@ -586,6 +634,14 @@ export class EditComponent implements OnInit {
       })
     } else {
       this.amountDiscount = this.totalAmount;
+    }
+  }
+  checkEmployee(id) {
+    let used = this.employeeDiscount.filter(discount => discount.id == id);
+    if(used[0]) {
+      return !used[0].hasBeenUsed
+    } else {
+      return true
     }
   }
 
