@@ -67,7 +67,7 @@ var OrderController = {
                 },
                 {
                     model: MenuExtra,
-                    as: 'extra'
+                    as: 'extra',
                 },
                 {
                     model: discount,
@@ -172,9 +172,18 @@ var OrderController = {
             })
             .catch(err => res.status(500).send(err));
     },
-    updateDiscount(req,res) {
+    createDiscount(req,res) {
         let discountData = req.body.discountData;
         discountOrder.create(discountData)
+            .then(discountUpdated => {
+                res.json({ newDiscount: discountUpdated })
+            })
+            .catch(err => res.status(500).send(err));
+    },
+    updateDiscount(req,res) {
+        let discountData = req.body.discountData;
+        let query = { where: { id: req.body.discountId }};
+        discountOrder.update(discountData, query)
             .then(discountUpdated => {
                 res.json({ newDiscount: discountUpdated })
             })
