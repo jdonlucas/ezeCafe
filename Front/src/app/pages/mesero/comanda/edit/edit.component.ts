@@ -94,6 +94,7 @@ export class EditComponent implements OnInit {
       this.foodItem = res[0].food;
       this.beveragesItem = res[0].beverages;
       this.extraItem = res[0].extra;
+      this.menuItem = res[0].special;
       this.discountItems = res[0].discount;
       this.orderName = res[0].name ? res[0].name : res[0].id;
       for(let i=0;i<this.foodItem.length;i++){

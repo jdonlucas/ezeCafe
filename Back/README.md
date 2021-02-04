@@ -7,17 +7,6 @@
 PORT = 3000
 DEVELOPMENT_DATABASE_URL = "[postgres]://[user]:[password]@[host]:[port]/[database]"
 SECRET_KEY = "[secret key]"
-MAILER_HOST = "[HOST]"
-MAILER_PORT = [PORT]
-APP_EMAIL = "[email]"
-APP_EMAIL_PASSWORD = "[password]"
-APP_EMAIL_FROM = "[from]
-FACEBOOK_APP_ID = "[FACEBOOK_ID]"
-FACEBOOK_APP_SECRET = "[FACEBOOK_SECRET]"
-FACEBOOK_APP_CALLBACK_URL = "http://localhost:3000/api/auth/facebook/callback
-GOOGLE_CLIENT_ID = "[GOOGLE_ID]"
-GOOGLE_CLIENT_SECRET = "[GOOGLE_SECRET]"
-GOOGLE_CLIENT_CALLBACK_URL = "http://localhost:3000/api/auth/google/callback"
 ```
 
 *  Corre en bash [sequelize db:migrate]
