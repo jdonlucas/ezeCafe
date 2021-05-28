@@ -1,123 +1,42 @@
-# Proyecto eze Café
+# EzeCafe
 
-Plataforma que gestiona el sistema de caja, comanda e inventario de eze Café. Se construye con angular para el front y node.js y express para el back, utilizando el ORM de sequelize.
-
-### Necesario
-
-* Angular CLI (version 8.2.0)
-* Node.js (version 10.16.1)[npm (version 6.9.0)]
-* MySQL
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.2.0.
 
 ## Instalación
 
-#### Node.js 
+    *  Correr en bash [npm i]
+    *  Correr en bash [npm run start]
 
-* Ubuntu/Debian
+## Cli
 
-Primero hay que agregar el PPA al tu sistema para instalar Node.js en Ubuntu.
-```
-sudo apt-get install curl python-software-properties
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash 
-```
+    *   Para generar una nueva página lazy load, correr en bash
+            ng g m modules/[moduleName] --routing
+            ng g c modules/[pageName] --module [moduleName]
 
-Después de esto podemos instalar Node.js en ubuntu corriendo el siguiente comando:
-```
-sudo apt-get install nodejs
-```
+## Frameworks
 
-y comprobamos que la instalación se haya realizado comprobando las versiones de Node:
-```
-$ node -v 
+    Ng Bootstrap: https://ng-bootstrap.github.io/#/components/datepicker/examples
 
-v10.16.1
-```
-y npm: 
-```
-$ npm -v 
+## Development server
 
-6.9.0
-```
-* Otros sistemas
+Corre `ng serve` para un servidor de desarrollo. Navega a `http://localhost:4200/`. La app automáticamente se recargará si cambias alguno de los archivos base.
 
-Para la instalación de Node en Windows o Mac sólo es necesario descargar el [instalador](https://nodejs.org/en/#download) para su respectivo sistema operativo, directamente desde el sitio web de [nodejs.org](https://nodejs.org/en/) y seguir sus instrucciones en pantalla.
+## Code scaffolding
 
-#### Angular CLI
+Corre `ng generate component component-name` para generar un nuevo componente. Puedes usar también `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-La instalación de Angular CLI es igual en todos los sistemas. 
+## Build
 
-*Importante:* Es necesario ya tener instalado node.js
+Corre `ng build` para construir el proyecto. Todo lo generado por build será guardado en el directorio `dist/`. Usa el indicador `--prod` para especificar un build de producción.
 
-Para instalar Angular CLI hay que correr el siguiente comando en terminal:
-```
-npm install -g @angular/cli
-```
+## Running unit tests
 
-Una vez instalado podemos correr comandos propios de Angular CLI:
-```
-ng serve                  # para correr el proyecto en servidor de prueba
-ng g c [componentName]    # para crear un componente nuevo
-ng g m [moduleName]       # para crear un módulo nuevo
-```
-Para conocer más referirse a la [documentación de Angular](https://angular.io/cli), o el archivo README del Front.
+Corre `ng test` tpara ejecutar pruebas unitarias via [Karma](https://karma-runner.github.io).
 
-#### PostgresSQL con PgAdmin4
+## Running end-to-end tests
 
-* Ubuntu/Debian
+Corre `ng e2e` para ejecutar pruebas end-to-end via [Protractor](http://www.protractortest.org/).
 
-Para la instalación de postgresql en sistemas basados en Debian sólo es necesario correr los siguientes comandos:
-```
-sudo apt update
+## Further help
 
-sudo apt install posgresql
-```
-
-Para la instalación de pgAdmin4 es necesario correr los siguientes comandos:
-```
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
-
-sudo apt install wget ca-certificates
-
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add
-
-sudo apt update
-
-sudo apt install pgadmin4
-```
-una vez instalado se debe configurar el servidor donde corre postgresql, en el caso de un servidor local:
-
-Dirección: localhost
-Port: 5432
-Contraseña: [contraseña definida por el usuario]
-
-* Windows/Mac
-
-Para instalar postgreSQL en Windows o Mac es necesario [descargar el instalador](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) y seguir los pasos del mismo. 
-
-Una vez en el instalador, se recomienda dejar puerto por default (5432) y designar una contraseña memorable para acceder a él. 
-
-Para la instalación de pgAdmin4 en Windows se necesita descargar su [instalador](https://www.pgadmin.org/download/pgadmin-4-windows/) en su versión más reciente, y lo mismo para [MacOs](https://www.pgadmin.org/download/pgadmin-4-macos/).
-
-## Para deployment en server
-
-Es necesario revisar varios puntos:
-
-# Back
-
-- Verificar que las rutas en los cors apunten a negocio.ezecafe.com.mx y no a localhost:7000
-- Se utiliza pm2 para el monitoreo de la app, pm2 correo como un deamon, para detener la app se usa:
-```
-$ pm2 stop www
-```
-con www el nombre de la app, si se hacen cambios, reiniciar pm2: 
-```
-$ pm2 restart www 
-```
-para mas información, consultar [esta liga](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
-
-# Front 
-
-- Verificar que las rutas de la api sean db.ezecafe.com.mx y no localhost:3000
-- Correr ng build --prod --aot=true para obtener el compilado de la aplicacion de angular
-- Eliminar en servidor los archivos anteriores de la aplicacion
-- Copiar los archivos generador con ng build, ubicados en dist/ezeCafe/ en la carpeta root del subdominio negocio en servidor
-
+Para obtener más ayuda con Angular CLI usa `ng help` o checa [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
