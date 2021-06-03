@@ -31,7 +31,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "jquery": "^3.5.1",
     "jwt-decode": "^2.2.0",
     "mdbootstrap": "^4.11.0",
