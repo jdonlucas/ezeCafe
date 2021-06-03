@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ChartIndexComponent } from './chart-index.component';
 
@@ -6,7 +6,7 @@ describe('ChartIndexComponent', () => {
   let component: ChartIndexComponent;
   let fixture: ComponentFixture<ChartIndexComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChartIndexComponent ]
     })
