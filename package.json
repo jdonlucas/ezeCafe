@@ -36,7 +36,7 @@
     "jwt-decode": "^2.2.0",
     "mdbootstrap": "^4.11.0",
     "moment": "^2.24.0",
-    "ng2-charts": "^2.3.0",
+    "ng2-charts": "^2.4.2",
     "ngx-spinner": "^8.1.0",
     "rxjs": "~6.5.4",
     "serialize-javascript": "^3.1.0",
