@@ -1,6 +1,6 @@
 <div class="container2">
     <div class="top">
-        <h1 class="titleSection">Menu especial y empleados</h1>
+        <h1 class="titleSection">Promociones y café</h1>
         <button routerLink="/admin/menu"><fa-icon [icon]="faArrowLeft"></fa-icon></button>
     </div>
     <div class="foodContainer">
@@ -18,7 +18,7 @@
                         <div class="items">
                             <div>{{ item.product }}</div>
                             <div class="total">${{ item.price }} mxn</div>
-                            <div class="type {{item.type == 'empleado' ? 'employee': 'deal'}}">{{ item.type }}</div>
+                            <div class="type {{item.type == 'cafe' ? 'cafe': 'deal'}}">{{ item.type }}</div>
                         </div>
                         <div class="eButtons">
                             <button class="editButton" (click)="edit(item.id,item.product,item.price,item.type)"><fa-icon [icon]="faEdit"></fa-icon></button>
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <select class="browser-default custom-select users" [ngClass]="{ 'is-invalid': addMenu.get('type').touched && addMenu.get('type').invalid }" formControlName="type">
                             <option value="" disabled selected>Tipo de producto</option>
-                            <option value="empleado">Empleado</option>
+                            <option value="cafe">Café</option>
                             <option value="promocion">Promoción</option>
                         </select>
                     </div>
@@ -74,7 +74,7 @@
                     <div class="form-group">
                         <select class="browser-default custom-select users" [ngClass]="{ 'is-invalid': editMenu.get('typeEdit').touched && editMenu.get('typeEdit').invalid }" formControlName="typeEdit">
                             <option value="" disabled selected>Tipo de producto</option>
-                            <option value="empleado">Empleado</option>
+                            <option value="cafe">Café</option>
                             <option value="promocion">Promoción</option>
                         </select>
                     </div>
