@@ -8,7 +8,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CommentStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-discounts',
