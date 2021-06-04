@@ -1,25 +1,21 @@
 FROM node:14-alpine
 
-# Create node_modules in home dir to ensure that desired permissions 
-# are stablished to default user
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-
-# Create app directory
-WORKDIR /home/node/app
+RUN apk update && apk add bash
 
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
-
-# Change user to node to avoid execute npm install with root user
-USER node 
-
-# Install dependencies
+RUN mkdir /build-dir
+WORKDIR /build-dir
+COPY package*.json /build-dir
 RUN npm install
 
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+RUN ln -s /build-dir/node_modules node_modules
+
 # Bundle app source
-COPY --chown=node:node . .
+COPY . /usr/src/app
 
 EXPOSE 7000
 
-CMD ["npm", "start"]
+CMD [ "npm", "start" ]
