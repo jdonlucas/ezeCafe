@@ -1,21 +1,17 @@
-FROM node:14-alpine
-
-RUN apk update && apk add bash
-
-# Install app dependencies
-RUN mkdir /build-dir
-WORKDIR /build-dir
-COPY package*.json /build-dir
-RUN npm install
+FROM node:14-slim
 
 # Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-RUN ln -s /build-dir/node_modules node_modules
+RUN mkdir -p /home/boilerplate
+WORKDIR /home/boilerplate
 
-# Bundle app source
-COPY . /usr/src/app
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json /home/boilerplate
 
-EXPOSE 7000
+# Install dependencies
+RUN npm install
+RUN npm install @angular/cli@latest -g
+
+EXPOSE 7000 49153
 
 CMD [ "npm", "start" ]
