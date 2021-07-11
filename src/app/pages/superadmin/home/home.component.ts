@@ -5,6 +5,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { DatePipe } from '@angular/common';
 import { BulletinService } from 'src/app/services/bulletin.service';
+import { ApiService } from 'src/app/services/api.service';
 import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private _orderService: OrderService,
+    private _apiService: ApiService,
     private _salesService: SalesService,
     private _bulletinService: BulletinService,
     private datePipe: DatePipe) { }
