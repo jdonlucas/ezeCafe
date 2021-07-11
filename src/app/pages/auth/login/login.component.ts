@@ -49,10 +49,17 @@ export class LoginComponent implements OnInit {
     }
 
     await this._apiService.graphqlAuth(data).then(res => {
-      let isActive = this._authService.login(res["data"]["login"].toString());
-      if (!isActive) {
-        this.loginError.status = true;
-        this.loginError.code = 897;
+      try {
+        let isActive = this._authService.login(res["data"]["login"].toString());
+        if (!isActive) {
+          this.loginError.status = true;
+          this.loginError.code = 897;
+        } 
+      } catch {
+          this.loginError.status = true;
+          console.log(res)
+          const errorCodes = res["errors"][0];
+          this.loginError.code = errorCodes.extensions.code;
       }
     }).catch(err => {
       this.loginError.status = true;

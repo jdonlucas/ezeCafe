@@ -62,17 +62,6 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  getDecodedAccessToken(token: string): any {
-    try {
-      let jwtDecoded = jwt_decode(token);
-      jwtDecoded.exp = new Date(jwtDecoded.exp * 1000);
-      jwtDecoded.iat = new Date(jwtDecoded.iat * 1000);
-      return jwtDecoded;
-    }
-    catch (Error) {
-      return null;
-    }
-  }
   async signup() {
     this.signupError.code = '';
     let { name, lastname, username, password, role } = this.signupForm.value;
@@ -82,19 +71,29 @@ export class UsuariosComponent implements OnInit {
       this.signupError.code = 777;
     } else if (this.signupForm.value.password != this.signupForm.value.password2) {
       this.signupError.code = 666;
+    } else if (this.signupForm.value.password.length < 6) {
+      this.signupError.code = 667;
     } else {
       this._spinnerService.show();
-      await this._authService.signup(name, lastname, username, password, role).then(response => {
-        let decodedToken = this.getDecodedAccessToken(response["token"].toString());
-        let userData = decodedToken ? decodedToken : {};
+      let data = {
+        "query": "mutation ($username: String!, $password: String!, $name: String!, $lastname: String!, $role: Int!) {" +
+            "signup(username: $username, password: $password, name: $name, lastname: $lastname, role: $role) {" +
+            "Username Role { name } }" +
+        "}",
+        "variables": {
+          "username": username,
+          "password": password,
+          "name": name,
+          "lastname": lastname,
+          "role": parseInt(role)
+        }
+      }
+      await this._apiService.graphql(data).then(res => {
+        let userCreated = res["data"].signup;
         this.create = false;
         this.created = true;
-        this.userCreated = "Se creo el " + userData.user.Role.description.toLowerCase() + ".";
-      }).catch(err => {
-        this.signupError.status = true;
-        const errorCodes = err.error;
-        this.signupError.code = errorCodes.Code;
-      });
+        this.userCreated = "Se creo el usuario " + userCreated.Username + " con el rol " + userCreated.Role.name.toLowerCase() + ".";
+      })
       this._spinnerService.hide();
     }
   }

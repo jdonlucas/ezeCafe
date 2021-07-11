@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
     private datePipe: DatePipe) { }
 
   ngOnInit() {
-    let today = new Date();
     let queryDate = this.datePipe.transform(new Date(),'dd-MM-yyyy');
     this._salesService.showAllSales(queryDate).then(resp => {
       let totalSales = resp['salesHistory'];

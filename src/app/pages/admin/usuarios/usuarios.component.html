@@ -51,6 +51,7 @@
                                 <button type="submit" [disabled]="!signupForm.valid" (click)="signup()">Crear</button>
                                 <div *ngIf="signupError.code == 777" class="alert-message">No tienes privilegios para crear a este usuario.</div>
                                 <div *ngIf="signupError.code == 666" class="alert-message">Las contraseñas no coinciden.</div>
+                                <div *ngIf="signupError.code == 667" class="alert-message">La contraseña debe tener al menos 6 caracteres.</div>
                             </div>
                             <div class="delete-user" >
                                 <a routerLink="/admin/baja/">Lista de usuarios »</a>
