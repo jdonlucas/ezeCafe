@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
+import { ApiService } from 'src/app/services/api.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as jwt_decode from 'jwt-decode';
@@ -23,6 +24,7 @@ export class UsuariosComponent implements OnInit {
   constructor(
     private _store: Store<AppState>,
     private _authService: AuthService,
+    private _apiService: ApiService,
     private _spinnerService: NgxSpinnerService
     ) {
       this.signupError = {

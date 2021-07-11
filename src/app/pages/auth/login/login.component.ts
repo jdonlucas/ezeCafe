@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   public loginError: any;
 
   constructor(
+    private _apiService: ApiService,
     private _authService: AuthService,
     private _spinnerService: NgxSpinnerService
   ) {
@@ -38,8 +40,16 @@ export class LoginComponent implements OnInit {
     let { username, password } = this.loginForm.value;
     this.loginError.status = false;
     this._spinnerService.show();
-    await this._authService.localLogin(username, password).then(response => {
-      let isActive = this._authService.login(response["token"].toString());
+    let data = {
+      "query": "mutation ($username: String!, $password: String!) { login(username: $username,password: $password) }",
+      "variables": {
+          "username": username,
+          "password": password
+      }
+    }
+
+    await this._apiService.graphqlAuth(data).then(res => {
+      let isActive = this._authService.login(res["data"]["login"].toString());
       if (!isActive) {
         this.loginError.status = true;
         this.loginError.code = 897;
