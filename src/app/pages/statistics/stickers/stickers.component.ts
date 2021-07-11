@@ -14,8 +14,6 @@ export class StickersComponent implements OnInit {
   public dateForm: FormGroup;
   public karla = 0;
   public karlaAmount = 0;
-  public sebas = 0;
-  public sebasAmount = 0;
 
   constructor(
     private _statisticsService: StatisticsService,
@@ -38,8 +36,6 @@ export class StickersComponent implements OnInit {
     this._statisticsService.getStickersSale(queryDate).then(resp => {
       this.karla = resp[0].karla;
       this.karlaAmount = resp[0].karlaAmount;
-      this.sebas = resp[0].sebas;
-      this.sebasAmount = resp[0].sebasAmount;
     }).catch(err => {});
   }
 
@@ -49,8 +45,6 @@ export class StickersComponent implements OnInit {
     this._statisticsService.getStickersSale(date).then(resp => {
       this.karla = resp[0].karla;
       this.karlaAmount = resp[0].karlaAmount;
-      this.sebas = resp[0].sebas;
-      this.sebasAmount = resp[0].sebasAmount;
     }).catch(err => { console.log('no hay datos') });
   }
 

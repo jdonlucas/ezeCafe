@@ -92,7 +92,6 @@
         <h2>Selecciona la forma de pago</h2>
         <button class="ezeButton" (click)="saveSale('card')">Pago con tarjeta</button>
         <button class="ezeButton" (click)="cash();">Pago en efectivo</button>
-        <button class="ezeButton" (click)="platform();">Plataforma de envío</button>
     </div>
     <div class="paddingContainer" *ngIf="plataforma">
         <form [formGroup]="platformGain">
